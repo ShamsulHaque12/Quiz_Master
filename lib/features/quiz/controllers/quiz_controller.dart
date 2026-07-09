@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/models/question_model.dart';
 
@@ -39,6 +40,10 @@ class QuizController extends GetxController {
   int? _selectedAnswerIndex;
   int _score = 0;
 
+  // Search state for Categories selection tab
+  final searchQuery = ''.obs;
+  late final searchController = TextEditingController();
+
   List<Question> get questions => _questions;
   int get currentQuestionIndex => _currentQuestionIndex;
   int? get selectedAnswerIndex => _selectedAnswerIndex;
@@ -69,5 +74,20 @@ class QuizController extends GetxController {
     _selectedAnswerIndex = null;
     _score = 0;
     update();
+  }
+
+  void updateSearchQuery(String query) {
+    searchQuery.value = query;
+  }
+
+  void clearSearch() {
+    searchQuery.value = '';
+    searchController.clear();
+  }
+
+  @override
+  void onClose() {
+    searchController.dispose();
+    super.onClose();
   }
 }

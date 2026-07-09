@@ -7,6 +7,12 @@ abstract class Routes {
   static const QUIZ = _Paths.QUIZ;
   static const SIGN_UP = _Paths.SIGN_UP;
   static const DASHBOARD = _Paths.DASHBOARD;
+  static const DAILY_SPIN = _Paths.DAILY_SPIN;
+  static const STATISTICS = _Paths.STATISTICS;
+  static const ACHIEVEMENTS = _Paths.ACHIEVEMENTS;
+  static const SETTINGS = _Paths.SETTINGS;
+  static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -15,4 +21,10 @@ abstract class _Paths {
   static const QUIZ = '/quiz';
   static const SIGN_UP = '/sign-up';
   static const DASHBOARD = '/dashboard';
+  static const DAILY_SPIN = '/daily-spin';
+  static const STATISTICS = '/statistics';
+  static const ACHIEVEMENTS = '/achievements';
+  static const SETTINGS = '/settings';
+  static const EDIT_PROFILE = '/edit-profile';
+  static const CHANGE_PASSWORD = '/change-password';
 }

@@ -16,7 +16,8 @@ class ScoreGauge extends StatefulWidget {
   State<ScoreGauge> createState() => _ScoreGaugeState();
 }
 
-class _ScoreGaugeState extends State<ScoreGauge> with SingleTickerProviderStateMixin {
+class _ScoreGaugeState extends State<ScoreGauge>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -27,10 +28,13 @@ class _ScoreGaugeState extends State<ScoreGauge> with SingleTickerProviderStateM
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     );
-    final double percentage = widget.totalQuestions > 0 ? widget.score / widget.totalQuestions : 0.0;
-    _animation = Tween<double>(begin: 0.0, end: percentage).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
-    );
+    final double percentage = widget.totalQuestions > 0
+        ? widget.score / widget.totalQuestions
+        : 0.0;
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: percentage,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
     _controller.forward();
   }
 
@@ -76,7 +80,7 @@ class _ScoreGaugeState extends State<ScoreGauge> with SingleTickerProviderStateM
                   '${widget.score} / ${widget.totalQuestions}',
                   style: TextStyle(
                     fontSize: 16.sp,
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -107,7 +111,7 @@ class _ScoreGaugePainter extends CustomPainter {
 
     // Draw background track
     final trackPaint = Paint()
-      ..color = Colors.white.withOpacity(0.08)
+      ..color = Colors.white.withValues(alpha: 0.08)
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 
@@ -138,6 +142,7 @@ class _ScoreGaugePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _ScoreGaugePainter oldDelegate) {
-    return oldDelegate.progress != progress || oldDelegate.strokeWidth != strokeWidth;
+    return oldDelegate.progress != progress ||
+        oldDelegate.strokeWidth != strokeWidth;
   }
 }

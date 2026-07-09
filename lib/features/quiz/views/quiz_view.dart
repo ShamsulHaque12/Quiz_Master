@@ -25,7 +25,7 @@ class QuizView extends GetView<QuizController> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF6C63FF).withOpacity(0.15),
+                    color: const Color(0xFF6C63FF).withValues(alpha: 0.15),
                     blurRadius: 100.r,
                     spreadRadius: 50.r,
                   ),
@@ -43,7 +43,7 @@ class QuizView extends GetView<QuizController> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF00D2FF).withOpacity(0.12),
+                    color: const Color(0xFF00D2FF).withValues(alpha: 0.12),
                     blurRadius: 80.r,
                     spreadRadius: 40.r,
                   ),
@@ -98,7 +98,7 @@ class QuizView extends GetView<QuizController> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.08),
+                  color: Colors.white.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
@@ -119,8 +119,10 @@ class QuizView extends GetView<QuizController> {
             borderRadius: BorderRadius.circular(10.r),
             child: LinearProgressIndicator(
               value: progress,
-              backgroundColor: Colors.white.withOpacity(0.05),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF6C63FF)),
+              backgroundColor: Colors.white.withValues(alpha: 0.05),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Color(0xFF6C63FF),
+              ),
               minHeight: 8.h,
             ),
           ),
@@ -130,10 +132,10 @@ class QuizView extends GetView<QuizController> {
           Container(
             padding: EdgeInsets.all(24.r),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.04),
+              color: Colors.white.withValues(alpha: 0.04),
               borderRadius: BorderRadius.circular(24.r),
               border: Border.all(
-                color: Colors.white.withOpacity(0.08),
+                color: Colors.white.withValues(alpha: 0.08),
                 width: 1.5,
               ),
             ),
@@ -154,20 +156,17 @@ class QuizView extends GetView<QuizController> {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
-                children: List.generate(
-                  question.options.length,
-                  (index) {
-                    final isSelected = controller.selectedAnswerIndex == index;
-                    final isCorrect = index == question.correctAnswerIndex;
-                    return OptionCard(
-                      optionText: question.options[index],
-                      isSelected: isSelected,
-                      isCorrect: isCorrect,
-                      hasAnswered: controller.hasAnswered,
-                      onTap: () => controller.selectAnswer(index),
-                    );
-                  },
-                ),
+                children: List.generate(question.options.length, (index) {
+                  final isSelected = controller.selectedAnswerIndex == index;
+                  final isCorrect = index == question.correctAnswerIndex;
+                  return OptionCard(
+                    optionText: question.options[index],
+                    isSelected: isSelected,
+                    isCorrect: isCorrect,
+                    hasAnswered: controller.hasAnswered,
+                    onTap: () => controller.selectAnswer(index),
+                  );
+                }),
               ),
             ),
           ),
@@ -179,17 +178,21 @@ class QuizView extends GetView<QuizController> {
             child: Padding(
               padding: EdgeInsets.only(top: 16.h),
               child: ElevatedButton(
-                onPressed: controller.hasAnswered ? controller.nextQuestion : null,
+                onPressed: controller.hasAnswered
+                    ? controller.nextQuestion
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF6C63FF),
                   foregroundColor: Colors.white,
-                  disabledBackgroundColor: const Color(0xFF6C63FF).withOpacity(0.4),
+                  disabledBackgroundColor: const Color(
+                    0xFF6C63FF,
+                  ).withValues(alpha: 0.4),
                   padding: EdgeInsets.symmetric(vertical: 18.h),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   elevation: 5,
-                  shadowColor: const Color(0xFF6C63FF).withOpacity(0.3),
+                  shadowColor: const Color(0xFF6C63FF).withValues(alpha: 0.3),
                 ),
                 child: Text(
                   controller.currentQuestionIndex == totalQuestions - 1
@@ -243,11 +246,7 @@ class QuizView extends GetView<QuizController> {
         children: [
           const Spacer(),
           // Celebration Icon
-          Icon(
-            feedbackIcon,
-            size: 80.r,
-            color: feedbackColor,
-          ),
+          Icon(feedbackIcon, size: 80.r, color: feedbackColor),
           SizedBox(height: 24.h),
           Text(
             feedbackTitle,
@@ -263,7 +262,7 @@ class QuizView extends GetView<QuizController> {
             feedbackSubtitle,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.6),
+              color: Colors.white.withValues(alpha: 0.6),
               fontSize: 16.sp,
             ),
           ),
@@ -271,10 +270,7 @@ class QuizView extends GetView<QuizController> {
 
           // Animated gauge
           Center(
-            child: ScoreGauge(
-              score: score,
-              totalQuestions: total,
-            ),
+            child: ScoreGauge(score: score, totalQuestions: total),
           ),
 
           const Spacer(),
@@ -288,7 +284,7 @@ class QuizView extends GetView<QuizController> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF6C63FF).withOpacity(0.3),
+                  color: const Color(0xFF6C63FF).withValues(alpha: 0.3),
                   blurRadius: 15.r,
                   offset: Offset(0, 5.h),
                 ),

@@ -29,10 +29,10 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify we are on the Dashboard Home screen
-    expect(find.text('Start Quick Game'), findsOneWidget);
+    expect(find.text('Programming\nFundamentals'), findsOneWidget);
 
-    // Tap on "Start Quick Game" to launch QuizView gameplay
-    await tester.tap(find.text('Start Quick Game'));
+    // Tap on the daily challenge card to launch QuizView gameplay
+    await tester.tap(find.text('Programming\nFundamentals'));
     await tester.pumpAndSettle();
 
     // 3. Verify we are on the Quiz screen

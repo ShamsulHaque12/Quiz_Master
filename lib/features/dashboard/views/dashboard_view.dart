@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:get/get.dart';
 import '../controllers/dashboard_controller.dart';
-import 'tabs/home_tab.dart';
-import 'tabs/quiz_tab.dart';
-import 'tabs/rank_tab.dart';
-import 'tabs/profile_tab.dart';
+import '../../home/views/home_view.dart';
+import '../../quiz/views/quiz_tab_view.dart';
+import '../../leaderboard/views/leaderboard_view.dart';
+import '../../profile/views/profile_view.dart';
 
 class DashboardView extends GetView<DashboardController> {
   const DashboardView({super.key});
 
   final List<Widget> _tabs = const [
-    HomeTab(),
-    QuizTab(),
-    RankTab(),
-    ProfileTab(),
+    HomeView(),
+    QuizTabView(),
+    LeaderboardView(),
+    ProfileView(),
   ];
 
   @override
