@@ -41,13 +41,13 @@ class DailySpinController extends GetxController {
 
   // Daily Streak Bonus Rewards Mockup
   final streakDays = const [
-    {'day': '1', 'icon': '⭐', 'isCompleted': true},
-    {'day': '2', 'icon': '⭐', 'isCompleted': true},
-    {'day': '3', 'icon': '🎯', 'isCompleted': true},
-    {'day': '4', 'icon': '⭐', 'isCompleted': true},
-    {'day': '5', 'icon': '⭐', 'isCompleted': true},
-    {'day': '6', 'icon': '⭐', 'isCompleted': true},
-    {'day': '7', 'icon': '💎', 'isCompleted': false},
+    {'day': '1', 'reward': '20 XP', 'type': 'xp', 'isCompleted': true},
+    {'day': '2', 'reward': '10 Coin', 'type': 'coin', 'isCompleted': true},
+    {'day': '3', 'reward': '50 XP', 'type': 'xp', 'isCompleted': true},
+    {'day': '4', 'reward': '40 Coin', 'type': 'coin', 'isCompleted': true},
+    {'day': '5', 'reward': '60 Coin', 'type': 'coin', 'isCompleted': true},
+    {'day': '6', 'reward': '100 XP', 'type': 'xp', 'isCompleted': true},
+    {'day': '7', 'reward': '150 Coin', 'type': 'coin', 'isCompleted': false},
   ];
 
   // Starts the spin calculation and determines the landing index

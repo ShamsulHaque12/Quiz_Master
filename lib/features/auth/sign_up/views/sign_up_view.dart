@@ -18,12 +18,12 @@ class SignUpView extends GetView<SignUpController> {
         'Account created successfully! Welcome ${controller.fullNameController.text.trim()}.',
         backgroundColor: const Color(0xFF6C63FF),
         colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         margin: EdgeInsets.all(16.w),
         borderRadius: 12.r,
       );
-      // Navigate to Dashboard
-      Get.offAllNamed(Routes.DASHBOARD);
+      // Navigate to Sign In
+      Get.offAllNamed(Routes.SIGN_IN);
     }
   }
 

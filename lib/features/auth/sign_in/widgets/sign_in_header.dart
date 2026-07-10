@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:quiz_app/core/app_images.dart';
 
 class SignInHeader extends StatelessWidget {
   const SignInHeader({super.key});
@@ -29,10 +30,9 @@ class SignInHeader extends StatelessWidget {
                 ),
               ],
             ),
-            child: Icon(
-              Icons.psychology_rounded,
-              size: 40.r,
-              color: Colors.white,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24.r),
+              child: Image.asset(AppImages.appIcon, fit: BoxFit.cover),
             ),
           ),
         ),

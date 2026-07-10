@@ -422,13 +422,14 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
                       children: controller.streakDays.map((day) {
                         final isCompleted = day['isCompleted'] as bool;
                         final dayNum = day['day'] as String;
-                        final icon = day['icon'] as String;
+                        final type = day['type'] as String;
+                        final reward = day['reward'] as String;
                         
                         return Padding(
                           padding: EdgeInsets.only(right: 10.w),
                           child: Container(
-                            width: 52.w,
-                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            width: 56.w,
+                            padding: EdgeInsets.symmetric(vertical: 10.h),
                             decoration: BoxDecoration(
                               color: isCompleted 
                                   ? const Color(0xFF6C63FF).withValues(alpha: 0.12)
@@ -442,6 +443,7 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
                               ),
                             ),
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   'Day',
@@ -459,26 +461,24 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 8.h),
-                                // Render beautiful icons instead of simple text emojis
-                                if (icon == '⭐')
-                                  Icon(
-                                    Icons.star_rounded,
-                                    color: isCompleted ? const Color(0xFFFFD700) : Colors.white.withValues(alpha: 0.2),
-                                    size: 16.r,
-                                  )
-                                else if (icon == '🎯')
-                                  Icon(
-                                    Icons.gps_fixed_rounded,
-                                    color: isCompleted ? const Color(0xFFFF4B5C) : Colors.white.withValues(alpha: 0.2),
-                                    size: 15.r,
-                                  )
-                                else
-                                  Icon(
-                                    Icons.diamond_rounded,
-                                    color: isCompleted ? const Color(0xFF00D2FF) : Colors.white.withValues(alpha: 0.2),
-                                    size: 16.r,
+                                SizedBox(height: 6.h),
+                                Icon(
+                                  type == 'xp' ? Icons.bolt_rounded : Icons.monetization_on_rounded,
+                                  color: isCompleted 
+                                      ? (type == 'xp' ? const Color(0xFF3B82F6) : const Color(0xFFFFD700))
+                                      : Colors.white.withValues(alpha: 0.2),
+                                  size: 16.r,
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  reward,
+                                  style: TextStyle(
+                                    color: isCompleted ? Colors.white : Colors.white.withValues(alpha: 0.4),
+                                    fontSize: 9.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ],
                             ),
                           ),

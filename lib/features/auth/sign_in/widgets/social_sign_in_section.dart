@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quiz_app/core/app_icone.dart';
 
 class SocialSignInSection extends StatelessWidget {
   final VoidCallback onGoogleTap;
@@ -70,29 +72,10 @@ class SocialSignInSection extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7.w,
-                          vertical: 2.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 4.r,
-                            ),
-                          ],
-                        ),
-                        child: Text(
-                          'G',
-                          style: TextStyle(
-                            color: const Color(0xFF4285F4),
-                            fontWeight: FontWeight.w900,
-                            fontSize: 14.sp,
-                          ),
-                        ),
+                      SvgPicture.asset(
+                        AppIcone.googleIcon,
+                        width: 22.r,
+                        height: 22.r,
                       ),
                       SizedBox(width: 12.w),
                       Text(

@@ -1,7 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:quiz_app/service/shared_prefarence_helper.dart';
 
 class SignUpController extends GetxController {
   final fullNameController = TextEditingController();
@@ -44,11 +47,6 @@ class SignUpController extends GetxController {
     emailController.removeListener(_clearEmailError);
     passwordController.removeListener(_clearPasswordError);
     confirmPasswordController.removeListener(_clearConfirmPasswordError);
-
-    fullNameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
     super.onClose();
   }
 
@@ -109,7 +107,7 @@ class SignUpController extends GetxController {
         'Failed to retrieve image: $e',
         backgroundColor: const Color(0xFFFF6C6C),
         colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
     }
   }
@@ -117,6 +115,32 @@ class SignUpController extends GetxController {
   void removeImage() {
     _profileImage = null;
     update();
+  }
+
+  Future<String?> _uploadProfileImage(String userId) async {
+    if (_profileImage == null) return null;
+
+    try {
+      final supabase = Supabase.instance.client;
+
+      final fileExtension = _profileImage!.path.split('.').last;
+      final fileName = "$userId.$fileExtension";
+
+      await supabase.storage
+          .from('avatars')
+          .upload(
+            fileName,
+            _profileImage!,
+            fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
+          );
+
+      final imageUrl = supabase.storage.from('avatars').getPublicUrl(fileName);
+
+      return imageUrl;
+    } catch (e) {
+      debugPrint("Image Upload Error: $e");
+      return null;
+    }
   }
 
   Future<bool> signUp() async {
@@ -178,12 +202,87 @@ class SignUpController extends GetxController {
     _isLoading = true;
     update();
 
-    // Mock network registration request delay
-    await Future.delayed(const Duration(milliseconds: 1500));
+    try {
+      final AuthResponse response = await Supabase.instance.client.auth.signUp(
+        email: email,
+        password: password,
+        data: {'display_name': fullName},
+      );
 
-    _isLoading = false;
-    update();
+      final user = response.user;
+      final session = response.session;
 
-    return true;
+      if (user != null) {
+        // Save auth data locally using SharedPreferenceHelper
+        if (session != null) {
+          await SharedPreferenceHelper.saveAuthData(
+            userId: user.id,
+            accessToken: session.accessToken,
+            refreshToken: session.refreshToken ?? '',
+          );
+        }
+
+        // Upload Profile Image
+        String? imageUrl;
+
+        if (_profileImage != null) {
+          imageUrl = await _uploadProfileImage(user.id);
+        }
+
+        // Insert user details into the profiles table in Supabase
+        await Supabase.instance.client.from('profiles').insert({
+          "id": user.id,
+          "full_name": fullName,
+          "email": email,
+          "avatar_url": imageUrl,
+          "xp": 0,
+          "coin": 0,
+          "level": 1,
+          "streak": 1,
+        });
+
+        log("========== SIGN UP SUCCESS ==========");
+        log("Raw Response : $response");
+        log("Session      : ${response.session}");
+        log("User ID      : ${user.id}");
+        log("Email        : ${user.email}");
+        log("Display Name : $fullName");
+        log("Avatar URL   : $imageUrl");
+        log("Created At   : ${user.createdAt}");
+        log("====================================");
+        log("========== PROFILES DB INSERT SUCCESS ==========");
+        log("User successfully inserted into profiles table.");
+
+        _isLoading = false;
+        update();
+        return true;
+      }
+
+      _isLoading = false;
+      update();
+      return false;
+    } on AuthException catch (e) {
+      _isLoading = false;
+      update();
+      Get.snackbar(
+        'Sign Up Failed',
+        e.message,
+        backgroundColor: const Color(0xFFFF6C6C),
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+      );
+      return false;
+    } catch (e) {
+      _isLoading = false;
+      update();
+      Get.snackbar(
+        'Sign Up Failed',
+        'An unexpected error occurred: $e',
+        backgroundColor: const Color(0xFFFF6C6C),
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+      );
+      return false;
+    }
   }
 }

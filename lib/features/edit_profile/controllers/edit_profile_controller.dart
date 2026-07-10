@@ -19,11 +19,7 @@ class EditProfileController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    fullNameController.dispose();
-    super.onClose();
-  }
+
 
   Future<void> pickImage(ImageSource source) async {
     try {

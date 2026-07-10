@@ -10,13 +10,7 @@ class ChangePasswordController extends GetxController {
   final obscureNewPassword = true.obs;
   final obscureConfirmPassword = true.obs;
 
-  @override
-  void onClose() {
-    currentPasswordController.dispose();
-    newPasswordController.dispose();
-    confirmPasswordController.dispose();
-    super.onClose();
-  }
+
 
   void toggleCurrentPasswordVisibility() {
     obscureCurrentPassword.value = !obscureCurrentPassword.value;
