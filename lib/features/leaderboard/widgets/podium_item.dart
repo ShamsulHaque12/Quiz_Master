@@ -3,7 +3,9 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 class PodiumItem extends StatelessWidget {
   final String name;
-  final String xp;
+  final int xp;
+  final int coin;
+  final String score;
   final String rank;
   final String avatar;
   final Color badgeColor;
@@ -13,6 +15,8 @@ class PodiumItem extends StatelessWidget {
     super.key,
     required this.name,
     required this.xp,
+    required this.coin,
+    required this.score,
     required this.rank,
     required this.avatar,
     required this.badgeColor,
@@ -46,16 +50,13 @@ class PodiumItem extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white.withValues(alpha: 0.04),
-                border: Border.all(
-                  color: badgeColor,
-                  width: isWinner ? 3 : 2,
-                ),
+                border: Border.all(color: badgeColor, width: isWinner ? 3 : 2),
                 boxShadow: [
                   BoxShadow(
                     color: badgeColor.withValues(alpha: 0.25),
                     blurRadius: isWinner ? 20.r : 12.r,
                     spreadRadius: 1.r,
-                  )
+                  ),
                 ],
               ),
               child: Center(
@@ -78,7 +79,7 @@ class PodiumItem extends StatelessWidget {
                       color: Colors.black.withValues(alpha: 0.3),
                       blurRadius: 4.r,
                       offset: const Offset(0, 2),
-                    )
+                    ),
                   ],
                 ),
                 child: Text(
@@ -113,15 +114,27 @@ class PodiumItem extends StatelessWidget {
         SizedBox(height: 2.h),
 
         // XP Points
-        Text(
-          '$xp XP',
-          style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.6),
-            fontSize: 11.sp,
-            fontWeight: FontWeight.w500,
-          ),
+        // Primary Score
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.star_rounded,
+              color: const Color(0xFFFFD700),
+              size: 13.r,
+            ),
+            SizedBox(width: 2.w),
+            Text(
+              score,
+              style: TextStyle(
+                color: const Color(0xFFFFD700),
+                fontSize: 12.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
-        SizedBox(height: 12.h),
+        SizedBox(height: 2.h),
 
         // The Podium Block Column
         Container(
@@ -129,15 +142,18 @@ class PodiumItem extends StatelessWidget {
           height: rank == '1'
               ? 95.h
               : rank == '2'
-                  ? 72.h
-                  : 58.h,
+              ? 72.h
+              : 58.h,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: rank == '1'
                   ? [const Color(0xFFFFD700), const Color(0xFFFFA500)] // Gold
                   : rank == '2'
-                      ? [const Color(0xFFBDC3C7), const Color(0xFF95A5A6)] // Silver
-                      : [const Color(0xFFE5A93C), const Color(0xFF965F00)], // Bronze/Orange
+                  ? [const Color(0xFFBDC3C7), const Color(0xFF95A5A6)] // Silver
+                  : [
+                      const Color(0xFFE5A93C),
+                      const Color(0xFF965F00),
+                    ], // Bronze/Orange
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),

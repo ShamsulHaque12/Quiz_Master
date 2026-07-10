@@ -3,6 +3,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 class LevelProgressCard extends StatelessWidget {
   final int userLevel;
+  final String userLevelName;
   final int totalXP;
   final int currentXP;
   final int nextLevelXP;
@@ -11,6 +12,7 @@ class LevelProgressCard extends StatelessWidget {
   const LevelProgressCard({
     super.key,
     required this.userLevel,
+    required this.userLevelName,
     required this.totalXP,
     required this.currentXP,
     required this.nextLevelXP,
@@ -59,7 +61,7 @@ class LevelProgressCard extends StatelessWidget {
                       'Level $userLevel',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -76,7 +78,9 @@ class LevelProgressCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '$currentXP/$nextLevelXP',
+                nextLevelXP > 200000
+                    ? '$currentXP XP'
+                    : '$currentXP/$nextLevelXP XP',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.5),
                   fontSize: 12.sp,

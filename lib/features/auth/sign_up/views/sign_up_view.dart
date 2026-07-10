@@ -23,7 +23,7 @@ class SignUpView extends GetView<SignUpController> {
         borderRadius: 12.r,
       );
       // Navigate to Sign In
-      Get.offAllNamed(Routes.SIGN_IN);
+      Get.offAllNamed(Routes.DASHBOARD);
     }
   }
 

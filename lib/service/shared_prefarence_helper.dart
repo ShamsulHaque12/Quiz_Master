@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceHelper {
@@ -15,6 +16,12 @@ class SharedPreferenceHelper {
     await prefs.setString(_keyUserId, userId);
     await prefs.setString(_keyAccessToken, accessToken);
     await prefs.setString(_keyRefreshToken, refreshToken);
+
+    log("========== SHARED PREFERENCES SAVED ==========");
+    log("Saved User ID      : $userId");
+    log("Saved Access Token : $accessToken");
+    log("Saved Refresh Token: $refreshToken");
+    log("=============================================");
   }
 
   // Get User ID

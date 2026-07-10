@@ -111,6 +111,23 @@ class SignInController extends GetxController {
           refreshToken: session.refreshToken ?? '',
         );
 
+        // Retrieve and print the profile to verify details on sign in
+        try {
+          final profile = await Supabase.instance.client
+              .from('profiles')
+              .select()
+              .eq('id', user.id)
+              .single();
+
+          debugPrint("========== SIGN IN PROFILE ==========");
+          profile.forEach((key, value) {
+            debugPrint("$key : $value");
+          });
+          debugPrint("====================================");
+        } catch (dbError) {
+          debugPrint("Error fetching profile on Sign In: $dbError");
+        }
+
         log("========== SIGN IN SUCCESS ==========");
         log("Raw Response : $response");
         log("Session      : ${response.session}");

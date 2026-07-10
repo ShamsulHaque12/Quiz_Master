@@ -96,26 +96,43 @@ class TopPlayersList extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 2.h),
-                          Text(
-                            player['totalXp'].toString(),
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.4),
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          SizedBox(height: 4.h),
+                          Row(
+                            children: [
+                              Text('🪙', style: TextStyle(fontSize: 10.sp)),
+                              SizedBox(width: 2.w),
+                              Text(
+                                '${player['coin'] ?? 0} Coins',
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.45),
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
                     // Today's XP score
-                    Text(
-                      player['todayXp'].toString(),
-                      style: TextStyle(
-                        color: const Color(0xFF7B61FF),
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.star_rounded,
+                          color: const Color(0xFFFFD700),
+                          size: 16.r,
+                        ),
+                        SizedBox(width: 4.w),
+                        Text(
+                          (player['totalScore'] ?? 0).toString(),
+                          style: TextStyle(
+                            color: const Color(0xFFFFD700),
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

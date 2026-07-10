@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
-import '../models/leaderboard_user_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
+import '../models/leaderboard_model.dart';
 
 class LeaderboardController extends GetxController {
   // Timeframe selector state
@@ -9,99 +11,73 @@ class LeaderboardController extends GetxController {
   final timeframes = const ['Daily', 'Weekly', 'Monthly', 'All Time'];
 
   // Base list of users
-  final _allUsers = const [
-    LeaderboardUserModel(
-      rank: '1',
-      name: 'Rahim Ahmed',
-      todayXp: '2,850',
-      totalXp: '4,200 XP',
-      avatar: '🦁',
-    ),
-    LeaderboardUserModel(
-      rank: '2',
-      name: 'Priya Sharma',
-      todayXp: '2,720',
-      totalXp: '3,980 XP',
-      avatar: '🦊',
-    ),
-    LeaderboardUserModel(
-      rank: '3',
-      name: 'Karim Hassan',
-      todayXp: '2,650',
-      totalXp: '3,750 XP',
-      avatar: '🐺',
-    ),
-    LeaderboardUserModel(
-      rank: '4',
-      name: 'Fatima Khan',
-      todayXp: '2,580',
-      totalXp: '3,600 XP',
-      avatar: '🦅',
-    ),
-    LeaderboardUserModel(
-      rank: '5',
-      name: 'You',
-      todayXp: '2,510',
-      totalXp: '3,420 XP',
-      avatar: '😊',
-      isCurrentUser: true,
-    ),
-    LeaderboardUserModel(
-      rank: '6',
-      name: 'Sakib Al Hasan',
-      todayXp: '2,480',
-      totalXp: '3,300 XP',
-      avatar: '🦋',
-    ),
-    LeaderboardUserModel(
-      rank: '7',
-      name: 'Mitu Begum',
-      todayXp: '2,350',
-      totalXp: '3,100 XP',
-      avatar: '🦜',
-    ),
-  ];
+  RxList<LeaderboardModel> users = <LeaderboardModel>[].obs;
+
+  @override
+  void onInit() {
+    getLeaderboard();
+    super.onInit();
+  }
+
+  Future<void> getLeaderboard() async {
+    try {
+      final response = await Supabase.instance.client
+          .from('profiles')
+          .select()
+          .order('total_score', ascending: false);
+
+      debugPrint("Leaderboard response: $response");
+      debugPrint("Leaderboard count: ${response.length}");
+
+      users.value = response
+          .map((e) => LeaderboardModel.fromJson(e))
+          .toList();
+    } catch (e) {
+      debugPrint("Error fetching leaderboard: $e");
+    }
+  }
 
   // Helper method to get the current period score based on the selected timeframe
-  String getPeriodScore(LeaderboardUserModel user, String timeframe) {
-    // Clean current value
-    final cleanXp = int.parse(user.todayXp.replaceAll(',', ''));
+  int getPeriodScore(LeaderboardModel user, String timeframe) {
     if (timeframe == 'Weekly') {
-      return '${(cleanXp * 5.4).toInt()}';
+      return (user.totalScore * 5.4).toInt();
     } else if (timeframe == 'Monthly') {
-      return '${(cleanXp * 22.1).toInt()}';
+      return (user.totalScore * 22.1).toInt();
     } else if (timeframe == 'All Time') {
-      return '${(cleanXp * 85.6).toInt()}';
+      return (user.totalScore * 85.6).toInt();
     }
-    return user.todayXp;
+    return user.totalScore;
   }
 
   // Reactive list of users for the selected timeframe
-  List<LeaderboardUserModel> get leaderboard {
+  List<LeaderboardModel> get leaderboard {
     final timeframe = selectedTimeframe.value;
-    return _allUsers.map((user) {
+    final currentUser = Supabase.instance.client.auth.currentUser;
+
+    return List.generate(users.length, (index) {
+      final user = users[index];
+      final rank = index + 1;
+      final isCurrentUser = currentUser != null && user.id == currentUser.id;
+
+      String avatar = '😊';
+      final emojis = ['🦁', '🦊', '🐺', '🦅', '🐹', '🐼', '🐯', '🐨'];
+      avatar = emojis[index % emojis.length];
+
       final periodScore = getPeriodScore(user, timeframe);
-      // Format number with commas
-      final formattedScore = _formatNumber(periodScore);
-      return LeaderboardUserModel(
-        rank: user.rank,
-        name: user.name,
+      final formattedScore = _formatNumber(periodScore.toString());
+
+      return user.copyWith(
+        rank: rank.toString(),
+        avatar: avatar,
+        isCurrentUser: isCurrentUser,
         todayXp: formattedScore,
-        totalXp: user.totalXp,
-        avatar: user.avatar,
-        isCurrentUser: user.isCurrentUser,
       );
-    }).toList();
+    });
   }
 
   // Podium list (Top 3)
-  List<LeaderboardUserModel> get podium {
-    final list = leaderboard;
-    if (list.length >= 3) {
-      // Return 2nd, 1st, 3rd to match podium layout order
-      return [list[1], list[0], list[2]];
-    }
-    return [];
+  List<LeaderboardModel> get podium {
+    return leaderboard;
   }
 
   void changeTimeframe(String timeframe) {

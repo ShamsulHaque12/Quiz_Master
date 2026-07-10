@@ -11,8 +11,6 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    final userEmail = controller.getUserEmail();
-
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
@@ -24,6 +22,7 @@ class ProfileView extends GetView<ProfileController> {
               // Avatar
               Obx(() {
                 final userImage = controller.profileImage.value;
+                final url = controller.avatarUrl.value;
                 return Container(
                   width: 84.r,
                   height: 84.r,
@@ -47,35 +46,58 @@ class ProfileView extends GetView<ProfileController> {
                     borderRadius: BorderRadius.circular(24.r),
                     child: userImage != null
                         ? Image.file(userImage, fit: BoxFit.cover)
-                        : Center(
-                            child: Text('😊', style: TextStyle(fontSize: 42.sp)),
-                          ),
+                        : (url.isNotEmpty
+                              ? Image.network(
+                                  url,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Center(
+                                        child: Text(
+                                          '😊',
+                                          style: TextStyle(fontSize: 42.sp),
+                                        ),
+                                      ),
+                                )
+                              : Center(
+                                  child: Text(
+                                    '😊',
+                                    style: TextStyle(fontSize: 42.sp),
+                                  ),
+                                )),
                   ),
                 );
               }),
               SizedBox(height: 16.h),
 
               // Username & Email
-              Obx(() => Text(
-                controller.displayName.value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.bold,
+              Obx(
+                () => Text(
+                  controller.displayName.value.isNotEmpty
+                      ? controller.displayName.value
+                      : 'Rafiq Islam',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              )),
+              ),
               SizedBox(height: 4.h),
-              Text(
-                userEmail,
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.4),
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w400,
+              Obx(
+                () => Text(
+                  controller.email.value.isNotEmpty
+                      ? controller.email.value
+                      : 'rafiq@example.com',
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.4),
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 16.h),
 
@@ -104,7 +126,7 @@ class ProfileView extends GetView<ProfileController> {
                         SizedBox(width: 6.w),
                         Obx(
                           () => Text(
-                            'Level ${controller.userLevel.value}',
+                            controller.xpLevelName,
                             style: TextStyle(
                               color: const Color(0xFFFFD700),
                               fontSize: 12.sp,
@@ -173,19 +195,21 @@ class ProfileView extends GetView<ProfileController> {
                       children: [
                         Text('⚡', style: TextStyle(fontSize: 14.sp)),
                         SizedBox(width: 6.w),
-                        Text(
-                          'Experience',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
+                        Obx(
+                          () => Text(
+                            controller.xpLevelName,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     Obx(
                       () => Text(
-                        '${controller.currentXP.value} XP',
+                        'Total: ${controller.currentXP.value} XP',
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.5),
                           fontSize: 12.sp,
@@ -201,9 +225,7 @@ class ProfileView extends GetView<ProfileController> {
                 LayoutBuilder(
                   builder: (context, constraints) {
                     return Obx(() {
-                      final ratio =
-                          controller.currentXP.value /
-                          controller.nextLevelXP.value;
+                      final ratio = controller.xpLevelProgress;
                       return Container(
                         width: double.infinity,
                         height: 10.h,
@@ -238,10 +260,20 @@ class ProfileView extends GetView<ProfileController> {
                 SizedBox(height: 8.h),
 
                 Obx(() {
-                  final remaining =
-                      controller.nextLevelXP.value - controller.currentXP.value;
+                  final remaining = controller.xpRemainingToNextLevel;
+                  final nextLevel = controller.nextLevelName;
+                  if (nextLevel.isEmpty) {
+                    return Text(
+                      'Max level reached (Enterprise / Professional)',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.4),
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    );
+                  }
                   return Text(
-                    '$remaining XP until Level ${controller.userLevel.value + 1}',
+                    '$remaining XP until $nextLevel',
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.4),
                       fontSize: 11.sp,
@@ -377,38 +409,6 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ),
 
-          SizedBox(height: 16.h),
-
-          // Delete Account Button
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: () {},
-              icon: Icon(
-                Icons.delete_rounded,
-                color: const Color(0xFFFF4B5C),
-                size: 18.r,
-              ),
-              label: Text(
-                'Delete Account',
-                style: TextStyle(
-                  color: const Color(0xFFFF4B5C),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(
-                  color: const Color(0xFFFF4B5C).withValues(alpha: 0.3),
-                  width: 1.5,
-                ),
-                padding: EdgeInsets.symmetric(vertical: 14.h),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-              ),
-            ),
-          ),
           SizedBox(height: 16.h),
 
           // Log Out Button

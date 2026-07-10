@@ -241,6 +241,23 @@ class SignUpController extends GetxController {
           "streak": 1,
         });
 
+        // Retrieve and print the profile to verify details are saved in the DB
+        try {
+          final profile = await Supabase.instance.client
+              .from('profiles')
+              .select()
+              .eq('id', user.id)
+              .single();
+
+          debugPrint("========== SIGN UP PROFILE ==========");
+          profile.forEach((key, value) {
+            debugPrint("$key : $value");
+          });
+          debugPrint("====================================");
+        } catch (dbError) {
+          debugPrint("Error fetching inserted profile: $dbError");
+        }
+
         log("========== SIGN UP SUCCESS ==========");
         log("Raw Response : $response");
         log("Session      : ${response.session}");

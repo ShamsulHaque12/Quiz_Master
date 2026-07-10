@@ -46,7 +46,7 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
   }
 
   void _spinWheel() {
-    if (controller.isSpinning.value) return;
+    if (controller.isSpinning.value || !controller.canSpin.value) return;
 
     _pulseController.stop(); // Stop pulsing during spin
     final targetIndex = controller.calculateSpinResult();
@@ -69,9 +69,9 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
     );
 
     _spinController.reset();
-    _spinController.forward().then((_) {
+    _spinController.forward().then((_) async {
       _currentRotation = targetRotation;
-      controller.rewardUser(targetIndex);
+      await controller.rewardUser(targetIndex);
       _pulseController.repeat(reverse: true); // Resume pulsing
       _showRewardDialog(controller.prizes[targetIndex]);
     });
@@ -288,29 +288,41 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
                 ),
 
                 // Pulsing Center GO Button
-                ScaleTransition(
-                  scale: Tween<double>(begin: 0.96, end: 1.04).animate(
-                    CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-                  ),
+                Obx(() => ScaleTransition(
+                  scale: controller.canSpin.value
+                      ? Tween<double>(begin: 0.96, end: 1.04).animate(
+                          CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+                        )
+                      : const AlwaysStoppedAnimation(1.0),
                   child: GestureDetector(
-                    onTap: _spinWheel,
+                    onTap: (controller.isSpinning.value || !controller.canSpin.value) ? null : _spinWheel,
                     child: Container(
                       width: 58.r,
                       height: 58.r,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF1E1B4B), Color(0xFF0F0C20)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        gradient: controller.canSpin.value
+                            ? const LinearGradient(
+                                colors: [Color(0xFF1E1B4B), Color(0xFF0F0C20)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              )
+                            : LinearGradient(
+                                colors: [Colors.grey[800]!, Colors.grey[900]!],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
                         shape: BoxShape.circle,
-                        border: Border.all(color: const Color(0xFFFFD700), width: 2.5.r),
+                        border: Border.all(
+                          color: controller.canSpin.value ? const Color(0xFFFFD700) : Colors.grey,
+                          width: 2.5.r,
+                        ),
                         boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFFFD700).withValues(alpha: 0.2),
-                            blurRadius: 12.r,
-                            spreadRadius: 1.r,
-                          ),
+                          if (controller.canSpin.value)
+                            BoxShadow(
+                              color: const Color(0xFFFFD700).withValues(alpha: 0.2),
+                              blurRadius: 12.r,
+                              spreadRadius: 1.r,
+                            ),
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.5),
                             blurRadius: 8.r,
@@ -320,70 +332,76 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        'GO!',
+                        controller.canSpin.value ? 'GO!' : 'WAIT',
                         style: TextStyle(
-                          color: const Color(0xFFFFD700),
-                          fontSize: 13.sp,
+                          color: controller.canSpin.value ? const Color(0xFFFFD700) : Colors.grey[400],
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 0.5,
                         ),
                       ),
                     ),
                   ),
-                ),
+                )),
               ],
             ),
             SizedBox(height: 38.h),
 
-            // SPIN NOW Button
-            Obx(() => SizedBox(
-              width: double.infinity,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: controller.isSpinning.value
-                      ? null
-                      : const LinearGradient(
-                          colors: [Color(0xFFFF8000), Color(0xFFFF9E00)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                  color: controller.isSpinning.value ? Colors.white.withValues(alpha: 0.08) : null,
-                  borderRadius: BorderRadius.circular(20.r),
-                  border: controller.isSpinning.value 
-                      ? Border.all(color: Colors.white.withValues(alpha: 0.05), width: 1.2)
-                      : null,
-                  boxShadow: controller.isSpinning.value
-                      ? null
-                      : [
-                          BoxShadow(
-                            color: const Color(0xFFFF8000).withValues(alpha: 0.35),
-                            blurRadius: 16.r,
-                            offset: Offset(0, 4.h),
-                          ),
-                        ],
-                ),
-                child: ElevatedButton.icon(
-                  onPressed: controller.isSpinning.value ? null : _spinWheel,
-                  icon: Text('🎡', style: TextStyle(fontSize: 16.sp)),
-                  label: Text(
-                    controller.isSpinning.value ? 'SPINNING...' : 'SPIN NOW!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    padding: EdgeInsets.symmetric(vertical: 15.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                  ),
-                ),
-              ),
-            )),
+             // SPIN NOW Button
+             Obx(() => SizedBox(
+               width: double.infinity,
+               child: Container(
+                 decoration: BoxDecoration(
+                   gradient: (controller.isSpinning.value || !controller.canSpin.value)
+                       ? null
+                       : const LinearGradient(
+                           colors: [Color(0xFFFF8000), Color(0xFFFF9E00)],
+                           begin: Alignment.topLeft,
+                           end: Alignment.bottomRight,
+                         ),
+                   color: (controller.isSpinning.value || !controller.canSpin.value)
+                       ? Colors.white.withValues(alpha: 0.08)
+                       : null,
+                   borderRadius: BorderRadius.circular(20.r),
+                   border: (controller.isSpinning.value || !controller.canSpin.value)
+                       ? Border.all(color: Colors.white.withValues(alpha: 0.05), width: 1.2)
+                       : null,
+                   boxShadow: (controller.isSpinning.value || !controller.canSpin.value)
+                       ? null
+                       : [
+                           BoxShadow(
+                             color: const Color(0xFFFF8000).withValues(alpha: 0.35),
+                             blurRadius: 16.r,
+                             offset: Offset(0, 4.h),
+                           ),
+                         ],
+                 ),
+                 child: ElevatedButton.icon(
+                   onPressed: (controller.isSpinning.value || !controller.canSpin.value) ? null : _spinWheel,
+                   icon: Text('🎡', style: TextStyle(fontSize: 16.sp)),
+                   label: Text(
+                     controller.isSpinning.value
+                         ? 'SPINNING...'
+                         : (!controller.canSpin.value
+                             ? 'NEXT SPIN IN: ${controller.remainingTime.value}'
+                             : 'SPIN NOW!'),
+                     style: TextStyle(
+                       color: Colors.white,
+                       fontSize: 15.sp,
+                       fontWeight: FontWeight.bold,
+                     ),
+                   ),
+                   style: ElevatedButton.styleFrom(
+                     backgroundColor: Colors.transparent,
+                     shadowColor: Colors.transparent,
+                     padding: EdgeInsets.symmetric(vertical: 15.h),
+                     shape: RoundedRectangleBorder(
+                       borderRadius: BorderRadius.circular(20.r),
+                     ),
+                   ),
+                 ),
+               ),
+             )),
             SizedBox(height: 24.h),
 
             // Streak Bonus Rewards
@@ -401,90 +419,139 @@ class _DailySpinViewState extends State<DailySpinView> with TickerProviderStateM
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('🔥', style: TextStyle(fontSize: 14.sp)),
-                      SizedBox(width: 8.w),
-                      Text(
-                        'Streak Bonus Rewards',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          Text('🔥', style: TextStyle(fontSize: 14.sp)),
+                          SizedBox(width: 8.w),
+                          Text(
+                            'Streak Bonus Rewards',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
+                      Obx(() {
+                        if (controller.canClaimStreak.value) {
+                          return GestureDetector(
+                            onTap: controller.claimDailyStreak,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF6C63FF), Color(0xFF3B82F6)],
+                                ),
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                              child: Text(
+                                'CLAIM TODAY',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        return Container();
+                      }),
                     ],
                   ),
                   SizedBox(height: 16.h),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
-                    child: Row(
-                      children: controller.streakDays.map((day) {
+                    child: Obx(() => Row(
+                      children: controller.dynamicStreakDays.map((day) {
                         final isCompleted = day['isCompleted'] as bool;
+                        final isClaimable = day['isClaimable'] as bool;
                         final dayNum = day['day'] as String;
                         final type = day['type'] as String;
                         final reward = day['reward'] as String;
                         
                         return Padding(
                           padding: EdgeInsets.only(right: 10.w),
-                          child: Container(
-                            width: 56.w,
-                            padding: EdgeInsets.symmetric(vertical: 10.h),
-                            decoration: BoxDecoration(
-                              color: isCompleted 
-                                  ? const Color(0xFF6C63FF).withValues(alpha: 0.12)
-                                  : Colors.white.withValues(alpha: 0.015),
-                              borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(
-                                color: isCompleted
-                                    ? const Color(0xFF6C63FF).withValues(alpha: 0.3)
-                                    : Colors.white.withValues(alpha: 0.04),
-                                width: 1.2,
+                          child: GestureDetector(
+                            onTap: isClaimable ? controller.claimDailyStreak : null,
+                            child: Container(
+                              width: 56.w,
+                              padding: EdgeInsets.symmetric(vertical: 10.h),
+                              decoration: BoxDecoration(
+                                color: isCompleted 
+                                    ? const Color(0xFF6C63FF).withValues(alpha: 0.12)
+                                    : (isClaimable 
+                                        ? const Color(0xFFFF8000).withValues(alpha: 0.15)
+                                        : Colors.white.withValues(alpha: 0.015)),
+                                borderRadius: BorderRadius.circular(16.r),
+                                border: Border.all(
+                                  color: isCompleted
+                                      ? const Color(0xFF6C63FF).withValues(alpha: 0.3)
+                                      : (isClaimable
+                                          ? const Color(0xFFFF8000).withValues(alpha: 0.6)
+                                          : Colors.white.withValues(alpha: 0.04)),
+                                  width: 1.2,
+                                ),
+                                boxShadow: isClaimable
+                                    ? [
+                                        BoxShadow(
+                                          color: const Color(0xFFFF8000).withValues(alpha: 0.2),
+                                          blurRadius: 8.r,
+                                          spreadRadius: 1.r,
+                                        )
+                                      ]
+                                    : null,
                               ),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Day',
-                                  style: TextStyle(
-                                    color: Colors.white.withValues(alpha: 0.35),
-                                    fontSize: 9.sp,
-                                    fontWeight: FontWeight.w500,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Day',
+                                    style: TextStyle(
+                                      color: Colors.white.withValues(alpha: 0.35),
+                                      fontSize: 9.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  dayNum,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold,
+                                  Text(
+                                    dayNum,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 6.h),
-                                Icon(
-                                  type == 'xp' ? Icons.bolt_rounded : Icons.monetization_on_rounded,
-                                  color: isCompleted 
-                                      ? (type == 'xp' ? const Color(0xFF3B82F6) : const Color(0xFFFFD700))
-                                      : Colors.white.withValues(alpha: 0.2),
-                                  size: 16.r,
-                                ),
-                                SizedBox(height: 4.h),
-                                Text(
-                                  reward,
-                                  style: TextStyle(
-                                    color: isCompleted ? Colors.white : Colors.white.withValues(alpha: 0.4),
-                                    fontSize: 9.sp,
-                                    fontWeight: FontWeight.bold,
+                                  SizedBox(height: 6.h),
+                                  Icon(
+                                    type == 'xp' ? Icons.bolt_rounded : Icons.monetization_on_rounded,
+                                    color: isCompleted 
+                                        ? (type == 'xp' ? const Color(0xFF3B82F6) : const Color(0xFFFFD700))
+                                        : (isClaimable
+                                            ? (type == 'xp' ? const Color(0xFF3B82F6) : const Color(0xFFFFD700))
+                                            : Colors.white.withValues(alpha: 0.2)),
+                                    size: 16.r,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    reward,
+                                    style: TextStyle(
+                                      color: (isCompleted || isClaimable) ? Colors.white : Colors.white.withValues(alpha: 0.4),
+                                      fontSize: 9.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
                       }).toList(),
-                    ),
+                    )),
                   ),
                 ],
               ),

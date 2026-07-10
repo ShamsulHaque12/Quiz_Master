@@ -15,7 +15,7 @@ class LeaderboardView extends GetView<LeaderboardController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 16.h),
-          
+
           // Header with Trophy Icon
           Row(
             children: [
@@ -48,42 +48,55 @@ class LeaderboardView extends GetView<LeaderboardController> {
 
           // Podium Layout (Top 3 Users)
           Obx(() {
-            if (controller.podium.length < 3) {
+            final list = controller.podium;
+            if (list.isEmpty) {
               return const SizedBox.shrink();
             }
-            final second = controller.podium[0];
-            final first = controller.podium[1];
-            final third = controller.podium[2];
-            
+            final first = list[0];
+            final second = list.length > 1 ? list[1] : null;
+            final third = list.length > 2 ? list[2] : null;
+
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 // 2nd Place
-                PodiumItem(
-                  name: second.name,
-                  xp: second.todayXp,
-                  rank: second.rank,
-                  avatar: second.avatar,
-                  badgeColor: const Color(0xFFBDC3C7), // Silver
-                ),
+                if (second != null)
+                  PodiumItem(
+                    name: second.name,
+                    xp: second.xp,
+                    coin: second.coin,
+                    score: second.todayXp,
+                    rank: second.rank,
+                    avatar: second.avatar,
+                    badgeColor: const Color(0xFFBDC3C7), // Silver
+                  )
+                else
+                  SizedBox(width: 64.w),
                 // 1st Place (Tallest, center)
                 PodiumItem(
                   name: first.name,
-                  xp: first.todayXp,
+                  xp: first.xp,
+                  coin: first.coin,
+                  score: first.todayXp,
                   rank: first.rank,
                   avatar: first.avatar,
                   badgeColor: const Color(0xFFFFD700), // Gold
                   isWinner: true,
                 ),
                 // 3rd Place
-                PodiumItem(
-                  name: third.name,
-                  xp: third.todayXp,
-                  rank: third.rank,
-                  avatar: third.avatar,
-                  badgeColor: const Color(0xFFE5A93C), // Bronze
-                ),
+                if (third != null)
+                  PodiumItem(
+                    name: third.name,
+                    xp: third.xp,
+                    coin: third.coin,
+                    score: third.todayXp,
+                    rank: third.rank,
+                    avatar: third.avatar,
+                    badgeColor: const Color(0xFFE5A93C), // Bronze
+                  )
+                else
+                  SizedBox(width: 64.w),
               ],
             );
           }),
@@ -103,7 +116,8 @@ class LeaderboardView extends GetView<LeaderboardController> {
             child: Obx(() {
               return Row(
                 children: controller.timeframes.map((timeframe) {
-                  final isSelected = controller.selectedTimeframe.value == timeframe;
+                  final isSelected =
+                      controller.selectedTimeframe.value == timeframe;
                   return Expanded(
                     child: GestureDetector(
                       onTap: () => controller.changeTimeframe(timeframe),
@@ -114,7 +128,10 @@ class LeaderboardView extends GetView<LeaderboardController> {
                           borderRadius: BorderRadius.circular(20.r),
                           gradient: isSelected
                               ? const LinearGradient(
-                                  colors: [Color(0xFF6C63FF), Color(0xFF4A00E0)],
+                                  colors: [
+                                    Color(0xFF6C63FF),
+                                    Color(0xFF4A00E0),
+                                  ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 )
@@ -124,9 +141,13 @@ class LeaderboardView extends GetView<LeaderboardController> {
                         child: Text(
                           timeframe,
                           style: TextStyle(
-                            color: isSelected ? Colors.white : Colors.white.withValues(alpha: 0.4),
+                            color: isSelected
+                                ? Colors.white
+                                : Colors.white.withValues(alpha: 0.4),
                             fontSize: 12.sp,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.w600,
                           ),
                         ),
                       ),
@@ -149,11 +170,14 @@ class LeaderboardView extends GetView<LeaderboardController> {
                 itemBuilder: (context, index) {
                   final user = list[index];
                   final isTop3 = index < 3;
-                  
+
                   return Padding(
                     padding: EdgeInsets.only(bottom: 10.h),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 14.h,
+                      ),
                       decoration: BoxDecoration(
                         color: user.isCurrentUser
                             ? const Color(0xFF6C63FF).withValues(alpha: 0.12)
@@ -168,10 +192,12 @@ class LeaderboardView extends GetView<LeaderboardController> {
                         boxShadow: user.isCurrentUser
                             ? [
                                 BoxShadow(
-                                  color: const Color(0xFF6C63FF).withValues(alpha: 0.1),
+                                  color: const Color(
+                                    0xFF6C63FF,
+                                  ).withValues(alpha: 0.1),
                                   blurRadius: 12.r,
                                   spreadRadius: 1.r,
-                                )
+                                ),
                               ]
                             : null,
                       ),
@@ -185,17 +211,17 @@ class LeaderboardView extends GetView<LeaderboardController> {
                               style: TextStyle(
                                 color: isTop3
                                     ? (index == 0
-                                        ? const Color(0xFFFFD700)
-                                        : index == 1
-                                            ? const Color(0xFFBDC3C7)
-                                            : const Color(0xFFE5A93C))
+                                          ? const Color(0xFFFFD700)
+                                          : index == 1
+                                          ? const Color(0xFFBDC3C7)
+                                          : const Color(0xFFE5A93C))
                                     : Colors.white.withValues(alpha: 0.35),
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          
+
                           // Avatar
                           Container(
                             width: 36.r,
@@ -206,10 +232,10 @@ class LeaderboardView extends GetView<LeaderboardController> {
                               border: Border.all(
                                 color: isTop3
                                     ? (index == 0
-                                        ? const Color(0xFFFFD700)
-                                        : index == 1
-                                            ? const Color(0xFFBDC3C7)
-                                            : const Color(0xFFE5A93C))
+                                          ? const Color(0xFFFFD700)
+                                          : index == 1
+                                          ? const Color(0xFFBDC3C7)
+                                          : const Color(0xFFE5A93C))
                                     : Colors.transparent,
                                 width: isTop3 ? 1.5 : 0,
                               ),
@@ -222,7 +248,7 @@ class LeaderboardView extends GetView<LeaderboardController> {
                             ),
                           ),
                           SizedBox(width: 12.w),
-                          
+
                           // Name & Career XP
                           Expanded(
                             child: Column(
@@ -233,40 +259,49 @@ class LeaderboardView extends GetView<LeaderboardController> {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 13.sp,
-                                    fontWeight: user.isCurrentUser ? FontWeight.bold : FontWeight.w600,
+                                    fontWeight: user.isCurrentUser
+                                        ? FontWeight.bold
+                                        : FontWeight.w600,
                                   ),
                                 ),
-                                SizedBox(height: 2.h),
-                                Text(
-                                  user.totalXp,
-                                  style: TextStyle(
-                                    color: Colors.white.withValues(alpha: 0.4),
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                SizedBox(height: 4.h),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '🪙',
+                                      style: TextStyle(fontSize: 10.sp),
+                                    ),
+                                    SizedBox(width: 2.w),
+                                    Text(
+                                      '${user.coin} Coins',
+                                      style: TextStyle(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.45,
+                                        ),
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                          
+
                           // Period XP Points
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              if (index == 0) ...[
-                                Icon(
-                                  Icons.star_rounded,
-                                  color: const Color(0xFFFFD700),
-                                  size: 14.r,
-                                ),
-                                SizedBox(width: 4.w),
-                              ],
+                              Icon(
+                                Icons.star_rounded,
+                                color: const Color(0xFFFFD700),
+                                size: 14.r,
+                              ),
+                              SizedBox(width: 4.w),
                               Text(
-                                user.todayXp,
+                                user.totalScore.toString(),
                                 style: TextStyle(
-                                  color: user.isCurrentUser
-                                      ? const Color(0xFF9089FF)
-                                      : const Color(0xFFFFD700),
+                                  color: const Color(0xFFFFD700),
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
                                 ),

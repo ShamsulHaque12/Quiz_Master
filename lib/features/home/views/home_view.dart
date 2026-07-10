@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:get/get.dart';
-import '../../auth/sign_up/controllers/sign_up_controller.dart';
-import '../../auth/sign_in/controllers/sign_in_controller.dart';
 import '../../dashboard/controllers/dashboard_controller.dart';
 import '../controllers/home_controller.dart';
 import '../../quiz/widgets/category_card.dart';
@@ -11,30 +9,13 @@ import '../widgets/level_progress_card.dart';
 import '../widgets/daily_challenge_card.dart';
 import '../widgets/top_players_list.dart';
 import '../widgets/daily_spin_wheel_banner.dart';
-import '../widgets/recent_performance_card.dart';
 import '../../../routes/app_pages.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
-  String _getUserName() {
-    if (Get.isRegistered<SignUpController>()) {
-      final name = Get.find<SignUpController>().fullNameController.text.trim();
-      if (name.isNotEmpty) return name;
-    }
-    if (Get.isRegistered<SignInController>()) {
-      final email = Get.find<SignInController>().emailController.text.trim();
-      if (email.isNotEmpty) {
-        return email.split('@').first;
-      }
-    }
-    return 'Rafiq Islam';
-  }
-
   @override
   Widget build(BuildContext context) {
-    final userName = _getUserName();
-    final displayName = (userName.isEmpty) ? 'Rafiq Islam' : userName;
     final dashboardController = Get.find<DashboardController>();
 
     return ListView(
@@ -42,21 +23,28 @@ class HomeView extends GetView<HomeController> {
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
       children: [
         // User Greeting Header Row
-        Obx(() => HomeHeader(
-              displayName: displayName,
-              streakCount: controller.streakCount.value,
-              coinCount: controller.coinCount.value,
-            )),
+        Obx(
+          () => HomeHeader(
+            displayName: controller.displayName.value.isNotEmpty
+                ? controller.displayName.value
+                : 'No Name',
+            streakCount: controller.streakCount.value,
+            coinCount: controller.coinCount.value,
+          ),
+        ),
         SizedBox(height: 20.h),
 
         // Gamification Level Progress Card
-        Obx(() => LevelProgressCard(
-              userLevel: controller.userLevel.value,
-              totalXP: controller.totalXP.value,
-              currentXP: controller.currentXP.value,
-              nextLevelXP: controller.nextLevelXP.value,
-              progress: controller.levelProgress,
-            )),
+        Obx(
+          () => LevelProgressCard(
+            userLevel: controller.xpUserLevel,
+            userLevelName: controller.xpLevelName,
+            totalXP: controller.totalXP.value,
+            currentXP: controller.xpInCurrentLevel,
+            nextLevelXP: controller.xpMaxInCurrentLevel,
+            progress: controller.levelProgress,
+          ),
+        ),
         SizedBox(height: 24.h),
 
         // Daily Challenge Section Header
@@ -94,9 +82,11 @@ class HomeView extends GetView<HomeController> {
         SizedBox(height: 14.h),
 
         // Programming Fundamentals Card
-        DailyChallengeCard(
-          onTap: () => Get.toNamed(Routes.QUIZ),
-        ),
+        DailyChallengeCard(onTap: () => Get.toNamed(Routes.QUIZ)),
+        SizedBox(height: 24.h),
+
+        // Daily Spin Wheel Banner
+        const DailySpinWheelBanner(),
         SizedBox(height: 24.h),
 
         // Categories Header
@@ -185,7 +175,7 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
-        SizedBox(height: 24.h),
+        SizedBox(height: 0.h),
 
         // Top Players Today Header
         Row(
@@ -227,21 +217,10 @@ class HomeView extends GetView<HomeController> {
         SizedBox(height: 14.h),
 
         // Top Players List Card
-        Obx(() => TopPlayersList(
-              players: controller.topPlayers.toList(),
-            )),
+        Obx(() => TopPlayersList(players: controller.topPlayers.toList())),
         SizedBox(height: 24.h),
 
-        // Daily Spin Wheel Banner
-        const DailySpinWheelBanner(),
         SizedBox(height: 24.h),
-
-        // RECENT PERFORMANCE Card
-        Obx(() => RecentPerformanceCard(
-              totalQuiz: controller.recentTotalQuiz.value,
-              bestScore: controller.recentBestScore.value,
-              dayStreak: controller.recentDayStreak.value,
-            )),
       ],
     );
   }
