@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:quiz_app/main.dart';
+import 'package:quiz_app/features/quiz/controllers/quiz_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    try {
+      await Supabase.initialize(
+        url: 'https://placeholder-project.supabase.co',
+        anonKey: 'placeholder-anon-key',
+      );
+    } catch (_) {}
+  });
+
   testWidgets('Quiz App full integration flow test', (WidgetTester tester) async {
     // Set screen size to a comfortable mobile/tablet ratio for the test environment
     tester.view.physicalSize = const Size(600 * 3, 1000 * 3);
@@ -16,6 +31,10 @@ void main() {
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
+    await tester.pumpAndSettle();
+    
+    // Wait for the splash screen timer (3 seconds) to trigger navigation
+    await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
 
     // 1. Verify we are on the Sign-In screen
@@ -31,26 +50,38 @@ void main() {
     // Verify we are on the Dashboard Home screen
     expect(find.text('Programming\nFundamentals'), findsOneWidget);
 
+    // Register custom QuizController with FakeAssetBundle before tapping and navigating
+    final fakeAssetBundle = FakeAssetBundle();
+    await Get.delete<QuizController>();
+    final controller = QuizController(assetBundle: fakeAssetBundle);
+    Get.put<QuizController>(controller);
+
     // Tap on the daily challenge card to launch QuizView gameplay
     await tester.tap(find.text('Programming\nFundamentals'));
+    await tester.pump();
+    
+    // Pump until the loading state finishes
+    while (controller.isLoading) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
     await tester.pumpAndSettle();
 
     // 3. Verify we are on the Quiz screen
     expect(find.text('Quiz Master'), findsOneWidget);
     expect(find.text('Which programming language is used by Flutter?'), findsOneWidget);
 
-    // Verify that the Next Question button is initially disabled
-    final nextButtonFinder = find.widgetWithText(ElevatedButton, 'Next Question');
-    expect(nextButtonFinder, findsOneWidget);
-    expect(tester.widget<ElevatedButton>(nextButtonFinder).enabled, isFalse);
+    // Verify that the Skip Question button is initially shown (unanswered state)
+    final skipButtonFinder = find.widgetWithText(OutlinedButton, 'Skip Question');
+    expect(skipButtonFinder, findsOneWidget);
 
     // Tap on the correct answer "Dart"
     await tester.ensureVisible(find.text('Dart'));
     await tester.tap(find.text('Dart'));
     await tester.pumpAndSettle();
 
-    // Verify that the "Next Question" button is now enabled
-    expect(tester.widget<ElevatedButton>(nextButtonFinder).enabled, isTrue);
+    // Verify that the "View Results" button is now shown (answered state, last question)
+    final nextButtonFinder = find.widgetWithText(ElevatedButton, 'View Results');
+    expect(nextButtonFinder, findsOneWidget);
   });
 
   testWidgets('Quiz App inline validation test', (WidgetTester tester) async {
@@ -63,6 +94,10 @@ void main() {
     });
 
     await tester.pumpWidget(const MyApp());
+    await tester.pumpAndSettle();
+
+    // Wait for the splash screen timer (3 seconds) to trigger navigation
+    await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
 
     // 1. Enter invalid email and tap Sign In
@@ -101,6 +136,10 @@ void main() {
     await tester.pumpWidget(const MyApp());
     await tester.pumpAndSettle();
 
+    // Wait for the splash screen timer (3 seconds) to trigger navigation
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
     // 1. Scroll to and tap on Sign Up prompt to navigate
     final signUpLink = find.descendant(
       of: find.byType(GestureDetector),
@@ -133,4 +172,28 @@ void main() {
     // Verify we are back on the Sign-In screen
     expect(find.text('QuizMaster'), findsOneWidget);
   });
+}
+
+class FakeAssetBundle extends AssetBundle {
+  @override
+  Future<String> loadString(String key, {bool cache = true}) async {
+    if (key == 'assets/quiz_json_file/program_option.json') {
+      return '''
+[
+  {
+    "id": 1,
+    "question": "Which programming language is used by Flutter?",
+    "options": ["Java", "Kotlin", "Swift", "Dart"],
+    "answer": 3
+  }
+]
+''';
+    }
+    return '';
+  }
+
+  @override
+  Future<ByteData> load(String key) async {
+    throw UnimplementedError();
+  }
 }

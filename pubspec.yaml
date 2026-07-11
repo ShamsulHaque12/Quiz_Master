@@ -74,6 +74,7 @@ flutter:
     - assets/lotti_files/
     - assets/images/
     - assets/icons/
+    - assets/quiz_json_file/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

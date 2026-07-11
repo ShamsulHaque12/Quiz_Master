@@ -6,7 +6,10 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/sign_up/controllers/sign_up_controller.dart';
 import '../../auth/sign_in/controllers/sign_in_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../../routes/app_pages.dart';
+import '../../../core/app_images.dart';
+import '../models/badge_model.dart';
 
 class ProfileController extends GetxController {
   // Gamification & stats
@@ -18,11 +21,120 @@ class ProfileController extends GetxController {
   final totalQuiz = 0.obs;
   final bestScore = 0.obs;
   final coinCount = 0.obs;
+  final totalScore = 0.obs;
 
   final displayName = ''.obs;
   final email = ''.obs;
   final avatarUrl = ''.obs;
   final profileImage = Rxn<File>();
+
+  late final List<BadgeModel> badges = [
+    BadgeModel(
+      id: 1,
+      imagePath: AppImages.badge1,
+      title: 'Bronze Collector',
+      description: 'Unlock at 50 coins',
+      isUnlocked: (c) => c.coinCount.value >= 50,
+    ),
+    BadgeModel(
+      id: 2,
+      imagePath: AppImages.badge2,
+      title: 'Silver Collector',
+      description: 'Unlock at 100 coins',
+      isUnlocked: (c) => c.coinCount.value >= 100,
+    ),
+    BadgeModel(
+      id: 3,
+      imagePath: AppImages.badge3,
+      title: 'Gold Collector',
+      description: 'Unlock at 200 coins',
+      isUnlocked: (c) => c.coinCount.value >= 200,
+    ),
+    BadgeModel(
+      id: 4,
+      imagePath: AppImages.badge4,
+      title: 'Novice Quizzer',
+      description: 'Unlock at 200 XP',
+      isUnlocked: (c) => c.currentXP.value >= 200,
+    ),
+    BadgeModel(
+      id: 5,
+      imagePath: AppImages.badge5,
+      title: 'Apprentice Quizzer',
+      description: 'Unlock at 500 XP',
+      isUnlocked: (c) => c.currentXP.value >= 500,
+    ),
+    BadgeModel(
+      id: 6,
+      imagePath: AppImages.badge6,
+      title: 'Adept Quizzer',
+      description: 'Unlock at 1000 XP',
+      isUnlocked: (c) => c.currentXP.value >= 1000,
+    ),
+    BadgeModel(
+      id: 7,
+      imagePath: AppImages.badge7,
+      title: 'Challenger Score',
+      description: 'Unlock at 400 Score',
+      isUnlocked: (c) => c.totalScore.value >= 400,
+    ),
+    BadgeModel(
+      id: 8,
+      imagePath: AppImages.badge8,
+      title: 'Veteran Score',
+      description: 'Unlock at 600 score',
+      isUnlocked: (c) => c.totalScore.value >= 600,
+    ),
+    BadgeModel(
+      id: 9,
+      imagePath: AppImages.badge9,
+      title: 'Elite Score',
+      description: 'Unlock at 1000 score',
+      isUnlocked: (c) => c.totalScore.value >= 1000,
+    ),
+    BadgeModel(
+      id: 10,
+      imagePath: AppImages.badge10,
+      title: 'Rising Star',
+      description: 'Unlock at level 3',
+      isUnlocked: (c) => c.userLevel.value >= 3,
+    ),
+    BadgeModel(
+      id: 11,
+      imagePath: AppImages.badge11,
+      title: 'Champion',
+      description: 'Unlock at level 5',
+      isUnlocked: (c) => c.userLevel.value >= 5,
+    ),
+    BadgeModel(
+      id: 12,
+      imagePath: AppImages.badge12,
+      title: 'Master',
+      description: 'Unlock at level 10',
+      isUnlocked: (c) => c.userLevel.value >= 10,
+    ),
+    BadgeModel(
+      id: 13,
+      imagePath: AppImages.badge13,
+      title: 'Grandmaster Quizzer',
+      description: 'Unlock at 3000 XP',
+      isUnlocked: (c) => c.currentXP.value >= 3000,
+    ),
+    BadgeModel(
+      id: 14,
+      imagePath: AppImages.badge14,
+      title: 'Wealthy Collector',
+      description: 'Unlock at 2000 coin',
+      isUnlocked: (c) => c.coinCount.value >= 2000,
+    ),
+    BadgeModel(
+      id: 15,
+      imagePath: AppImages.badge15,
+      title: 'Legendary Champion',
+      description: 'Unlock at level 15',
+      isUnlocked: (c) => c.userLevel.value >= 15,
+    ),
+  ];
 
   int get xpUserLevel {
     final xp = currentXP.value;
@@ -107,10 +219,16 @@ class ProfileController extends GetxController {
         userLevel.value = data['level'] ?? 1;
         currentXP.value = data['xp'] ?? 0;
         nextLevelXP.value = (data['level'] ?? 1) * 1000;
-        streakCount.value = data['streak'] ?? 1;
+        streakCount.value = data['streak_day'] ?? data['streak'] ?? 1;
         coinCount.value = data['coin'] ?? 0;
         totalQuiz.value = data['total_quiz'] ?? 0;
         bestScore.value = data['best_score'] ?? 0;
+        totalScore.value = data['total_score'] ?? 0;
+
+        // If HomeController is registered, refresh its user profile to keep UI in sync
+        if (Get.isRegistered<HomeController>()) {
+          Get.find<HomeController>().fetchUserProfile();
+        }
       }
     } catch (e) {
       log("Error fetching user profile in ProfileController: $e");
@@ -230,5 +348,83 @@ class ProfileController extends GetxController {
         ],
       ),
     );
+  }
+
+  Future<void> updateUserStats({
+    required int addedScore,
+    required int addedXP,
+    required int addedCoins,
+  }) async {
+    try {
+      final user = Supabase.instance.client.auth.currentUser;
+      if (user != null) {
+        final newScore = totalScore.value + addedScore;
+        final newXP = currentXP.value + addedXP;
+        final newCoins = coinCount.value + addedCoins;
+        final newTotalQuiz = totalQuiz.value + 1;
+        final newBestScore = addedScore > bestScore.value ? addedScore : bestScore.value;
+
+        // Level up calculation: level increases as XP threshold is met
+        int newLevel = userLevel.value;
+        int tempXP = newXP;
+        while (tempXP >= newLevel * 1000) {
+          newLevel++;
+        }
+
+        await Supabase.instance.client
+            .from('profiles')
+            .update({
+              'total_score': newScore,
+              'xp': newXP,
+              'coin': newCoins,
+              'total_quiz': newTotalQuiz,
+              'best_score': newBestScore,
+              'level': newLevel,
+            })
+            .eq('id', user.id);
+
+        await fetchUserProfile();
+      }
+    } catch (e) {
+      log("Error updating user stats: $e");
+    }
+  }
+
+  Future<void> recordQuizAttempt({
+    required String category,
+    required int totalQuestion,
+    required int correct,
+    required int wrong,
+    required int skip,
+    required int score,
+    required int xp,
+    required int coin,
+    required double accuracy,
+    required DateTime startedAt,
+    required DateTime completedAt,
+  }) async {
+    try {
+      final user = Supabase.instance.client.auth.currentUser;
+      if (user != null) {
+        final quizId = '${category.toLowerCase().replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}';
+        await Supabase.instance.client.from('quiz_attempts').insert({
+          'user_id': user.id,
+          'quiz_id': quizId,
+          'category': category,
+          'total_question': totalQuestion,
+          'correct': correct,
+          'wrong': wrong,
+          'skip': skip,
+          'score': score,
+          'xp': xp,
+          'coin': coin,
+          'accuracy': accuracy,
+          'started_at': startedAt.toIso8601String(),
+          'completed_at': completedAt.toIso8601String(),
+        });
+      }
+    } catch (e) {
+      log("Error saving quiz attempt: $e");
+    }
   }
 }

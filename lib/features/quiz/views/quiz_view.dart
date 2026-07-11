@@ -56,6 +56,13 @@ class QuizView extends GetView<QuizController> {
           SafeArea(
             child: GetBuilder<QuizController>(
               builder: (_) {
+                if (controller.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(0xFF6C63FF),
+                    ),
+                  );
+                }
                 if (controller.isQuizFinished) {
                   return _buildResultScreen();
                 }
@@ -171,39 +178,55 @@ class QuizView extends GetView<QuizController> {
             ),
           ),
 
-          // Action Button (Next Question)
-          AnimatedOpacity(
-            opacity: controller.hasAnswered ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 300),
-            child: Padding(
-              padding: EdgeInsets.only(top: 16.h),
-              child: ElevatedButton(
-                onPressed: controller.hasAnswered
-                    ? controller.nextQuestion
-                    : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6C63FF),
-                  foregroundColor: Colors.white,
-                  disabledBackgroundColor: const Color(
-                    0xFF6C63FF,
-                  ).withValues(alpha: 0.4),
-                  padding: EdgeInsets.symmetric(vertical: 18.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  elevation: 5,
-                  shadowColor: const Color(0xFF6C63FF).withValues(alpha: 0.3),
-                ),
-                child: Text(
-                  controller.currentQuestionIndex == totalQuestions - 1
-                      ? 'View Results'
-                      : 'Next Question',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+          // Action Button (Next / Skip)
+          Padding(
+            padding: EdgeInsets.only(top: 16.h),
+            child: SizedBox(
+              width: double.infinity,
+              child: controller.hasAnswered
+                  ? ElevatedButton(
+                      onPressed: controller.nextQuestion,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6C63FF),
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 18.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.r),
+                        ),
+                        elevation: 5,
+                        shadowColor: const Color(0xFF6C63FF).withValues(alpha: 0.3),
+                      ),
+                      child: Text(
+                        controller.currentQuestionIndex == totalQuestions - 1
+                            ? 'View Results'
+                            : 'Next Question',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  : OutlinedButton(
+                      onPressed: controller.skipQuestion,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white.withValues(alpha: 0.6),
+                        side: BorderSide(
+                          color: Colors.white.withValues(alpha: 0.15),
+                          width: 1.5,
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 18.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.r),
+                        ),
+                      ),
+                      child: Text(
+                        'Skip Question',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
             ),
           ),
         ],

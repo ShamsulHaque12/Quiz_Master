@@ -17,6 +17,95 @@ class CategoryCard extends StatelessWidget {
     this.onTap,
   });
 
+  String _getFilepath(String category, String mode) {
+    final bool isMcq = mode == 'MCQ';
+    final String modeSuffix = isMcq ? 'option' : 'tf';
+    String prefix = category.toLowerCase().replaceAll(' ', '_');
+    if (prefix.contains('program')) {
+      prefix = 'program';
+    } else if (prefix.contains('general') || prefix.contains('genarel')) {
+      prefix = 'genarel';
+    }
+    return 'assets/quiz_json_file/${prefix}_$modeSuffix.json';
+  }
+
+  Future<bool> _doesAssetExist(BuildContext context, String filepath) async {
+    try {
+      await DefaultAssetBundle.of(context).load(filepath);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  void _showComingSoonDialog(BuildContext context, String categoryName) {
+    Get.dialog(
+      Dialog(
+        backgroundColor: const Color(0xFF161233),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24.r),
+          side: BorderSide(
+            color: Colors.white.withValues(alpha: 0.08),
+            width: 1.5,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '🚀',
+                style: TextStyle(fontSize: 48.sp),
+              ),
+              SizedBox(height: 16.h),
+              Text(
+                'Coming Soon!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                'The quiz for "$categoryName" is currently under development. Stay tuned!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  fontSize: 13.sp,
+                  height: 1.4,
+                ),
+              ),
+              SizedBox(height: 24.h),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Get.back(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF6C63FF),
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: Text(
+                    'Got it',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _showQuizModeDialog(BuildContext context) {
     Get.dialog(
       Dialog(
@@ -60,9 +149,22 @@ class CategoryCard extends StatelessWidget {
                 gradient: const LinearGradient(
                   colors: [Color(0xFF6C63FF), Color(0xFF4A00E0)],
                 ),
-                onTap: () {
+                onTap: () async {
+                  final String filepath = _getFilepath(name, 'MCQ');
+                  final bool exists = await _doesAssetExist(context, filepath);
+                  if (!context.mounted) return;
                   Get.back();
-                  Get.toNamed(Routes.QUIZ);
+                  if (exists) {
+                    Get.toNamed(
+                      Routes.QUIZ,
+                      arguments: {
+                        'category': name,
+                        'mode': 'MCQ',
+                      },
+                    );
+                  } else {
+                    _showComingSoonDialog(context, name);
+                  }
                 },
               ),
               SizedBox(height: 14.h),
@@ -74,9 +176,22 @@ class CategoryCard extends StatelessWidget {
                 gradient: const LinearGradient(
                   colors: [Color(0xFF00B074), Color(0xFF05D59E)],
                 ),
-                onTap: () {
+                onTap: () async {
+                  final String filepath = _getFilepath(name, 'TF');
+                  final bool exists = await _doesAssetExist(context, filepath);
+                  if (!context.mounted) return;
                   Get.back();
-                  Get.toNamed(Routes.QUIZ);
+                  if (exists) {
+                    Get.toNamed(
+                      Routes.QUIZ,
+                      arguments: {
+                        'category': name,
+                        'mode': 'TF',
+                      },
+                    );
+                  } else {
+                    _showComingSoonDialog(context, name);
+                  }
                 },
               ),
             ],

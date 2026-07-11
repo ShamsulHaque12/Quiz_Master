@@ -1,0 +1,3302 @@
+[
+  {
+    "id": 1,
+    "question": "What is Dart primarily used for?",
+    "options": [
+      "Web backend",
+      "Mobile apps",
+      "Data Science",
+      "OS development"
+    ],
+    "correct_answer": "Mobile apps"
+  },
+  {
+    "id": 2,
+    "question": "Who developed the Flutter framework?",
+    "options": [
+      "Apple",
+      "Facebook",
+      "Google",
+      "Microsoft"
+    ],
+    "correct_answer": "Google"
+  },
+  {
+    "id": 3,
+    "question": "Everything in Flutter's UI is a...",
+    "options": [
+      "Component",
+      "Widget",
+      "Module",
+      "Element"
+    ],
+    "correct_answer": "Widget"
+  },
+  {
+    "id": 4,
+    "question": "Which widget is immutable and has no internal state?",
+    "options": [
+      "StatefulWidget",
+      "StatelessWidget",
+      "InheritedWidget",
+      "DynamicWidget"
+    ],
+    "correct_answer": "StatelessWidget"
+  },
+  {
+    "id": 5,
+    "question": "What is the main entry point of a Dart application?",
+    "options": [
+      "start()",
+      "runApp()",
+      "main()",
+      "init()"
+    ],
+    "correct_answer": "main()"
+  },
+  {
+    "id": 6,
+    "question": "Which file is used to manage dependencies in a Flutter project?",
+    "options": [
+      "package.json",
+      "build.gradle",
+      "pubspec.yaml",
+      "manifest.xml"
+    ],
+    "correct_answer": "pubspec.yaml"
+  },
+  {
+    "id": 7,
+    "question": "Which widget provides a basic material design visual layout structure?",
+    "options": [
+      "Container",
+      "Scaffold",
+      "MaterialApp",
+      "Column"
+    ],
+    "correct_answer": "Scaffold"
+  },
+  {
+    "id": 8,
+    "question": "What does the SafeArea widget do?",
+    "options": [
+      "Secures data",
+      "Prevents UI from overlapping with system status bars",
+      "Handles error boundaries",
+      "Encrypts API calls"
+    ],
+    "correct_answer": "Prevents UI from overlapping with system status bars"
+  },
+  {
+    "id": 9,
+    "question": "How does a Column widget arrange its children?",
+    "options": [
+      "Horizontally",
+      "Vertically",
+      "In a grid",
+      "Overlapping"
+    ],
+    "correct_answer": "Vertically"
+  },
+  {
+    "id": 10,
+    "question": "How does a Row widget arrange its children?",
+    "options": [
+      "Horizontally",
+      "Vertically",
+      "Diagonally",
+      "Randomly"
+    ],
+    "correct_answer": "Horizontally"
+  },
+  {
+    "id": 11,
+    "question": "To prevent a RenderFlex overflow error in a vertically scrolling layout, you should wrap your Column with:",
+    "options": [
+      "Padding",
+      "SingleChildScrollView",
+      "Expanded",
+      "SizedBox"
+    ],
+    "correct_answer": "SingleChildScrollView"
+  },
+  {
+    "id": 12,
+    "question": "If a GridView layout causes extreme RenderFlex overflow in a restricted space, what is a simple structural alternative?",
+    "options": [
+      "Changing it to a Column-based layout",
+      "Adding more padding",
+      "Using a Stack",
+      "Removing the images"
+    ],
+    "correct_answer": "Changing it to a Column-based layout"
+  },
+  {
+    "id": 13,
+    "question": "What is GetX in Flutter?",
+    "options": [
+      "A database",
+      "A state management and routing library",
+      "An animation package",
+      "A backend framework"
+    ],
+    "correct_answer": "A state management and routing library"
+  },
+  {
+    "id": 14,
+    "question": "What does BLoC stand for?",
+    "options": [
+      "Business Logic Component",
+      "Basic Layout Object Controller",
+      "Binary Logic Operator Class",
+      "Business Layer of Code"
+    ],
+    "correct_answer": "Business Logic Component"
+  },
+  {
+    "id": 15,
+    "question": "Which command is used to navigate to a new screen in GetX?",
+    "options": [
+      "Navigator.push()",
+      "Get.to()",
+      "Get.navigate()",
+      "Route.go()"
+    ],
+    "correct_answer": "Get.to()"
+  },
+  {
+    "id": 16,
+    "question": "BLoC state management relies heavily on:",
+    "options": [
+      "Futures",
+      "Streams",
+      "Isolates",
+      "Threads"
+    ],
+    "correct_answer": "Streams"
+  },
+  {
+    "id": 17,
+    "question": "When parsing complex JSON data (e.g., for language lessons), which Dart package is commonly built-in?",
+    "options": [
+      "dart:html",
+      "dart:convert",
+      "dart:math",
+      "dart:io"
+    ],
+    "correct_answer": "dart:convert"
+  },
+  {
+    "id": 18,
+    "question": "Which widget is used to build a UI based on the latest snapshot of a Future?",
+    "options": [
+      "StreamBuilder",
+      "StatefulBuilder",
+      "FutureBuilder",
+      "LayoutBuilder"
+    ],
+    "correct_answer": "FutureBuilder"
+  },
+  {
+    "id": 19,
+    "question": "Which widget is used to build a UI based on continuous data events?",
+    "options": [
+      "StreamBuilder",
+      "FutureBuilder",
+      "ListView",
+      "GridView"
+    ],
+    "correct_answer": "StreamBuilder"
+  },
+  {
+    "id": 20,
+    "question": "Who developed the Go (Golang) programming language?",
+    "options": [
+      "Mozilla",
+      "Google",
+      "Microsoft",
+      "Apple"
+    ],
+    "correct_answer": "Google"
+  },
+  {
+    "id": 21,
+    "question": "In Go, lightweight threads managed by the Go runtime are called:",
+    "options": [
+      "Threads",
+      "Processes",
+      "Goroutines",
+      "Workers"
+    ],
+    "correct_answer": "Goroutines"
+  },
+  {
+    "id": 22,
+    "question": "How do you start a new goroutine in Go?",
+    "options": [
+      "async func()",
+      "go func()",
+      "start func()",
+      "thread func()"
+    ],
+    "correct_answer": "go func()"
+  },
+  {
+    "id": 23,
+    "question": "What is the standard way to handle errors in Go?",
+    "options": [
+      "try/catch",
+      "Returning error as a value",
+      "panic/recover",
+      "Throwing exceptions"
+    ],
+    "correct_answer": "Returning error as a value"
+  },
+  {
+    "id": 24,
+    "question": "How do you make a variable or function public (exported) in a Go package?",
+    "options": [
+      "Use public keyword",
+      "Start with an uppercase letter",
+      "Start with a lowercase letter",
+      "Use the @export annotation"
+    ],
+    "correct_answer": "Start with an uppercase letter"
+  },
+  {
+    "id": 25,
+    "question": "Which keyword ensures a function call is performed later, usually for cleanup?",
+    "options": [
+      "defer",
+      "await",
+      "finally",
+      "catch"
+    ],
+    "correct_answer": "defer"
+  },
+  {
+    "id": 26,
+    "question": "What is the primary purpose of a Go channel?",
+    "options": [
+      "Storing global state",
+      "Communication between goroutines",
+      "Connecting to databases",
+      "File I/O"
+    ],
+    "correct_answer": "Communication between goroutines"
+  },
+  {
+    "id": 27,
+    "question": "What does REST API stand for?",
+    "options": [
+      "Representational State Transfer",
+      "Remote Server Transfer",
+      "Real-time System Transport",
+      "Relative State Transformation"
+    ],
+    "correct_answer": "Representational State Transfer"
+  },
+  {
+    "id": 28,
+    "question": "Which HTTP method is typically used to retrieve data?",
+    "options": [
+      "POST",
+      "PUT",
+      "DELETE",
+      "GET"
+    ],
+    "correct_answer": "GET"
+  },
+  {
+    "id": 29,
+    "question": "When making a GET request, where should the parameters ideally be sent?",
+    "options": [
+      "In the Request Body",
+      "As URL Query Parameters",
+      "In a separate POST request",
+      "Inside an HTML tag"
+    ],
+    "correct_answer": "As URL Query Parameters"
+  },
+  {
+    "id": 30,
+    "question": "Which HTTP method is typically used to create a new resource?",
+    "options": [
+      "GET",
+      "PATCH",
+      "POST",
+      "DELETE"
+    ],
+    "correct_answer": "POST"
+  },
+  {
+    "id": 31,
+    "question": "What does JSON stand for?",
+    "options": [
+      "Java Standard Output Network",
+      "JavaScript Object Notation",
+      "JavaScript Oriented Notation",
+      "Java Syntax Object Notation"
+    ],
+    "correct_answer": "JavaScript Object Notation"
+  },
+  {
+    "id": 32,
+    "question": "What does an HTTP 200 status code mean?",
+    "options": [
+      "Not Found",
+      "Internal Server Error",
+      "OK / Success",
+      "Unauthorized"
+    ],
+    "correct_answer": "OK / Success"
+  },
+  {
+    "id": 33,
+    "question": "What does an HTTP 404 status code mean?",
+    "options": [
+      "Bad Request",
+      "Not Found",
+      "Forbidden",
+      "Server Error"
+    ],
+    "correct_answer": "Not Found"
+  },
+  {
+    "id": 34,
+    "question": "What does an HTTP 500 status code mean?",
+    "options": [
+      "Unauthorized",
+      "Created",
+      "Internal Server Error",
+      "Bad Gateway"
+    ],
+    "correct_answer": "Internal Server Error"
+  },
+  {
+    "id": 35,
+    "question": "Which of the following is a NoSQL database?",
+    "options": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "SQLite"
+    ],
+    "correct_answer": "MongoDB"
+  },
+  {
+    "id": 36,
+    "question": "In Linux (Ubuntu), which command lists the files in a directory?",
+    "options": [
+      "cd",
+      "pwd",
+      "ls",
+      "mkdir"
+    ],
+    "correct_answer": "ls"
+  },
+  {
+    "id": 37,
+    "question": "Which command is used to change directories in Linux?",
+    "options": [
+      "cd",
+      "mv",
+      "rm",
+      "pwd"
+    ],
+    "correct_answer": "cd"
+  },
+  {
+    "id": 38,
+    "question": "If your Android SDK path has spaces in Linux causing Flutter build issues, what is the best solution?",
+    "options": [
+      "Delete the SDK",
+      "Move the SDK to a directory path without spaces",
+      "Reinstall Linux",
+      "Use a Windows emulator"
+    ],
+    "correct_answer": "Move the SDK to a directory path without spaces"
+  },
+  {
+    "id": 39,
+    "question": "Which Git command is used to save changes to the local repository?",
+    "options": [
+      "git push",
+      "git pull",
+      "git commit",
+      "git clone"
+    ],
+    "correct_answer": "git commit"
+  },
+  {
+    "id": 40,
+    "question": "Which Git command uploads local commits to a remote repository?",
+    "options": [
+      "git commit",
+      "git push",
+      "git pull",
+      "git fetch"
+    ],
+    "correct_answer": "git push"
+  },
+  {
+    "id": 41,
+    "question": "What does the command 'flutter pub get' do?",
+    "options": [
+      "Builds the APK",
+      "Runs the app",
+      "Fetches project dependencies",
+      "Formats Dart code"
+    ],
+    "correct_answer": "Fetches project dependencies"
+  },
+  {
+    "id": 42,
+    "question": "What is the purpose of 'flutter doctor'?",
+    "options": [
+      "To debug code",
+      "To check the Flutter environment and installation status",
+      "To update Flutter",
+      "To write unit tests"
+    ],
+    "correct_answer": "To check the Flutter environment and installation status"
+  },
+  {
+    "id": 43,
+    "question": "What does sound null safety in Dart prevent?",
+    "options": [
+      "Memory leaks",
+      "Infinite loops",
+      "NullReference exceptions",
+      "Compilation errors"
+    ],
+    "correct_answer": "NullReference exceptions"
+  },
+  {
+    "id": 44,
+    "question": "Which keyword is used in Dart for a variable whose value is assigned after its declaration?",
+    "options": [
+      "const",
+      "final",
+      "late",
+      "var"
+    ],
+    "correct_answer": "late"
+  },
+  {
+    "id": 45,
+    "question": "What is the difference between final and const in Dart?",
+    "options": [
+      "const is runtime, final is compile-time",
+      "final is runtime, const is compile-time",
+      "They are exactly the same",
+      "final is mutable"
+    ],
+    "correct_answer": "final is runtime, const is compile-time"
+  },
+  {
+    "id": 46,
+    "question": "In Dart, what is a List similar to in other languages?",
+    "options": [
+      "Object",
+      "Dictionary",
+      "Array",
+      "Set"
+    ],
+    "correct_answer": "Array"
+  },
+  {
+    "id": 47,
+    "question": "In Dart, what data structure does a Map represent?",
+    "options": [
+      "Ordered collection",
+      "Key-Value pairs",
+      "LIFO queue",
+      "FIFO stack"
+    ],
+    "correct_answer": "Key-Value pairs"
+  },
+  {
+    "id": 48,
+    "question": "What is a factory constructor in Dart used for?",
+    "options": [
+      "Returning an existing instance of a class",
+      "Destroying an object",
+      "Creating abstract classes",
+      "Inheritance"
+    ],
+    "correct_answer": "Returning an existing instance of a class"
+  },
+  {
+    "id": 49,
+    "question": "What does the Singleton pattern ensure?",
+    "options": [
+      "Multiple instances of a class",
+      "Only one instance of a class exists",
+      "Faster execution",
+      "Less memory usage across multiple objects"
+    ],
+    "correct_answer": "Only one instance of a class exists"
+  },
+  {
+    "id": 50,
+    "question": "What does MVC stand for in software architecture?",
+    "options": [
+      "Model View Controller",
+      "Module Variable Class",
+      "Main Visual Component",
+      "Memory Virtual Cache"
+    ],
+    "correct_answer": "Model View Controller"
+  },
+  {
+    "id": 51,
+    "question": "What does MVVM stand for?",
+    "options": [
+      "Model View View-Model",
+      "Module Variable View-Mode",
+      "Main Visual View-Manager",
+      "Multiple View Virtual Model"
+    ],
+    "correct_answer": "Model View View-Model"
+  },
+  {
+    "id": 52,
+    "question": "What is a Base URL in API integration?",
+    "options": [
+      "The endpoint's payload",
+      "The root web address that all endpoints append to",
+      "The JSON response",
+      "The HTTP headers"
+    ],
+    "correct_answer": "The root web address that all endpoints append to"
+  },
+  {
+    "id": 53,
+    "question": "What does JWT stand for?",
+    "options": [
+      "JavaScript Web Token",
+      "JSON Web Token",
+      "Java Web Tracker",
+      "JSON Wide Transport"
+    ],
+    "correct_answer": "JSON Web Token"
+  },
+  {
+    "id": 54,
+    "question": "Authentication is verifying who you are. What is Authorization?",
+    "options": [
+      "Logging in",
+      "Verifying what you have permission to do",
+      "Encrypting a password",
+      "Generating a token"
+    ],
+    "correct_answer": "Verifying what you have permission to do"
+  },
+  {
+    "id": 55,
+    "question": "In Flutter, what package is commonly used to save small amounts of user preferences locally?",
+    "options": [
+      "sqflite",
+      "hive",
+      "shared_preferences",
+      "firebase_core"
+    ],
+    "correct_answer": "shared_preferences"
+  },
+  {
+    "id": 56,
+    "question": "If you are building a math quiz app, which operator is used for the modulo (remainder) operation?",
+    "options": [
+      "/",
+      "*",
+      "%",
+      "//"
+    ],
+    "correct_answer": "%"
+  },
+  {
+    "id": 57,
+    "question": "In most programming languages, array indices start at:",
+    "options": [
+      "1",
+      "0",
+      "-1",
+      "It varies randomly"
+    ],
+    "correct_answer": "0"
+  },
+  {
+    "id": 58,
+    "question": "What does O(1) time complexity mean?",
+    "options": [
+      "Linear time",
+      "Constant time",
+      "Quadratic time",
+      "Exponential time"
+    ],
+    "correct_answer": "Constant time"
+  },
+  {
+    "id": 59,
+    "question": "What does O(n) time complexity mean?",
+    "options": [
+      "Constant time",
+      "Linear time",
+      "Logarithmic time",
+      "Infinite time"
+    ],
+    "correct_answer": "Linear time"
+  },
+  {
+    "id": 60,
+    "question": "Which principle does a Stack data structure follow?",
+    "options": [
+      "FIFO",
+      "LIFO",
+      "FILO",
+      "Random Access"
+    ],
+    "correct_answer": "LIFO"
+  },
+  {
+    "id": 61,
+    "question": "Which principle does a Queue data structure follow?",
+    "options": [
+      "LIFO",
+      "FIFO",
+      "Random Access",
+      "Priority Based Only"
+    ],
+    "correct_answer": "FIFO"
+  },
+  {
+    "id": 62,
+    "question": "What is recursion?",
+    "options": [
+      "A loop that never ends",
+      "A function calling itself",
+      "A database query",
+      "An error handling mechanism"
+    ],
+    "correct_answer": "A function calling itself"
+  },
+  {
+    "id": 63,
+    "question": "What causes an infinite loop?",
+    "options": [
+      "A missing break condition or faulty exit logic",
+      "Using too many variables",
+      "Calling a function twice",
+      "Syntax error"
+    ],
+    "correct_answer": "A missing break condition or faulty exit logic"
+  },
+  {
+    "id": 64,
+    "question": "What does the 'break' statement do?",
+    "options": [
+      "Pauses the program",
+      "Exits the current loop or switch case entirely",
+      "Skips one iteration",
+      "Returns a value"
+    ],
+    "correct_answer": "Exits the current loop or switch case entirely"
+  },
+  {
+    "id": 65,
+    "question": "What does the 'continue' statement do?",
+    "options": [
+      "Exits the loop",
+      "Restarts the program",
+      "Skips the rest of the current iteration and goes to the next",
+      "Throws an error"
+    ],
+    "correct_answer": "Skips the rest of the current iteration and goes to the next"
+  },
+  {
+    "id": 66,
+    "question": "A switch statement is an alternative to:",
+    "options": [
+      "for loops",
+      "while loops",
+      "if-else chains",
+      "try-catch blocks"
+    ],
+    "correct_answer": "if-else chains"
+  },
+  {
+    "id": 67,
+    "question": "What defines behavior in Go via method signatures?",
+    "options": [
+      "Structs",
+      "Interfaces",
+      "Classes",
+      "Modules"
+    ],
+    "correct_answer": "Interfaces"
+  },
+  {
+    "id": 68,
+    "question": "In Go, how do you define a custom data type containing a collection of fields?",
+    "options": [
+      "class",
+      "struct",
+      "object",
+      "record"
+    ],
+    "correct_answer": "struct"
+  },
+  {
+    "id": 69,
+    "question": "What does a pointer hold in programming?",
+    "options": [
+      "The actual data",
+      "The memory address of a value",
+      "A duplicate of a variable",
+      "An encrypted token"
+    ],
+    "correct_answer": "The memory address of a value"
+  },
+  {
+    "id": 70,
+    "question": "What is the purpose of Garbage Collection?",
+    "options": [
+      "To delete unused files",
+      "To automatically reclaim memory occupied by objects no longer in use",
+      "To optimize database queries",
+      "To format code"
+    ],
+    "correct_answer": "To automatically reclaim memory occupied by objects no longer in use"
+  },
+  {
+    "id": 71,
+    "question": "Which command compiles a Flutter app into an Android installation file?",
+    "options": [
+      "flutter build ios",
+      "flutter run apk",
+      "flutter build apk",
+      "flutter make android"
+    ],
+    "correct_answer": "flutter build apk"
+  },
+  {
+    "id": 72,
+    "question": "If you need an app to read incoming SMS messages automatically, you must request:",
+    "options": [
+      "Camera permissions",
+      "Storage permissions",
+      "READ_SMS and RECEIVE_SMS permissions",
+      "Location permissions"
+    ],
+    "correct_answer": "READ_SMS and RECEIVE_SMS permissions"
+  },
+  {
+    "id": 73,
+    "question": "When integrating a payment gateway, sensitive logic should ideally be handled:",
+    "options": [
+      "On the frontend client",
+      "On a secure backend server",
+      "In local storage",
+      "In the URL"
+    ],
+    "correct_answer": "On a secure backend server"
+  },
+  {
+    "id": 74,
+    "question": "Asynchronous programming is essential for:",
+    "options": [
+      "Basic arithmetic",
+      "Operations that take time, like network requests",
+      "Defining variables",
+      "Formatting text"
+    ],
+    "correct_answer": "Operations that take time, like network requests"
+  },
+  {
+    "id": 75,
+    "question": "In Dart, the 'await' keyword can only be used inside functions marked as:",
+    "options": [
+      "sync",
+      "async",
+      "future",
+      "stream"
+    ],
+    "correct_answer": "async"
+  },
+  {
+    "id": 76,
+    "question": "What is the main purpose of a try-catch block?",
+    "options": [
+      "To speed up execution",
+      "To handle exceptions and prevent the app from crashing",
+      "To loop through data",
+      "To declare variables"
+    ],
+    "correct_answer": "To handle exceptions and prevent the app from crashing"
+  },
+  {
+    "id": 77,
+    "question": "What does 'throwing' an exception mean?",
+    "options": [
+      "Catching an error",
+      "Intentionally triggering an error condition",
+      "Ignoring an error",
+      "Logging an error to the console"
+    ],
+    "correct_answer": "Intentionally triggering an error condition"
+  },
+  {
+    "id": 78,
+    "question": "What is Flutter's Hot Reload?",
+    "options": [
+      "Restarts the app completely",
+      "Injects updated source code files into the running Dart Virtual Machine, preserving state",
+      "Clears the cache",
+      "Builds a new APK"
+    ],
+    "correct_answer": "Injects updated source code files into the running Dart Virtual Machine, preserving state"
+  },
+  {
+    "id": 79,
+    "question": "What does Hot Restart do in Flutter?",
+    "options": [
+      "Keeps the state and updates UI",
+      "Destroys the preserved state and recompiles the code entirely",
+      "Closes the emulator",
+      "Formats the codebase"
+    ],
+    "correct_answer": "Destroys the preserved state and recompiles the code entirely"
+  },
+  {
+    "id": 80,
+    "question": "What does BuildContext represent in Flutter?",
+    "options": [
+      "The app's database connection",
+      "The location of a widget in the widget tree",
+      "The user's authentication state",
+      "The device's screen size"
+    ],
+    "correct_answer": "The location of a widget in the widget tree"
+  },
+  {
+    "id": 81,
+    "question": "What does calling setState() do in a StatefulWidget?",
+    "options": [
+      "Deletes the widget",
+      "Notifies the framework that the internal state has changed, triggering a rebuild",
+      "Navigates to a new screen",
+      "Makes a network request"
+    ],
+    "correct_answer": "Notifies the framework that the internal state has changed, triggering a rebuild"
+  },
+  {
+    "id": 82,
+    "question": "When is initState() called in a StatefulWidget's lifecycle?",
+    "options": [
+      "Every time the UI rebuilds",
+      "Only once, when the state object is inserted into the tree",
+      "When the widget is destroyed",
+      "During hot reload"
+    ],
+    "correct_answer": "Only once, when the state object is inserted into the tree"
+  },
+  {
+    "id": 83,
+    "question": "What is the dispose() method used for in Flutter?",
+    "options": [
+      "To initialize variables",
+      "To clean up resources (like controllers or listeners) when a widget is removed from the tree",
+      "To build the UI",
+      "To trigger an animation"
+    ],
+    "correct_answer": "To clean up resources (like controllers or listeners) when a widget is removed from the tree"
+  },
+  {
+    "id": 84,
+    "question": "What is the Widget Tree?",
+    "options": [
+      "A database structure",
+      "A conceptual tree representing the hierarchical arrangement of widgets in the UI",
+      "A Git branching strategy",
+      "A folder structure"
+    ],
+    "correct_answer": "A conceptual tree representing the hierarchical arrangement of widgets in the UI"
+  },
+  {
+    "id": 85,
+    "question": "Which tree manages the lifecycle and holds the state of widgets in Flutter?",
+    "options": [
+      "Widget Tree",
+      "Element Tree",
+      "Render Tree",
+      "DOM Tree"
+    ],
+    "correct_answer": "Element Tree"
+  },
+  {
+    "id": 86,
+    "question": "Which tree is responsible for actual layout and painting on the screen in Flutter?",
+    "options": [
+      "Widget Tree",
+      "Element Tree",
+      "Render Tree",
+      "Syntax Tree"
+    ],
+    "correct_answer": "Render Tree"
+  },
+  {
+    "id": 87,
+    "question": "Is Dart compiled Ahead-Of-Time (AOT) or Just-In-Time (JIT)?",
+    "options": [
+      "AOT only",
+      "JIT only",
+      "JIT during development (for Hot Reload) and AOT for production",
+      "Neither"
+    ],
+    "correct_answer": "JIT during development (for Hot Reload) and AOT for production"
+  },
+  {
+    "id": 88,
+    "question": "What does JIT compilation allow?",
+    "options": [
+      "Faster production app startup",
+      "Dynamic execution and fast iteration (Hot Reload)",
+      "Smaller APK sizes",
+      "Direct hardware access"
+    ],
+    "correct_answer": "Dynamic execution and fast iteration (Hot Reload)"
+  },
+  {
+    "id": 89,
+    "question": "What does AOT compilation provide?",
+    "options": [
+      "Fast native execution and quick startup times for release apps",
+      "Hot reload capabilities",
+      "Interpreted runtime logic",
+      "Platform independence without a VM"
+    ],
+    "correct_answer": "Fast native execution and quick startup times for release apps"
+  },
+  {
+    "id": 90,
+    "question": "What does Open Source mean?",
+    "options": [
+      "Software that costs money",
+      "Software whose source code is freely available to view, modify, and distribute",
+      "Software that requires an internet connection",
+      "Software built only by Google"
+    ],
+    "correct_answer": "Software whose source code is freely available to view, modify, and distribute"
+  },
+  {
+    "id": 91,
+    "question": "In object-oriented programming, what is encapsulation?",
+    "options": [
+      "Bundling data and methods that operate on that data within a single unit/class",
+      "Inheriting properties from a parent",
+      "Multiple functions with the same name",
+      "Writing comments"
+    ],
+    "correct_answer": "Bundling data and methods that operate on that data within a single unit/class"
+  },
+  {
+    "id": 92,
+    "question": "What is polymorphism?",
+    "options": [
+      "Hiding data",
+      "The ability of different objects to respond to the same method call in their own way",
+      "A type of database",
+      "A syntax error"
+    ],
+    "correct_answer": "The ability of different objects to respond to the same method call in their own way"
+  },
+  {
+    "id": 93,
+    "question": "What is a primary key in a relational database?",
+    "options": [
+      "A password",
+      "A unique identifier for a specific record in a table",
+      "A foreign relationship",
+      "A column that allows nulls"
+    ],
+    "correct_answer": "A unique identifier for a specific record in a table"
+  },
+  {
+    "id": 94,
+    "question": "Which symbol is used for a single-line comment in Dart and Go?",
+    "options": [
+      "#",
+      "<!--",
+      "//",
+      "/*"
+    ],
+    "correct_answer": "//"
+  },
+  {
+    "id": 95,
+    "question": "What does IDE stand for?",
+    "options": [
+      "Integrated Development Environment",
+      "Internal Design Engine",
+      "Internet Data Exchange",
+      "Interactive Debugging Emulator"
+    ],
+    "correct_answer": "Integrated Development Environment"
+  },
+  {
+    "id": 96,
+    "question": "What is an SDK?",
+    "options": [
+      "Software Design Key",
+      "System Data Kernel",
+      "Software Development Kit",
+      "Standard Deployment Kit"
+    ],
+    "correct_answer": "Software Development Kit"
+  },
+  {
+    "id": 97,
+    "question": "Which architecture is highly recommended by the Flutter team for state management besides GetX and Provider?",
+    "options": [
+      "MVC",
+      "BLoC",
+      "Redux",
+      "MobX"
+    ],
+    "correct_answer": "BLoC"
+  },
+  {
+    "id": 98,
+    "question": "What is a 'Merge Conflict' in Git?",
+    "options": [
+      "When Git deletes a file",
+      "When changes from different branches contradict each other and cannot be automatically resolved",
+      "When the repository is offline",
+      "When a commit fails to push due to internet issues"
+    ],
+    "correct_answer": "When changes from different branches contradict each other and cannot be automatically resolved"
+  },
+  {
+    "id": 99,
+    "question": "What does CI/CD stand for?",
+    "options": [
+      "Continuous Integration / Continuous Deployment",
+      "Code Inspection / Code Delivery",
+      "Centralized Integration / Centralized Distribution",
+      "Control Interface / Command Dispatch"
+    ],
+    "correct_answer": "Continuous Integration / Continuous Deployment"
+  },
+  {
+    "id": 100,
+    "question": "In Flutter, if you want a widget to take up the remaining space in a Row or Column, which widget should you use?",
+    "options": [
+      "Padding",
+      "SizedBox",
+      "Expanded",
+      "Align"
+    ],
+    "correct_answer": "Expanded"
+  },
+  {
+    "id": 101,
+    "question": "Which inheritance model does Dart support?",
+    "options": [
+      "Single inheritance",
+      "Multiple inheritance",
+      "Both Single and Multiple inheritance",
+      "None"
+    ],
+    "correct_answer": "Single inheritance"
+  },
+  {
+    "id": 102,
+    "question": "What is used in Dart to share functionality across multiple classes without traditional inheritance?",
+    "options": [
+      "Interfaces",
+      "Mixins",
+      "Enums",
+      "Typedefs"
+    ],
+    "correct_answer": "Mixins"
+  },
+  {
+    "id": 103,
+    "question": "How do you define a private variable in a Dart class?",
+    "options": [
+      "Using private keyword",
+      "Starting with an underscore (_)",
+      "Starting with a hash (#)",
+      "Using var"
+    ],
+    "correct_answer": "Starting with an underscore (_)"
+  },
+  {
+    "id": 104,
+    "question": "Which widget allows you to create a scrollable list in Flutter?",
+    "options": [
+      "ListView",
+      "ScrollView",
+      "Column",
+      "Stack"
+    ],
+    "correct_answer": "ListView"
+  },
+  {
+    "id": 105,
+    "question": "What does cross-axis alignment do in a Row widget?",
+    "options": [
+      "Aligns items horizontally",
+      "Aligns items vertically",
+      "Adds padding",
+      "Changes item color"
+    ],
+    "correct_answer": "Aligns items vertically"
+  },
+  {
+    "id": 106,
+    "question": "What does main-axis alignment do in a Column widget?",
+    "options": [
+      "Aligns items horizontally",
+      "Aligns items vertically",
+      "Resizes items",
+      "Overlaps items"
+    ],
+    "correct_answer": "Aligns items vertically"
+  },
+  {
+    "id": 107,
+    "question": "Which Flutter command analyzes your code for errors?",
+    "options": [
+      "flutter test",
+      "flutter run",
+      "flutter analyze",
+      "flutter check"
+    ],
+    "correct_answer": "flutter analyze"
+  },
+  {
+    "id": 108,
+    "question": "What is the primary language used to write Go (Golang) compiler today?",
+    "options": [
+      "C++",
+      "C",
+      "Go",
+      "Assembly"
+    ],
+    "correct_answer": "Go"
+  },
+  {
+    "id": 109,
+    "question": "How do you declare a constant in Go?",
+    "options": [
+      "let x = 10",
+      "final x = 10",
+      "const x = 10",
+      "var x = 10"
+    ],
+    "correct_answer": "const x = 10"
+  },
+  {
+    "id": 110,
+    "question": "Which of the following is NOT a primitive data type in Go?",
+    "options": [
+      "int",
+      "float64",
+      "bool",
+      "class"
+    ],
+    "correct_answer": "class"
+  },
+  {
+    "id": 111,
+    "question": "How do you initialize a slice in Go?",
+    "options": [
+      "make([]int, 0)",
+      "new([]int)",
+      "[]int{}",
+      "Both make([]int, 0) and []int{}"
+    ],
+    "correct_answer": "Both make([]int, 0) and []int{}"
+  },
+  {
+    "id": 112,
+    "question": "Which Go keyword is used to return early from a function?",
+    "options": [
+      "break",
+      "continue",
+      "return",
+      "exit"
+    ],
+    "correct_answer": "return"
+  },
+  {
+    "id": 113,
+    "question": "What is a blank identifier in Go?",
+    "options": [
+      "*",
+      "_",
+      "&",
+      "null"
+    ],
+    "correct_answer": "_"
+  },
+  {
+    "id": 114,
+    "question": "What does 'Obx' widget do in GetX?",
+    "options": [
+      "Handles routing",
+      "Rebuilds UI when observable variables change",
+      "Shows a dialog",
+      "Fetches API data"
+    ],
+    "correct_answer": "Rebuilds UI when observable variables change"
+  },
+  {
+    "id": 115,
+    "question": "How do you make a variable observable in GetX (Dart)?",
+    "options": [
+      "Add .obs at the end",
+      "Wrap in Observable()",
+      "Use @observable",
+      "Extend Obs class"
+    ],
+    "correct_answer": "Add .obs at the end"
+  },
+  {
+    "id": 116,
+    "question": "In Flutter, which widget is used to overlay widgets on top of each other?",
+    "options": [
+      "Overlay",
+      "Stack",
+      "Positioned",
+      "Align"
+    ],
+    "correct_answer": "Stack"
+  },
+  {
+    "id": 117,
+    "question": "What is 'context' in Flutter?",
+    "options": [
+      "The current app state",
+      "A handle to the location of a widget in the widget tree",
+      "The database connection",
+      "The theme data"
+    ],
+    "correct_answer": "A handle to the location of a widget in the widget tree"
+  },
+  {
+    "id": 118,
+    "question": "What does JSON.parse() do in JavaScript/Web context?",
+    "options": [
+      "Converts JSON string to object",
+      "Converts object to JSON string",
+      "Validates JSON",
+      "Minifies JSON"
+    ],
+    "correct_answer": "Converts JSON string to object"
+  },
+  {
+    "id": 119,
+    "question": "Which Dart method converts an object to a JSON string?",
+    "options": [
+      "jsonDecode",
+      "jsonEncode",
+      "toJson",
+      "stringify"
+    ],
+    "correct_answer": "jsonEncode"
+  },
+  {
+    "id": 120,
+    "question": "Which database type uses tables, rows, and columns?",
+    "options": [
+      "NoSQL",
+      "Graph",
+      "Relational (SQL)",
+      "Key-Value"
+    ],
+    "correct_answer": "Relational (SQL)"
+  },
+  {
+    "id": 121,
+    "question": "What does CRUD stand for?",
+    "options": [
+      "Create, Read, Update, Delete",
+      "Copy, Run, Undo, Delete",
+      "Create, Render, Upload, Download",
+      "Code, Run, Update, Debug"
+    ],
+    "correct_answer": "Create, Read, Update, Delete"
+  },
+  {
+    "id": 122,
+    "question": "In Linux, how do you view the contents of a file in the terminal?",
+    "options": [
+      "cat",
+      "show",
+      "view",
+      "read"
+    ],
+    "correct_answer": "cat"
+  },
+  {
+    "id": 123,
+    "question": "Which command deletes a file in Linux?",
+    "options": [
+      "del",
+      "erase",
+      "rm",
+      "remove"
+    ],
+    "correct_answer": "rm"
+  },
+  {
+    "id": 124,
+    "question": "How do you rename a file in Linux?",
+    "options": [
+      "rename",
+      "mv",
+      "cp",
+      "rn"
+    ],
+    "correct_answer": "mv"
+  },
+  {
+    "id": 125,
+    "question": "What is Git?",
+    "options": [
+      "A programming language",
+      "A local IDE",
+      "A distributed version control system",
+      "A database"
+    ],
+    "correct_answer": "A distributed version control system"
+  },
+  {
+    "id": 126,
+    "question": "Which command shows the current status of a Git repository?",
+    "options": [
+      "git check",
+      "git status",
+      "git log",
+      "git diff"
+    ],
+    "correct_answer": "git status"
+  },
+  {
+    "id": 127,
+    "question": "How do you create a new branch in Git?",
+    "options": [
+      "git branch <name>",
+      "git new <name>",
+      "git create <name>",
+      "git checkout <name>"
+    ],
+    "correct_answer": "git branch <name>"
+  },
+  {
+    "id": 128,
+    "question": "What does a 'Future' represent in Dart?",
+    "options": [
+      "A past event",
+      "A potential value or error that will be available at some time in the future",
+      "A continuous stream of data",
+      "An asynchronous loop"
+    ],
+    "correct_answer": "A potential value or error that will be available at some time in the future"
+  },
+  {
+    "id": 129,
+    "question": "What happens if a Future completes with an error and it's not caught?",
+    "options": [
+      "App ignores it",
+      "App crashes or throws an unhandled exception",
+      "Future retries automatically",
+      "Returns null"
+    ],
+    "correct_answer": "App crashes or throws an unhandled exception"
+  },
+  {
+    "id": 130,
+    "question": "Which keyword is used to yield multiple values over time in Dart?",
+    "options": [
+      "yield",
+      "return",
+      "await",
+      "send"
+    ],
+    "correct_answer": "yield"
+  },
+  {
+    "id": 131,
+    "question": "A function that uses 'yield' in Dart returns a:",
+    "options": [
+      "Future",
+      "Stream",
+      "List",
+      "Void"
+    ],
+    "correct_answer": "Stream"
+  },
+  {
+    "id": 132,
+    "question": "What does the 'SizedBox' widget primarily do?",
+    "options": [
+      "Adds color to a widget",
+      "Forces a child widget to have a specific width and/or height",
+      "Animates a widget",
+      "Handles gestures"
+    ],
+    "correct_answer": "Forces a child widget to have a specific width and/or height"
+  },
+  {
+    "id": 133,
+    "question": "Which widget can detect gestures like taps and swipes without a visual ripple effect?",
+    "options": [
+      "InkWell",
+      "GestureDetector",
+      "TextButton",
+      "Scaffold"
+    ],
+    "correct_answer": "GestureDetector"
+  },
+  {
+    "id": 134,
+    "question": "Which widget adds a visual ripple effect upon touch?",
+    "options": [
+      "GestureDetector",
+      "InkWell",
+      "Container",
+      "Padding"
+    ],
+    "correct_answer": "InkWell"
+  },
+  {
+    "id": 135,
+    "question": "In Go, what is the default value of an uninitialized int variable?",
+    "options": [
+      "null",
+      "undefined",
+      "0",
+      "-1"
+    ],
+    "correct_answer": "0"
+  },
+  {
+    "id": 136,
+    "question": "In Go, what is the default value of an uninitialized boolean?",
+    "options": [
+      "true",
+      "false",
+      "null",
+      "0"
+    ],
+    "correct_answer": "false"
+  },
+  {
+    "id": 137,
+    "question": "How do you loop in Go?",
+    "options": [
+      "while loop only",
+      "for loop only",
+      "foreach loop only",
+      "do-while loop only"
+    ],
+    "correct_answer": "for loop only"
+  },
+  {
+    "id": 138,
+    "question": "What is the correct syntax for a simple API server in Go using the standard library?",
+    "options": [
+      "http.ListenAndServe()",
+      "server.Start()",
+      "app.listen()",
+      "net.Serve()"
+    ],
+    "correct_answer": "http.ListenAndServe()"
+  },
+  {
+    "id": 139,
+    "question": "What is the equivalent of a 'Class' in Go?",
+    "options": [
+      "Object",
+      "Struct",
+      "Interface",
+      "Go doesn't have classes or equivalent"
+    ],
+    "correct_answer": "Struct"
+  },
+  {
+    "id": 140,
+    "question": "What is SQL Injection?",
+    "options": [
+      "Adding SQL to a database",
+      "A security vulnerability where malicious SQL code is executed",
+      "A database backup method",
+      "A framework feature"
+    ],
+    "correct_answer": "A security vulnerability where malicious SQL code is executed"
+  },
+  {
+    "id": 141,
+    "question": "How can you prevent SQL Injection?",
+    "options": [
+      "Use complex passwords",
+      "Use prepared statements or parameterized queries",
+      "Hide the database IP",
+      "Use NoSQL only"
+    ],
+    "correct_answer": "Use prepared statements or parameterized queries"
+  },
+  {
+    "id": 142,
+    "question": "What does API Gateway do?",
+    "options": [
+      "Blocks all traffic",
+      "Acts as a single entry point for a system of microservices",
+      "Connects to the database",
+      "Renders UI"
+    ],
+    "correct_answer": "Acts as a single entry point for a system of microservices"
+  },
+  {
+    "id": 143,
+    "question": "What is Cross-Origin Resource Sharing (CORS)?",
+    "options": [
+      "A database replication tool",
+      "A security feature that restricts web pages from making requests to a different domain",
+      "A Flutter package",
+      "An encryption standard"
+    ],
+    "correct_answer": "A security feature that restricts web pages from making requests to a different domain"
+  },
+  {
+    "id": 144,
+    "question": "Which Dart feature allows you to extend the functionality of an existing class without subclassing?",
+    "options": [
+      "Mixins",
+      "Extension methods",
+      "Implements",
+      "Superclasses"
+    ],
+    "correct_answer": "Extension methods"
+  },
+  {
+    "id": 145,
+    "question": "What is the main advantage of using BLoC over setState?",
+    "options": [
+      "Less boilerplate code",
+      "Separation of business logic from UI",
+      "Faster compilation time",
+      "Automatically writes API code"
+    ],
+    "correct_answer": "Separation of business logic from UI"
+  },
+  {
+    "id": 146,
+    "question": "In Flutter BLoC, what is emitted to update the UI?",
+    "options": [
+      "Events",
+      "States",
+      "Streams",
+      "Contexts"
+    ],
+    "correct_answer": "States"
+  },
+  {
+    "id": 147,
+    "question": "In Flutter BLoC, what does the UI send to the BLoC?",
+    "options": [
+      "Events",
+      "States",
+      "Actions",
+      "Triggers"
+    ],
+    "correct_answer": "Events"
+  },
+  {
+    "id": 148,
+    "question": "Which Linux command changes file permissions?",
+    "options": [
+      "chown",
+      "chmod",
+      "chperm",
+      "attrib"
+    ],
+    "correct_answer": "chmod"
+  },
+  {
+    "id": 149,
+    "question": "Which Linux command displays the current absolute path?",
+    "options": [
+      "path",
+      "dir",
+      "pwd",
+      "cwd"
+    ],
+    "correct_answer": "pwd"
+  },
+  {
+    "id": 150,
+    "question": "What does 'sudo' stand for in Linux?",
+    "options": [
+      "Superuser do",
+      "System update default",
+      "Secure user document",
+      "System undo"
+    ],
+    "correct_answer": "Superuser do"
+  },
+  {
+    "id": 151,
+    "question": "If an API requires a token for authorization, where is it usually placed?",
+    "options": [
+      "In the body",
+      "In the URL query parameters",
+      "In the Authorization header",
+      "In a cookie only"
+    ],
+    "correct_answer": "In the Authorization header"
+  },
+  {
+    "id": 152,
+    "question": "What format does a standard JWT usually take?",
+    "options": [
+      "Header.Payload.Signature",
+      "Username.Password.Salt",
+      "Token.Key.ID",
+      "Encrypted Binary"
+    ],
+    "correct_answer": "Header.Payload.Signature"
+  },
+  {
+    "id": 153,
+    "question": "Which tool is commonly used to test REST APIs manually?",
+    "options": [
+      "Postman",
+      "Docker",
+      "Jenkins",
+      "Git"
+    ],
+    "correct_answer": "Postman"
+  },
+  {
+    "id": 154,
+    "question": "What is Docker used for?",
+    "options": [
+      "Image editing",
+      "Containerization of applications",
+      "Database design",
+      "UI building"
+    ],
+    "correct_answer": "Containerization of applications"
+  },
+  {
+    "id": 155,
+    "question": "In an MVP architecture, what does 'P' stand for?",
+    "options": [
+      "Page",
+      "Presenter",
+      "Provider",
+      "Package"
+    ],
+    "correct_answer": "Presenter"
+  },
+  {
+    "id": 156,
+    "question": "What does a 'pubspec.lock' file do in Flutter?",
+    "options": [
+      "Locks the app orientation",
+      "Records the exact versions of dependencies installed",
+      "Encrypts the source code",
+      "Locks the screen"
+    ],
+    "correct_answer": "Records the exact versions of dependencies installed"
+  },
+  {
+    "id": 157,
+    "question": "What is a major feature of Go regarding garbage collection?",
+    "options": [
+      "It requires manual memory freeing",
+      "It has a concurrent, low-latency garbage collector",
+      "It doesn't use garbage collection",
+      "It uses ARC (Automatic Reference Counting)"
+    ],
+    "correct_answer": "It has a concurrent, low-latency garbage collector"
+  },
+  {
+    "id": 158,
+    "question": "What is the index of the last element in an array of size N?",
+    "options": [
+      "N",
+      "N+1",
+      "N-1",
+      "0"
+    ],
+    "correct_answer": "N-1"
+  },
+  {
+    "id": 159,
+    "question": "Which algorithm is used to find an element in a sorted array in O(log n) time?",
+    "options": [
+      "Linear Search",
+      "Bubble Sort",
+      "Binary Search",
+      "Depth First Search"
+    ],
+    "correct_answer": "Binary Search"
+  },
+  {
+    "id": 160,
+    "question": "What does DRY stand for in programming?",
+    "options": [
+      "Do Repeat Yourself",
+      "Don't Read Yet",
+      "Don't Repeat Yourself",
+      "Debug Run Yield"
+    ],
+    "correct_answer": "Don't Repeat Yourself"
+  },
+  {
+    "id": 161,
+    "question": "What does SOLID stand for?",
+    "options": [
+      "A set of principles for object-oriented design",
+      "A database schema",
+      "A Linux kernel module",
+      "A Flutter package"
+    ],
+    "correct_answer": "A set of principles for object-oriented design"
+  },
+  {
+    "id": 162,
+    "question": "In SOLID, what does the 'S' stand for?",
+    "options": [
+      "Simple Object",
+      "Single Responsibility Principle",
+      "Solid State",
+      "Synchronous Process"
+    ],
+    "correct_answer": "Single Responsibility Principle"
+  },
+  {
+    "id": 163,
+    "question": "What is a 'foreign key' in SQL?",
+    "options": [
+      "A key from a foreign country",
+      "A field that uniquely identifies a row in another table",
+      "An encrypted password",
+      "A primary key alternative"
+    ],
+    "correct_answer": "A field that uniquely identifies a row in another table"
+  },
+  {
+    "id": 164,
+    "question": "Which operator is used to compare both value and type in JavaScript/Dart?",
+    "options": [
+      "==",
+      "=",
+      "===",
+      "!="
+    ],
+    "correct_answer": "==="
+  },
+  {
+    "id": 165,
+    "question": "Note: Dart does not have '===', it checks type inherently with '=='. What does 'is' keyword do in Dart?",
+    "options": [
+      "Assigns a variable",
+      "Checks if an object is of a specific type",
+      "Imports a file",
+      "Creates a class"
+    ],
+    "correct_answer": "Checks if an object is of a specific type"
+  },
+  {
+    "id": 166,
+    "question": "What does 'as' keyword do in Dart?",
+    "options": [
+      "Imports a library with an alias",
+      "Casts an object to a specific type",
+      "Both importing with an alias and casting",
+      "None of the above"
+    ],
+    "correct_answer": "Both importing with an alias and casting"
+  },
+  {
+    "id": 167,
+    "question": "If you want to read a file line by line in Go, which package is primarily used?",
+    "options": [
+      "io/ioutil",
+      "bufio",
+      "fmt",
+      "net/http"
+    ],
+    "correct_answer": "bufio"
+  },
+  {
+    "id": 168,
+    "question": "Which of these is a valid way to format a string with variables in Dart?",
+    "options": [
+      "'Hello %s'",
+      "'Hello $name'",
+      "'Hello {name}'",
+      "'Hello ' & name"
+    ],
+    "correct_answer": "'Hello $name'"
+  },
+  {
+    "id": 169,
+    "question": "What is the equivalent of Dart's string interpolation in Go using fmt?",
+    "options": [
+      "fmt.Sprintf(\"Hello %s\", name)",
+      "fmt.Print(\"Hello $name\")",
+      "fmt.String(\"Hello {name}\")",
+      "fmt.Format(\"Hello &name\")"
+    ],
+    "correct_answer": "fmt.Sprintf(\"Hello %s\", name)"
+  },
+  {
+    "id": 170,
+    "question": "In Flutter, what does a Flexible widget do?",
+    "options": [
+      "Changes colors dynamically",
+      "Allows a child of a Row/Column to scale relative to its siblings",
+      "Adds padding",
+      "Creates animations"
+    ],
+    "correct_answer": "Allows a child of a Row/Column to scale relative to its siblings"
+  },
+  {
+    "id": 171,
+    "question": "What is the difference between Expanded and Flexible in Flutter?",
+    "options": [
+      "No difference",
+      "Expanded forces the child to fill available space; Flexible does not necessarily",
+      "Flexible forces the child to fill space; Expanded does not",
+      "Expanded is only for Columns"
+    ],
+    "correct_answer": "Expanded forces the child to fill available space; Flexible does not necessarily"
+  },
+  {
+    "id": 172,
+    "question": "Which layout widget allows you to position children relative to the edges of the box?",
+    "options": [
+      "Align",
+      "Positioned (inside a Stack)",
+      "Padding",
+      "Both Align and Positioned"
+    ],
+    "correct_answer": "Both Align and Positioned"
+  },
+  {
+    "id": 173,
+    "question": "What command creates a new Flutter project?",
+    "options": [
+      "flutter new project_name",
+      "flutter create project_name",
+      "flutter init project_name",
+      "flutter start project_name"
+    ],
+    "correct_answer": "flutter create project_name"
+  },
+  {
+    "id": 174,
+    "question": "Which command initializes a new Go module?",
+    "options": [
+      "go init module_name",
+      "go mod init module_name",
+      "go new module_name",
+      "go create module_name"
+    ],
+    "correct_answer": "go mod init module_name"
+  },
+  {
+    "id": 175,
+    "question": "What is 'go.mod' file?",
+    "options": [
+      "Executable binary",
+      "Defines the module’s module path and dependency requirements",
+      "A UI template",
+      "An error log"
+    ],
+    "correct_answer": "Defines the module’s module path and dependency requirements"
+  },
+  {
+    "id": 176,
+    "question": "In Go, if a struct field starts with a lowercase letter, it is:",
+    "options": [
+      "Exported (Public)",
+      "Unexported (Private to the package)",
+      "A constant",
+      "A syntax error"
+    ],
+    "correct_answer": "Unexported (Private to the package)"
+  },
+  {
+    "id": 177,
+    "question": "How do you handle JSON serialization in Go?",
+    "options": [
+      "Using encoding/json package",
+      "Using math/json package",
+      "Go does not support JSON",
+      "Using fmt package"
+    ],
+    "correct_answer": "Using encoding/json package"
+  },
+  {
+    "id": 178,
+    "question": "What does json.Marshal do in Go?",
+    "options": [
+      "Converts JSON to struct",
+      "Converts struct to JSON",
+      "Validates JSON",
+      "Prints JSON"
+    ],
+    "correct_answer": "Converts struct to JSON"
+  },
+  {
+    "id": 179,
+    "question": "What does json.Unmarshal do in Go?",
+    "options": [
+      "Converts JSON string to a Go struct/map",
+      "Converts struct to JSON",
+      "Formats JSON string",
+      "Deletes JSON data"
+    ],
+    "correct_answer": "Converts JSON string to a Go struct/map"
+  },
+  {
+    "id": 180,
+    "question": "Which design pattern restricts the instantiation of a class to one single object?",
+    "options": [
+      "Factory",
+      "Observer",
+      "Singleton",
+      "Decorator"
+    ],
+    "correct_answer": "Singleton"
+  },
+  {
+    "id": 181,
+    "question": "Which design pattern is used to notify dependents when a state changes?",
+    "options": [
+      "Singleton",
+      "Observer",
+      "Builder",
+      "Adapter"
+    ],
+    "correct_answer": "Observer"
+  },
+  {
+    "id": 182,
+    "question": "What is an ORM?",
+    "options": [
+      "Object Relational Mapper",
+      "Online Resource Manager",
+      "Oriented Routing Module",
+      "Object Render Mechanism"
+    ],
+    "correct_answer": "Object Relational Mapper"
+  },
+  {
+    "id": 183,
+    "question": "Which of the following is a popular ORM for Go?",
+    "options": [
+      "Hibernate",
+      "Entity Framework",
+      "GORM",
+      "Sequelize"
+    ],
+    "correct_answer": "GORM"
+  },
+  {
+    "id": 184,
+    "question": "What is an 'Isolate' in Dart?",
+    "options": [
+      "A UI widget",
+      "An independent worker with its own memory heap and thread of control",
+      "A network request",
+      "A state management tool"
+    ],
+    "correct_answer": "An independent worker with its own memory heap and thread of control"
+  },
+  {
+    "id": 185,
+    "question": "Why use Isolates in Flutter?",
+    "options": [
+      "To design UI",
+      "To handle heavy computations without freezing the main UI thread",
+      "To make HTTP requests faster",
+      "To store local data"
+    ],
+    "correct_answer": "To handle heavy computations without freezing the main UI thread"
+  },
+  {
+    "id": 186,
+    "question": "How do Isolates communicate in Dart?",
+    "options": [
+      "Shared memory",
+      "Global variables",
+      "Passing messages through Ports",
+      "Using shared_preferences"
+    ],
+    "correct_answer": "Passing messages through Ports"
+  },
+  {
+    "id": 187,
+    "question": "What is a 'Closure' in programming?",
+    "options": [
+      "A function that has access to variables in its parent scope, even after the parent has returned",
+      "The end of a loop",
+      "Closing a database connection",
+      "A type of UI widget"
+    ],
+    "correct_answer": "A function that has access to variables in its parent scope, even after the parent has returned"
+  },
+  {
+    "id": 188,
+    "question": "Which terminal command lists running processes in Linux?",
+    "options": [
+      "top (or ps)",
+      "list-proc",
+      "pshow",
+      "dir-p"
+    ],
+    "correct_answer": "top (or ps)"
+  },
+  {
+    "id": 189,
+    "question": "How do you forcefully kill a process in Linux?",
+    "options": [
+      "kill -9 <PID>",
+      "stop <PID>",
+      "end <PID>",
+      "terminate <PID>"
+    ],
+    "correct_answer": "kill -9 <PID>"
+  },
+  {
+    "id": 190,
+    "question": "What does the 'chmod 777' command do?",
+    "options": [
+      "Deletes a file",
+      "Gives read, write, and execute permissions to everyone",
+      "Encrypts a file",
+      "Hides a file"
+    ],
+    "correct_answer": "Gives read, write, and execute permissions to everyone"
+  },
+  {
+    "id": 191,
+    "question": "Which architecture pattern uses Entities, Use Cases, and Interfaces layers?",
+    "options": [
+      "MVC",
+      "Clean Architecture",
+      "MVVM",
+      "Redux"
+    ],
+    "correct_answer": "Clean Architecture"
+  },
+  {
+    "id": 192,
+    "question": "What is the primary benefit of Clean Architecture?",
+    "options": [
+      "Less code",
+      "Independence from frameworks, databases, and UI",
+      "Faster execution",
+      "Built-in state management"
+    ],
+    "correct_answer": "Independence from frameworks, databases, and UI"
+  },
+  {
+    "id": 193,
+    "question": "What is 'Dependency Injection' (DI)?",
+    "options": [
+      "A security attack",
+      "Passing required dependencies (like services) to a class rather than the class instantiating them itself",
+      "Injecting code into the kernel",
+      "A way to style widgets"
+    ],
+    "correct_answer": "Passing required dependencies (like services) to a class rather than the class instantiating them itself"
+  },
+  {
+    "id": 194,
+    "question": "Which Flutter package is widely used for Dependency Injection?",
+    "options": [
+      "get_it",
+      "http",
+      "shared_preferences",
+      "url_launcher"
+    ],
+    "correct_answer": "get_it"
+  },
+  {
+    "id": 195,
+    "question": "What does a '401' HTTP status code mean?",
+    "options": [
+      "Bad Request",
+      "Unauthorized (Authentication required)",
+      "Forbidden (Permission denied)",
+      "Not Found"
+    ],
+    "correct_answer": "Unauthorized (Authentication required)"
+  },
+  {
+    "id": 196,
+    "question": "What does a '403' HTTP status code mean?",
+    "options": [
+      "Internal Server Error",
+      "Unauthorized",
+      "Forbidden (Server understood the request but refuses to authorize it)",
+      "Created"
+    ],
+    "correct_answer": "Forbidden (Server understood the request but refuses to authorize it)"
+  },
+  {
+    "id": 197,
+    "question": "What is WebSocket used for?",
+    "options": [
+      "Static HTML rendering",
+      "Full-duplex communication channels over a single TCP connection (Real-time data)",
+      "Image processing",
+      "Database indexing"
+    ],
+    "correct_answer": "Full-duplex communication channels over a single TCP connection (Real-time data)"
+  },
+  {
+    "id": 198,
+    "question": "In Go, what does 'defer fmt.Println(\"Done\")' do?",
+    "options": [
+      "Prints \"Done\" immediately",
+      "Defers the print until the surrounding function returns",
+      "Runs on a separate thread",
+      "Ignores the print statement"
+    ],
+    "correct_answer": "Defers the print until the surrounding function returns"
+  },
+  {
+    "id": 199,
+    "question": "Which of the following is true about Go interfaces?",
+    "options": [
+      "You must explicitly declare that a struct implements an interface",
+      "Interfaces are implemented implicitly if the struct has the required methods",
+      "Interfaces can only contain variables",
+      "Go does not have interfaces"
+    ],
+    "correct_answer": "Interfaces are implemented implicitly if the struct has the required methods"
+  },
+  {
+    "id": 200,
+    "question": "What is the purpose of a Reverse Proxy (like Nginx)?",
+    "options": [
+      "To write code backwards",
+      "To sit in front of web servers and forward client requests to them",
+      "To compress images on the client side",
+      "To bypass firewalls"
+    ],
+    "correct_answer": "To sit in front of web servers and forward client requests to them"
+  },
+  {
+    "id": 201,
+    "question": "In Flutter, what is the purpose of a 'Key'?",
+    "options": [
+      "To encrypt user data",
+      "To preserve the state of widgets when they move around in the widget tree",
+      "To unlock premium features",
+      "To identify database records"
+    ],
+    "correct_answer": "To preserve the state of widgets when they move around in the widget tree"
+  },
+  {
+    "id": 202,
+    "question": "Which key is best used for a reorderable list in Flutter?",
+    "options": [
+      "GlobalKey",
+      "ValueKey",
+      "ObjectKey",
+      "UniqueKey"
+    ],
+    "correct_answer": "ValueKey"
+  },
+  {
+    "id": 203,
+    "question": "What is a 'GlobalKey' primarily used for?",
+    "options": [
+      "Global state management",
+      "Accessing a widget's state from anywhere in the app",
+      "Translating the app to different languages",
+      "Defining global variables"
+    ],
+    "correct_answer": "Accessing a widget's state from anywhere in the app"
+  },
+  {
+    "id": 204,
+    "question": "Which widget is used to create a custom scrolling effect like a shrinking app bar?",
+    "options": [
+      "ListView",
+      "CustomScrollView",
+      "SingleChildScrollView",
+      "GridView"
+    ],
+    "correct_answer": "CustomScrollView"
+  },
+  {
+    "id": 205,
+    "question": "Inside a CustomScrollView, what type of widgets must you use?",
+    "options": [
+      "Regular Widgets",
+      "Sliver Widgets",
+      "Material Widgets",
+      "Cupertino Widgets"
+    ],
+    "correct_answer": "Sliver Widgets"
+  },
+  {
+    "id": 206,
+    "question": "Which widget allows an image to smoothly transition from one screen to another?",
+    "options": [
+      "AnimatedContainer",
+      "Hero",
+      "FadeTransition",
+      "SlideTransition"
+    ],
+    "correct_answer": "Hero"
+  },
+  {
+    "id": 207,
+    "question": "What does the 'TickerProviderStateMixin' do in Flutter?",
+    "options": [
+      "Plays audio files",
+      "Provides a vsync for animations tied to the screen's refresh rate",
+      "Manages state like GetX",
+      "Handles timers and countdowns"
+    ],
+    "correct_answer": "Provides a vsync for animations tied to the screen's refresh rate"
+  },
+  {
+    "id": 208,
+    "question": "Which command builds an iOS app bundle?",
+    "options": [
+      "flutter build apk",
+      "flutter build ios",
+      "flutter build ipa",
+      "flutter build bundle"
+    ],
+    "correct_answer": "flutter build ipa"
+  },
+  {
+    "id": 209,
+    "question": "What is SQLite commonly used for in mobile applications?",
+    "options": [
+      "Cloud hosting",
+      "Local offline database storage",
+      "Push notifications",
+      "State management"
+    ],
+    "correct_answer": "Local offline database storage"
+  },
+  {
+    "id": 210,
+    "question": "Which Flutter package is the standard for implementing SQLite?",
+    "options": [
+      "hive",
+      "sqflite",
+      "firebase_database",
+      "shared_preferences"
+    ],
+    "correct_answer": "sqflite"
+  },
+  {
+    "id": 211,
+    "question": "In Dart, what does the 'yield*' (yield star) keyword do?",
+    "options": [
+      "Multiplies the yield value",
+      "Delegates to another stream or iterable",
+      "Throws an error",
+      "Awaits a future"
+    ],
+    "correct_answer": "Delegates to another stream or iterable"
+  },
+  {
+    "id": 212,
+    "question": "What is the difference between Arrays and Slices in Go?",
+    "options": [
+      "Arrays have dynamic size; Slices have fixed size",
+      "Arrays have fixed size; Slices are dynamically sized",
+      "They are exactly the same",
+      "Slices can only store integers"
+    ],
+    "correct_answer": "Arrays have fixed size; Slices are dynamically sized"
+  },
+  {
+    "id": 213,
+    "question": "In Go, what function is used to add elements to a slice?",
+    "options": [
+      "add()",
+      "push()",
+      "insert()",
+      "append()"
+    ],
+    "correct_answer": "append()"
+  },
+  {
+    "id": 214,
+    "question": "How do you find the length of a slice or string in Go?",
+    "options": [
+      "len()",
+      "length()",
+      "size()",
+      "count()"
+    ],
+    "correct_answer": "len()"
+  },
+  {
+    "id": 215,
+    "question": "What is a 'map' in Go?",
+    "options": [
+      "A geographical charting tool",
+      "An unordered collection of key-value pairs",
+      "A function that transforms data",
+      "A sorted array"
+    ],
+    "correct_answer": "An unordered collection of key-value pairs"
+  },
+  {
+    "id": 216,
+    "question": "In Go, how do you delete a key from a map?",
+    "options": [
+      "remove(map, key)",
+      "map.delete(key)",
+      "delete(map, key)",
+      "map.remove(key)"
+    ],
+    "correct_answer": "delete(map, key)"
+  },
+  {
+    "id": 217,
+    "question": "What does the 'sync.WaitGroup' do in Go?",
+    "options": [
+      "Groups variables together",
+      "Waits for a collection of goroutines to finish executing",
+      "Creates a thread pool",
+      "Synchronizes database queries"
+    ],
+    "correct_answer": "Waits for a collection of goroutines to finish executing"
+  },
+  {
+    "id": 218,
+    "question": "Which Go statement is used to wait on multiple channel operations?",
+    "options": [
+      "switch",
+      "select",
+      "wait",
+      "defer"
+    ],
+    "correct_answer": "select"
+  },
+  {
+    "id": 219,
+    "question": "What does a 'Mutex' (sync.Mutex) prevent in Go?",
+    "options": [
+      "Infinite loops",
+      "Memory leaks",
+      "Race conditions by locking resources",
+      "Syntax errors"
+    ],
+    "correct_answer": "Race conditions by locking resources"
+  },
+  {
+    "id": 220,
+    "question": "What happens if a Go program triggers a 'panic' without a 'recover'?",
+    "options": [
+      "The program crashes and prints a stack trace",
+      "The program ignores it and continues",
+      "The program restarts automatically",
+      "The compiler fixes it"
+    ],
+    "correct_answer": "The program crashes and prints a stack trace"
+  },
+  {
+    "id": 221,
+    "question": "Where must 'recover()' be called in Go to catch a panic?",
+    "options": [
+      "Inside an if statement",
+      "Inside a deferred function",
+      "In the main() function only",
+      "Before the panic occurs"
+    ],
+    "correct_answer": "Inside a deferred function"
+  },
+  {
+    "id": 222,
+    "question": "Which Dart feature is used to parse a JSON string into a Dart Map?",
+    "options": [
+      "jsonDecode()",
+      "jsonEncode()",
+      "Map.parse()",
+      "String.toMap()"
+    ],
+    "correct_answer": "jsonDecode()"
+  },
+  {
+    "id": 223,
+    "question": "If your Flutter app needs to read a file from the device storage, which package is typically needed for permissions?",
+    "options": [
+      "path_provider",
+      "permission_handler",
+      "file_picker",
+      "storage_manager"
+    ],
+    "correct_answer": "permission_handler"
+  },
+  {
+    "id": 224,
+    "question": "Which Flutter package helps in finding the correct local directory paths (like Documents or Temp)?",
+    "options": [
+      "path_provider",
+      "url_launcher",
+      "directory_finder",
+      "local_storage"
+    ],
+    "correct_answer": "path_provider"
+  },
+  {
+    "id": 225,
+    "question": "In BLoC architecture, what connects the UI to the BLoC to rebuild widgets on state changes?",
+    "options": [
+      "BlocProvider",
+      "BlocBuilder",
+      "BlocListener",
+      "BlocConsumer"
+    ],
+    "correct_answer": "BlocBuilder"
+  },
+  {
+    "id": 226,
+    "question": "Which BLoC widget is used to navigate or show snackbars in response to a state change, without rebuilding the UI?",
+    "options": [
+      "BlocBuilder",
+      "BlocProvider",
+      "BlocListener",
+      "BlocConsumer"
+    ],
+    "correct_answer": "BlocListener"
+  },
+  {
+    "id": 227,
+    "question": "What widget combines the functionality of BlocBuilder and BlocListener?",
+    "options": [
+      "BlocProvider",
+      "BlocObserver",
+      "BlocConsumer",
+      "BlocAggregator"
+    ],
+    "correct_answer": "BlocConsumer"
+  },
+  {
+    "id": 228,
+    "question": "In GetX, what does 'Get.snackbar()' do?",
+    "options": [
+      "Navigates to a new screen",
+      "Shows a temporary message banner on the screen",
+      "Opens a dialog box",
+      "Closes the app"
+    ],
+    "correct_answer": "Shows a temporary message banner on the screen"
+  },
+  {
+    "id": 229,
+    "question": "How do you easily show a loading dialog in GetX?",
+    "options": [
+      "Get.dialog()",
+      "Get.bottomSheet()",
+      "Get.showLoading()",
+      "Get.toDialog()"
+    ],
+    "correct_answer": "Get.dialog()"
+  },
+  {
+    "id": 230,
+    "question": "What does the Linux command 'grep' do?",
+    "options": [
+      "Moves files",
+      "Searches for specific text patterns within files",
+      "Downloads files from the internet",
+      "Zips files"
+    ],
+    "correct_answer": "Searches for specific text patterns within files"
+  },
+  {
+    "id": 231,
+    "question": "In Linux, what does the pipe operator '|' do?",
+    "options": [
+      "Creates a new file",
+      "Passes the output of one command as input to another command",
+      "Executes commands in the background",
+      "Comments out code"
+    ],
+    "correct_answer": "Passes the output of one command as input to another command"
+  },
+  {
+    "id": 232,
+    "question": "Which Linux command displays the amount of free and used disk space?",
+    "options": [
+      "free",
+      "df",
+      "du",
+      "lsblk"
+    ],
+    "correct_answer": "df"
+  },
+  {
+    "id": 233,
+    "question": "Which Linux command is used to download files from the internet?",
+    "options": [
+      "wget (or curl)",
+      "fetch",
+      "download",
+      "get"
+    ],
+    "correct_answer": "wget (or curl)"
+  },
+  {
+    "id": 234,
+    "question": "What is the primary function of an Index in a database?",
+    "options": [
+      "To encrypt the data",
+      "To speed up data retrieval operations",
+      "To define foreign keys",
+      "To backup the database"
+    ],
+    "correct_answer": "To speed up data retrieval operations"
+  },
+  {
+    "id": 235,
+    "question": "In SQL, which clause is used to filter records?",
+    "options": [
+      "ORDER BY",
+      "GROUP BY",
+      "WHERE",
+      "HAVING"
+    ],
+    "correct_answer": "WHERE"
+  },
+  {
+    "id": 236,
+    "question": "What is an INNER JOIN in SQL?",
+    "options": [
+      "Returns all records from both tables",
+      "Returns records that have matching values in both tables",
+      "Returns all records from the left table",
+      "Returns all records from the right table"
+    ],
+    "correct_answer": "Returns records that have matching values in both tables"
+  },
+  {
+    "id": 237,
+    "question": "What does a '201 Created' HTTP status code mean?",
+    "options": [
+      "The request failed",
+      "The request was successful and a new resource was created",
+      "The resource was deleted",
+      "The request is redirecting"
+    ],
+    "correct_answer": "The request was successful and a new resource was created"
+  },
+  {
+    "id": 238,
+    "question": "What does a '422 Unprocessable Entity' HTTP status code usually indicate?",
+    "options": [
+      "Server crashed",
+      "Authentication failed",
+      "Validation error (the data sent was invalid)",
+      "Route not found"
+    ],
+    "correct_answer": "Validation error (the data sent was invalid)"
+  },
+  {
+    "id": 239,
+    "question": "What is the difference between PUT and PATCH methods in REST?",
+    "options": [
+      "There is no difference",
+      "PUT replaces the entire resource; PATCH applies partial updates",
+      "PATCH replaces the entire resource; PUT applies partial updates",
+      "PUT is for deleting, PATCH is for creating"
+    ],
+    "correct_answer": "PUT replaces the entire resource; PATCH applies partial updates"
+  },
+  {
+    "id": 240,
+    "question": "What is GraphQL?",
+    "options": [
+      "A graph database",
+      "A query language for APIs that allows clients to request exactly the data they need",
+      "A UI component library",
+      "A type of REST API"
+    ],
+    "correct_answer": "A query language for APIs that allows clients to request exactly the data they need"
+  },
+  {
+    "id": 241,
+    "question": "Which HTTP header indicates the media type of the resource being sent?",
+    "options": [
+      "Accept",
+      "Content-Type",
+      "Authorization",
+      "User-Agent"
+    ],
+    "correct_answer": "Content-Type"
+  },
+  {
+    "id": 242,
+    "question": "What is 'Pagination' in APIs?",
+    "options": [
+      "Encrypting the response",
+      "Dividing a large dataset into smaller, manageable chunks (pages)",
+      "Caching the data",
+      "Styling the UI"
+    ],
+    "correct_answer": "Dividing a large dataset into smaller, manageable chunks (pages)"
+  },
+  {
+    "id": 243,
+    "question": "In Dart, what is a 'Set'?",
+    "options": [
+      "An ordered collection of elements",
+      "An unordered collection of unique items",
+      "A key-value pair map",
+      "A variable type for numbers"
+    ],
+    "correct_answer": "An unordered collection of unique items"
+  },
+  {
+    "id": 244,
+    "question": "If you need a list where duplicate values are not allowed, you should use a:",
+    "options": [
+      "List",
+      "Map",
+      "Set",
+      "Queue"
+    ],
+    "correct_answer": "Set"
+  },
+  {
+    "id": 245,
+    "question": "What is the 'cascade notation' (..) used for in Dart?",
+    "options": [
+      "To create an infinite loop",
+      "To perform a sequence of operations on the same object without repeating the object name",
+      "To inherit from a class",
+      "To throw an exception"
+    ],
+    "correct_answer": "To perform a sequence of operations on the same object without repeating the object name"
+  },
+  {
+    "id": 246,
+    "question": "What does 'git clone' do?",
+    "options": [
+      "Creates a new branch",
+      "Creates a local copy of a remote repository",
+      "Uploads code to GitHub",
+      "Deletes a repository"
+    ],
+    "correct_answer": "Creates a local copy of a remote repository"
+  },
+  {
+    "id": 247,
+    "question": "What does 'git pull' do?",
+    "options": [
+      "Uploads local changes",
+      "Fetches and merges changes from the remote repository to the local working directory",
+      "Reverts a commit",
+      "Deletes a branch"
+    ],
+    "correct_answer": "Fetches and merges changes from the remote repository to the local working directory"
+  },
+  {
+    "id": 248,
+    "question": "What is the difference between 'git merge' and 'git rebase'?",
+    "options": [
+      "They are exactly the same",
+      "Merge creates a new commit; Rebase rewrites commit history to make it linear",
+      "Rebase deletes branches; Merge does not",
+      "Merge is faster than rebase"
+    ],
+    "correct_answer": "Merge creates a new commit; Rebase rewrites commit history to make it linear"
+  },
+  {
+    "id": 249,
+    "question": "How do you temporarily save uncommitted changes in Git without committing them?",
+    "options": [
+      "git save",
+      "git pause",
+      "git stash",
+      "git cache"
+    ],
+    "correct_answer": "git stash"
+  },
+  {
+    "id": 250,
+    "question": "Which Git command applies a specific commit from one branch to another?",
+    "options": [
+      "git apply",
+      "git cherry-pick",
+      "git copy",
+      "git transfer"
+    ],
+    "correct_answer": "git cherry-pick"
+  },
+  {
+    "id": 251,
+    "question": "In Go, what are 'Struct Tags' commonly used for?",
+    "options": [
+      "Defining variable types",
+      "Styling UI components",
+      "Providing metadata like JSON field names during serialization",
+      "Creating loops"
+    ],
+    "correct_answer": "Providing metadata like JSON field names during serialization"
+  },
+  {
+    "id": 252,
+    "question": "Which function is called automatically before main() in a Go package?",
+    "options": [
+      "start()",
+      "setup()",
+      "init()",
+      "begin()"
+    ],
+    "correct_answer": "init()"
+  },
+  {
+    "id": 253,
+    "question": "Can a Go package have multiple init() functions?",
+    "options": [
+      "No, only one per package",
+      "No, only one per file",
+      "Yes, and they are executed in the order they are presented",
+      "Yes, but they run concurrently"
+    ],
+    "correct_answer": "Yes, and they are executed in the order they are presented"
+  },
+  {
+    "id": 254,
+    "question": "What package is used in Go to read environment variables?",
+    "options": [
+      "os",
+      "env",
+      "sys",
+      "config"
+    ],
+    "correct_answer": "os"
+  },
+  {
+    "id": 255,
+    "question": "What is the standard Go package used to create HTTP clients and servers?",
+    "options": [
+      "web",
+      "net/http",
+      "url",
+      "tcp"
+    ],
+    "correct_answer": "net/http"
+  },
+  {
+    "id": 256,
+    "question": "What is a 'Context' in Go (context package)?",
+    "options": [
+      "A UI state",
+      "A mechanism to carry deadlines, cancellation signals, and request-scoped values across API boundaries",
+      "A database connection string",
+      "A type of struct"
+    ],
+    "correct_answer": "A mechanism to carry deadlines, cancellation signals, and request-scoped values across API boundaries"
+  },
+  {
+    "id": 257,
+    "question": "If a user cancels a web request midway, how does a Go server know to stop processing it?",
+    "options": [
+      "By checking the context's Done() channel",
+      "By pinging the client",
+      "By waiting for a timeout",
+      "By checking the HTTP headers"
+    ],
+    "correct_answer": "By checking the context's Done() channel"
+  },
+  {
+    "id": 258,
+    "question": "What does a 'Ternary Operator' (? :) do?",
+    "options": [
+      "Multiplies three numbers",
+      "Acts as a shorthand for an if-else statement",
+      "Loops three times",
+      "Converts strings to integers"
+    ],
+    "correct_answer": "Acts as a shorthand for an if-else statement"
+  },
+  {
+    "id": 259,
+    "question": "In Dart, what does the '??' (null-coalescing) operator do?",
+    "options": [
+      "Checks if two values are equal",
+      "Returns the left expression if it's not null, otherwise returns the right expression",
+      "Throws an error if null",
+      "Assigns a null value"
+    ],
+    "correct_answer": "Returns the left expression if it's not null, otherwise returns the right expression"
+  },
+  {
+    "id": 260,
+    "question": "What does 'TDD' stand for in software engineering?",
+    "options": [
+      "Test Driven Development",
+      "Time Delayed Delivery",
+      "Total Data Destruction",
+      "Technical Design Document"
+    ],
+    "correct_answer": "Test Driven Development"
+  },
+  {
+    "id": 261,
+    "question": "What is the first step in the TDD cycle?",
+    "options": [
+      "Write the implementation code",
+      "Write a failing test",
+      "Refactor the code",
+      "Deploy the app"
+    ],
+    "correct_answer": "Write a failing test"
+  },
+  {
+    "id": 262,
+    "question": "What does a Unit Test do?",
+    "options": [
+      "Tests the entire app flow",
+      "Tests the database connection",
+      "Tests a small, isolated piece of code (like a single function)",
+      "Tests the UI visuals"
+    ],
+    "correct_answer": "Tests a small, isolated piece of code (like a single function)"
+  },
+  {
+    "id": 263,
+    "question": "What does Widget Testing (or Component Testing) do in Flutter?",
+    "options": [
+      "Tests a single function",
+      "Tests a single widget's UI and interaction in isolation",
+      "Tests the whole app on an emulator",
+      "Tests backend APIs"
+    ],
+    "correct_answer": "Tests a single widget's UI and interaction in isolation"
+  },
+  {
+    "id": 264,
+    "question": "What is Integration Testing?",
+    "options": [
+      "Testing individual functions",
+      "Testing how different modules or the whole app work together",
+      "Testing UI color accuracy",
+      "Testing server ping time"
+    ],
+    "correct_answer": "Testing how different modules or the whole app work together"
+  },
+  {
+    "id": 265,
+    "question": "Which design principle says that classes should be open for extension but closed for modification?",
+    "options": [
+      "Single Responsibility Principle",
+      "Open-Closed Principle",
+      "Liskov Substitution Principle",
+      "Dependency Inversion"
+    ],
+    "correct_answer": "Open-Closed Principle"
+  },
+  {
+    "id": 266,
+    "question": "What is a 'Microservice' architecture?",
+    "options": [
+      "An app built entirely in one file",
+      "A monolithic architecture",
+      "An approach where an application is built as a collection of small, independent services",
+      "A UI framework"
+    ],
+    "correct_answer": "An approach where an application is built as a collection of small, independent services"
+  },
+  {
+    "id": 267,
+    "question": "What is the opposite of Microservices architecture?",
+    "options": [
+      "Monolithic Architecture",
+      "Serverless Architecture",
+      "MVC",
+      "Event-Driven"
+    ],
+    "correct_answer": "Monolithic Architecture"
+  },
+  {
+    "id": 268,
+    "question": "What does 'Serverless' mean in cloud computing?",
+    "options": [
+      "There are physically no servers",
+      "Developers don't have to manage the server infrastructure; the cloud provider does it automatically",
+      "The app runs entirely offline",
+      "The server is built into the mobile app"
+    ],
+    "correct_answer": "Developers don't have to manage the server infrastructure; the cloud provider does it automatically"
+  },
+  {
+    "id": 269,
+    "question": "Which tool is commonly used for managing Flutter versions easily on a machine?",
+    "options": [
+      "FVM (Flutter Version Management)",
+      "NVM",
+      "Docker",
+      "Git"
+    ],
+    "correct_answer": "FVM (Flutter Version Management)"
+  },
+  {
+    "id": 270,
+    "question": "What is a major cause of UI 'jank' or stuttering in Flutter?",
+    "options": [
+      "Using too many colors",
+      "Doing heavy synchronous work on the main UI thread",
+      "Having too many StatelessWidgets",
+      "Using the Scaffold widget"
+    ],
+    "correct_answer": "Doing heavy synchronous work on the main UI thread"
+  },
+  {
+    "id": 271,
+    "question": "To prevent UI jank during heavy calculation in Flutter, you should use:",
+    "options": [
+      "Futures",
+      "Isolates (compute function)",
+      "setState",
+      "Animations"
+    ],
+    "correct_answer": "Isolates (compute function)"
+  },
+  {
+    "id": 272,
+    "question": "What does the 'Opacity' widget do?",
+    "options": [
+      "Makes a widget transparent",
+      "Resizes a widget",
+      "Changes the background color",
+      "Adds a shadow"
+    ],
+    "correct_answer": "Makes a widget transparent"
+  },
+  {
+    "id": 273,
+    "question": "Why is it often better to use a transparent color than the Opacity widget in Flutter?",
+    "options": [
+      "It looks better",
+      "The Opacity widget can be expensive for performance because it requires an offscreen buffer",
+      "Transparent colors are more secure",
+      "There is no difference"
+    ],
+    "correct_answer": "The Opacity widget can be expensive for performance because it requires an offscreen buffer"
+  },
+  {
+    "id": 274,
+    "question": "Which widget is best for cropping a child widget into a circle?",
+    "options": [
+      "Container",
+      "ClipOval",
+      "RoundedRectangleBorder",
+      "Padding"
+    ],
+    "correct_answer": "ClipOval"
+  },
+  {
+    "id": 275,
+    "question": "In Go, what is 'shadowing' a variable?",
+    "options": [
+      "Creating a backup of a variable",
+      "Declaring a new variable with the same name in an inner scope, hiding the outer one",
+      "Encrypting the variable",
+      "Using pointers"
+    ],
+    "correct_answer": "Declaring a new variable with the same name in an inner scope, hiding the outer one"
+  },
+  {
+    "id": 276,
+    "question": "Which of these is a valid Go loop syntax to iterate over a map?",
+    "options": [
+      "for i = 0; i < len(map); i++",
+      "for key, value := range myMap",
+      "foreach(map as key=>value)",
+      "while(map.hasNext())"
+    ],
+    "correct_answer": "for key, value := range myMap"
+  },
+  {
+    "id": 277,
+    "question": "In SQL, what does the 'COUNT()' function do?",
+    "options": [
+      "Adds up numerical values",
+      "Returns the number of rows that match a specified criterion",
+      "Finds the highest value",
+      "Averages the values"
+    ],
+    "correct_answer": "Returns the number of rows that match a specified criterion"
+  },
+  {
+    "id": 278,
+    "question": "What does the SQL 'SUM()' function do?",
+    "options": [
+      "Returns the total sum of a numeric column",
+      "Counts the rows",
+      "Concatenates strings",
+      "Returns the highest value"
+    ],
+    "correct_answer": "Returns the total sum of a numeric column"
+  },
+  {
+    "id": 279,
+    "question": "What is the primary difference between a Stack and a Queue?",
+    "options": [
+      "Stack is FIFO, Queue is LIFO",
+      "Stack is LIFO, Queue is FIFO",
+      "They are exactly the same",
+      "Stack only holds integers, Queue holds strings"
+    ],
+    "correct_answer": "Stack is LIFO, Queue is FIFO"
+  },
+  {
+    "id": 280,
+    "question": "Which data structure is typically used to implement a 'Undo' feature in applications?",
+    "options": [
+      "Queue",
+      "Tree",
+      "Stack",
+      "Graph"
+    ],
+    "correct_answer": "Stack"
+  },
+  {
+    "id": 281,
+    "question": "What is a 'Hash Map' or 'Hash Table' primarily used for?",
+    "options": [
+      "Sorting data",
+      "Fast data retrieval using a key",
+      "Storing files",
+      "Drawing UI"
+    ],
+    "correct_answer": "Fast data retrieval using a key"
+  },
+  {
+    "id": 282,
+    "question": "Which sorting algorithm repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order?",
+    "options": [
+      "Quick Sort",
+      "Merge Sort",
+      "Bubble Sort",
+      "Insertion Sort"
+    ],
+    "correct_answer": "Bubble Sort"
+  },
+  {
+    "id": 283,
+    "question": "Which sorting algorithm uses a divide-and-conquer strategy?",
+    "options": [
+      "Bubble Sort",
+      "Quick Sort",
+      "Selection Sort",
+      "Linear Sort"
+    ],
+    "correct_answer": "Quick Sort"
+  },
+  {
+    "id": 284,
+    "question": "In Linux, what command unzips a '.tar.gz' file?",
+    "options": [
+      "unzip file.tar.gz",
+      "tar -xzvf file.tar.gz",
+      "extract file.tar.gz",
+      "gzip -d file.tar.gz"
+    ],
+    "correct_answer": "tar -xzvf file.tar.gz"
+  },
+  {
+    "id": 285,
+    "question": "What is the 'root' user in Linux?",
+    "options": [
+      "A standard user",
+      "A guest account",
+      "The superuser with absolute system privileges",
+      "A restricted network user"
+    ],
+    "correct_answer": "The superuser with absolute system privileges"
+  },
+  {
+    "id": 286,
+    "question": "Which Dart method can be used to delay code execution for a specific duration?",
+    "options": [
+      "Future.delay()",
+      "Future.wait()",
+      "Future.delayed()",
+      "Timer.pause()"
+    ],
+    "correct_answer": "Future.delayed()"
+  },
+  {
+    "id": 287,
+    "question": "What does 'Dependency Resolution' mean in Flutter (pubspec)?",
+    "options": [
+      "Fixing UI bugs",
+      "The process of finding compatible versions of all required packages",
+      "Deleting unused packages",
+      "Compiling the code"
+    ],
+    "correct_answer": "The process of finding compatible versions of all required packages"
+  },
+  {
+    "id": 288,
+    "question": "If your Flutter app works on Android but gets a white screen on iOS, where is the first place you should check for errors?",
+    "options": [
+      "pubspec.yaml",
+      "Xcode debug console",
+      "Android Studio logcat",
+      "Windows terminal"
+    ],
+    "correct_answer": "Xcode debug console"
+  },
+  {
+    "id": 289,
+    "question": "What is the purpose of the 'Info.plist' file in an iOS Flutter project?",
+    "options": [
+      "Managing Dart dependencies",
+      "Configuring iOS-specific permissions and app metadata",
+      "Writing UI code",
+      "Handling Android configurations"
+    ],
+    "correct_answer": "Configuring iOS-specific permissions and app metadata"
+  },
+  {
+    "id": 290,
+    "question": "What is the purpose of the 'AndroidManifest.xml' file?",
+    "options": [
+      "Writing Dart logic",
+      "Configuring Android-specific permissions, activities, and metadata",
+      "Managing iOS builds",
+      "Styling the app"
+    ],
+    "correct_answer": "Configuring Android-specific permissions, activities, and metadata"
+  },
+  {
+    "id": 291,
+    "question": "In GetX, what is the best way to handle Dependency Injection so a controller is created only when needed?",
+    "options": [
+      "Get.put()",
+      "Get.lazyPut()",
+      "Get.create()",
+      "Get.find()"
+    ],
+    "correct_answer": "Get.lazyPut()"
+  },
+  {
+    "id": 292,
+    "question": "How do you retrieve an already injected GetX controller in another screen?",
+    "options": [
+      "Get.find()",
+      "Get.get()",
+      "Get.fetch()",
+      "Get.put()"
+    ],
+    "correct_answer": "Get.find()"
+  },
+  {
+    "id": 293,
+    "question": "What is a 'WebHook'?",
+    "options": [
+      "A physical network cable",
+      "An automated HTTP callback triggered by a specific event",
+      "A database query",
+      "A UI widget"
+    ],
+    "correct_answer": "An automated HTTP callback triggered by a specific event"
+  },
+  {
+    "id": 294,
+    "question": "Which HTTP method is typically used to handle WebHooks?",
+    "options": [
+      "GET",
+      "POST",
+      "DELETE",
+      "OPTIONS"
+    ],
+    "correct_answer": "POST"
+  },
+  {
+    "id": 295,
+    "question": "In Go, what does 'go build' do?",
+    "options": [
+      "Runs the program",
+      "Compiles the packages and dependencies into an executable binary",
+      "Formats the code",
+      "Downloads packages"
+    ],
+    "correct_answer": "Compiles the packages and dependencies into an executable binary"
+  },
+  {
+    "id": 296,
+    "question": "Which command runs a Go program without creating a permanent executable file?",
+    "options": [
+      "go start",
+      "go execute",
+      "go run",
+      "go play"
+    ],
+    "correct_answer": "go run"
+  },
+  {
+    "id": 297,
+    "question": "What is a 'Pointer' receiver in Go methods?",
+    "options": [
+      "A method that copies the struct",
+      "A method that can modify the original struct's values",
+      "A method that points to a database",
+      "A method that returns a memory address"
+    ],
+    "correct_answer": "A method that can modify the original struct's values"
+  },
+  {
+    "id": 298,
+    "question": "What is 'State Restoration' in mobile apps?",
+    "options": [
+      "Fixing corrupted files",
+      "Restoring the app's previous state after it was killed by the OS to free up memory",
+      "Undoing a Git commit",
+      "Resetting the phone to factory settings"
+    ],
+    "correct_answer": "Restoring the app's previous state after it was killed by the OS to free up memory"
+  },
+  {
+    "id": 299,
+    "question": "Which principle suggests that high-level modules should not depend on low-level modules, but both should depend on abstractions?",
+    "options": [
+      "Single Responsibility",
+      "Liskov Substitution",
+      "Dependency Inversion",
+      "Interface Segregation"
+    ],
+    "correct_answer": "Dependency Inversion"
+  },
+  {
+    "id": 300,
+    "question": "In object-oriented programming, what is an Abstract Class?",
+    "options": [
+      "A class with no name",
+      "A class that cannot be instantiated and usually contains abstract methods",
+      "A class that only contains static variables",
+      "A class meant for testing only"
+    ],
+    "correct_answer": "A class that cannot be instantiated and usually contains abstract methods"
+  }
+]

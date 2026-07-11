@@ -74,7 +74,7 @@ class ProfileView extends GetView<ProfileController> {
                 () => Text(
                   controller.displayName.value.isNotEmpty
                       ? controller.displayName.value
-                      : 'Rafiq Islam',
+                      : 'No Name',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22.sp,
@@ -89,7 +89,7 @@ class ProfileView extends GetView<ProfileController> {
                 () => Text(
                   controller.email.value.isNotEmpty
                       ? controller.email.value
-                      : 'rafiq@example.com',
+                      : 'xyz@example.com',
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.4),
                     fontSize: 13.sp,
@@ -344,30 +344,35 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 16.h),
 
-                // Badges Row 1
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildBadgeItem('🎯', isLocked: false),
-                    _buildBadgeItem('⚡', isLocked: false),
-                    _buildBadgeItem('🔥', isLocked: false),
-                    _buildBadgeItem('✅', isLocked: false),
-                    _buildBadgeItem('🧠', isLocked: false),
-                  ],
-                ),
-                SizedBox(height: 12.h),
+                Obx(() {
+                  // Explicitly register dependencies on reactive variables
+                  // so GetX can track updates in this lazy GridView builder
+                  controller.coinCount.value;
+                  controller.currentXP.value;
+                  controller.userLevel.value;
+                  controller.totalScore.value;
 
-                // Badges Row 2 (Locked)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _buildBadgeItem('🔒', isLocked: true),
-                    SizedBox(width: 20.w),
-                    _buildBadgeItem('🔒', isLocked: true),
-                    SizedBox(width: 20.w),
-                    _buildBadgeItem('🔒', isLocked: true),
-                  ],
-                ),
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.badges.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                      mainAxisSpacing: 14.h,
+                      crossAxisSpacing: 14.w,
+                      childAspectRatio: 1.0,
+                    ),
+                    itemBuilder: (context, index) {
+                      final badge = controller.badges[index];
+                      final isLocked = !badge.isUnlocked(controller);
+                      return _buildBadgeItem(
+                        badge.imagePath,
+                        isLocked: isLocked,
+                        tooltip: '${badge.title}\n(${badge.description})\n${isLocked ? "Locked 🔒" : "Unlocked! 🎉"}',
+                      );
+                    },
+                  );
+                }),
               ],
             ),
           ),
@@ -447,28 +452,76 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 
-  Widget _buildBadgeItem(String emoji, {required bool isLocked}) {
-    return Container(
-      width: 46.r,
-      height: 46.r,
+  Widget _buildBadgeItem(String imagePath, {required bool isLocked, required String tooltip}) {
+    return Tooltip(
+      message: tooltip,
+      triggerMode: TooltipTriggerMode.tap,
       decoration: BoxDecoration(
-        color: isLocked
-            ? Colors.white.withValues(alpha: 0.01)
-            : const Color(0xFF1D1B3D).withValues(alpha: 0.8),
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: isLocked
-              ? Colors.white.withValues(alpha: 0.05)
-              : const Color(0xFF6C63FF).withValues(alpha: 0.25),
-          width: 1.2,
-        ),
+        color: const Color(0xFF161233),
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
-      alignment: Alignment.center,
-      child: Text(
-        emoji,
-        style: TextStyle(
-          fontSize: isLocked ? 14.sp : 18.sp,
-          color: isLocked ? Colors.white.withValues(alpha: 0.15) : null,
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 12.sp,
+        fontWeight: FontWeight.bold,
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      child: Container(
+        width: 52.r,
+        height: 52.r,
+        decoration: BoxDecoration(
+          color: isLocked
+              ? Colors.white.withValues(alpha: 0.02)
+              : const Color(0xFF1D1B3D).withValues(alpha: 0.8),
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: isLocked
+                ? Colors.white.withValues(alpha: 0.06)
+                : const Color(0xFF00D2FF).withValues(alpha: 0.35),
+            width: 1.5,
+          ),
+          boxShadow: isLocked
+              ? []
+              : [
+                  BoxShadow(
+                    color: const Color(0xFF00D2FF).withValues(alpha: 0.15),
+                    blurRadius: 8.r,
+                    spreadRadius: 1.r,
+                  ),
+                ],
+        ),
+        padding: EdgeInsets.all(8.r),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Opacity(
+              opacity: isLocked ? 0.25 : 1.0,
+              child: ColorFiltered(
+                colorFilter: isLocked
+                    ? const ColorFilter.matrix(<double>[
+                        0.2126, 0.7152, 0.0722, 0, 0,
+                        0.2126, 0.7152, 0.0722, 0, 0,
+                        0.2126, 0.7152, 0.0722, 0, 0,
+                        0,      0,      0,      1.0, 0,
+                      ])
+                    : const ColorFilter.mode(
+                        Colors.transparent,
+                        BlendMode.dst,
+                      ),
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            if (isLocked)
+              Icon(
+                Icons.lock_rounded,
+                color: Colors.white.withValues(alpha: 0.65),
+                size: 16.r,
+              ),
+          ],
         ),
       ),
     );
