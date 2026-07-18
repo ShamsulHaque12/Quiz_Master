@@ -21,9 +21,11 @@ class CategoryCard extends StatelessWidget {
     final bool isMcq = mode == 'MCQ';
     final String modeSuffix = isMcq ? 'option' : 'tf';
     String prefix = category.toLowerCase().replaceAll(' ', '_');
-    if (prefix.contains('program')) {
+    if (prefix.contains('program') ||
+        prefix.contains('ict') ||
+        prefix.contains('computer')) {
       prefix = 'program';
-    } else if (prefix.contains('general') || prefix.contains('genarel')) {
+    } else {
       prefix = 'genarel';
     }
     return 'assets/quiz_json_file/${prefix}_$modeSuffix.json';
@@ -54,10 +56,7 @@ class CategoryCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                '🚀',
-                style: TextStyle(fontSize: 48.sp),
-              ),
+              Text('🚀', style: TextStyle(fontSize: 48.sp)),
               SizedBox(height: 16.h),
               Text(
                 'Coming Soon!',
@@ -157,10 +156,7 @@ class CategoryCard extends StatelessWidget {
                   if (exists) {
                     Get.toNamed(
                       Routes.QUIZ,
-                      arguments: {
-                        'category': name,
-                        'mode': 'MCQ',
-                      },
+                      arguments: {'category': name, 'mode': 'MCQ'},
                     );
                   } else {
                     _showComingSoonDialog(context, name);
@@ -184,10 +180,7 @@ class CategoryCard extends StatelessWidget {
                   if (exists) {
                     Get.toNamed(
                       Routes.QUIZ,
-                      arguments: {
-                        'category': name,
-                        'mode': 'TF',
-                      },
+                      arguments: {'category': name, 'mode': 'TF'},
                     );
                   } else {
                     _showComingSoonDialog(context, name);

@@ -6,9 +6,11 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:get/get.dart';
 import '../../../data/models/question_model.dart';
 import '../../profile/controllers/profile_controller.dart';
+import '../services/groq_service.dart';
 
 class QuizController extends GetxController {
   final AssetBundle? assetBundle;
+  final GroqService _groqService = GroqService();
 
   QuizController({this.assetBundle});
 
@@ -63,9 +65,9 @@ class QuizController extends GetxController {
       final bool isMcq =
           mode.toUpperCase() == 'MCQ' || mode.toLowerCase().contains('option');
       String prefix = category.toLowerCase().replaceAll(' ', '_');
-      if (prefix.contains('program')) {
+      if (prefix.contains('program') || prefix.contains('ict') || prefix.contains('computer')) {
         prefix = 'program';
-      } else if (prefix.contains('general') || prefix.contains('genarel')) {
+      } else {
         prefix = 'genarel';
       }
       final String modeSuffix = isMcq ? 'option' : 'tf';
@@ -159,6 +161,34 @@ class QuizController extends GetxController {
       wrongAnswers++;
     }
     update();
+
+    final question = currentQuestion;
+    final bool isMcq = question.options.length > 2;
+
+    String prompt;
+    if (isMcq) {
+      prompt = 'You are a Quiz Assistant. Explain this multiple choice question:\n'
+          'Question: ${question.questionText}\n'
+          'Options: ${question.options}\n'
+          'Correct Answer: ${question.options[question.correctAnswerIndex]}\n'
+          'User Selected Answer: ${question.options[index]}\n\n'
+          'Provide a concise, helpful explanation in Bengali.';
+    } else {
+      prompt = 'You are a Quiz Assistant. Explain this true/false question:\n'
+          'Question: ${question.questionText}\n'
+          'Correct Answer: ${question.correctAnswerIndex == 0 ? "True" : "False"}\n'
+          'User Selected Answer: ${index == 0 ? "True" : "False"}\n\n'
+          'Provide a concise, helpful explanation in Bengali.';
+    }
+
+    _groqService.askAI(prompt).then((explanation) {
+      log('--- AI Explanation ---');
+      log('Question: ${question.questionText}');
+      log('Explanation: $explanation');
+      log('----------------------');
+    }).catchError((e) {
+      log('Failed to fetch AI explanation: $e');
+    });
   }
 
   void skipQuestion() {
