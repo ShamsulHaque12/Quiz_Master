@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/sign_up/controllers/sign_up_controller.dart';
 import '../../auth/sign_in/controllers/sign_in_controller.dart';
 import '../../home/controllers/home_controller.dart';
@@ -12,19 +11,19 @@ import '../../../core/app_images.dart';
 import '../models/badge_model.dart';
 
 class ProfileController extends GetxController {
-  // Gamification & stats
+  // Gamification & stats (Mock initial state for pure UI)
   final userLevel = 1.obs;
-  final currentXP = 0.obs;
+  final currentXP = 350.obs;
   final nextLevelXP = 1000.obs;
-  final streakCount = 1.obs;
+  final streakCount = 3.obs;
 
-  final totalQuiz = 0.obs;
-  final bestScore = 0.obs;
-  final coinCount = 0.obs;
-  final totalScore = 0.obs;
+  final totalQuiz = 8.obs;
+  final bestScore = 180.obs;
+  final coinCount = 150.obs;
+  final totalScore = 650.obs;
 
-  final displayName = ''.obs;
-  final email = ''.obs;
+  final displayName = 'Quiz Master'.obs;
+  final email = 'user@quizmaster.app'.obs;
   final avatarUrl = ''.obs;
   final profileImage = Rxn<File>();
 
@@ -197,48 +196,21 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    displayName.value = getUserName();
+    final name = getUserName();
+    if (name.isNotEmpty && name != 'No Name') {
+      displayName.value = name;
+    }
     email.value = getUserEmail();
     profileImage.value = getUserImage();
-    fetchUserProfile();
-  }
-
-  Future<void> fetchUserProfile() async {
-    try {
-      final user = Supabase.instance.client.auth.currentUser;
-      if (user != null) {
-        email.value = user.email ?? '';
-        final data = await Supabase.instance.client
-            .from('profiles')
-            .select()
-            .eq('id', user.id)
-            .single();
-
-        displayName.value = data['full_name'] ?? '';
-        avatarUrl.value = data['avatar_url'] ?? '';
-        userLevel.value = data['level'] ?? 1;
-        currentXP.value = data['xp'] ?? 0;
-        nextLevelXP.value = (data['level'] ?? 1) * 1000;
-        streakCount.value = data['streak_day'] ?? data['streak'] ?? 1;
-        coinCount.value = data['coin'] ?? 0;
-        totalQuiz.value = data['total_quiz'] ?? 0;
-        bestScore.value = data['best_score'] ?? 0;
-        totalScore.value = data['total_score'] ?? 0;
-
-        // If HomeController is registered, refresh its user profile to keep UI in sync
-        if (Get.isRegistered<HomeController>()) {
-          Get.find<HomeController>().fetchUserProfile();
-        }
-      }
-    } catch (e) {
-      log("Error fetching user profile in ProfileController: $e");
-    }
   }
 
   void updateProfile({required String newName, File? newImage}) {
     displayName.value = newName;
     if (newImage != null) {
       profileImage.value = newImage;
+    }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().displayName.value = newName;
     }
   }
 
@@ -248,10 +220,9 @@ class ProfileController extends GetxController {
       if (name.isNotEmpty) return name;
     }
     if (Get.isRegistered<SignInController>()) {
-      final email = Get.find<SignInController>().emailController.text.trim();
-      if (email.isNotEmpty) {
-        // Capitalize words
-        final username = email.split('@').first;
+      final inputEmail = Get.find<SignInController>().emailController.text.trim();
+      if (inputEmail.isNotEmpty) {
+        final username = inputEmail.split('@').first;
         return username
             .split(RegExp(r'[^a-zA-Z0-9]'))
             .map(
@@ -262,26 +233,26 @@ class ProfileController extends GetxController {
             .join(' ');
       }
     }
-    return 'No Name';
+    return displayName.value;
   }
 
   String getUserEmail() {
     if (Get.isRegistered<SignUpController>()) {
-      final email = Get.find<SignUpController>().emailController.text.trim();
-      if (email.isNotEmpty) return email;
+      final inputEmail = Get.find<SignUpController>().emailController.text.trim();
+      if (inputEmail.isNotEmpty) return inputEmail;
     }
     if (Get.isRegistered<SignInController>()) {
-      final email = Get.find<SignInController>().emailController.text.trim();
-      if (email.isNotEmpty) return email;
+      final inputEmail = Get.find<SignInController>().emailController.text.trim();
+      if (inputEmail.isNotEmpty) return inputEmail;
     }
-    return 'xyz@example.com';
+    return email.value;
   }
 
   File? getUserImage() {
     if (Get.isRegistered<SignUpController>()) {
       return Get.find<SignUpController>().profileImage;
     }
-    return null;
+    return profileImage.value;
   }
 
   void handleLogout() {
@@ -355,38 +326,33 @@ class ProfileController extends GetxController {
     required int addedXP,
     required int addedCoins,
   }) async {
-    try {
-      final user = Supabase.instance.client.auth.currentUser;
-      if (user != null) {
-        final newScore = totalScore.value + addedScore;
-        final newXP = currentXP.value + addedXP;
-        final newCoins = coinCount.value + addedCoins;
-        final newTotalQuiz = totalQuiz.value + 1;
-        final newBestScore = addedScore > bestScore.value ? addedScore : bestScore.value;
+    final newScore = totalScore.value + addedScore;
+    final newXP = currentXP.value + addedXP;
+    final newCoins = coinCount.value + addedCoins;
+    final newTotalQuiz = totalQuiz.value + 1;
+    final newBestScore = addedScore > bestScore.value ? addedScore : bestScore.value;
 
-        // Level up calculation: level increases as XP threshold is met
-        int newLevel = userLevel.value;
-        int tempXP = newXP;
-        while (tempXP >= newLevel * 1000) {
-          newLevel++;
-        }
+    int newLevel = userLevel.value;
+    int tempXP = newXP;
+    while (tempXP >= newLevel * 1000) {
+      newLevel++;
+    }
 
-        await Supabase.instance.client
-            .from('profiles')
-            .update({
-              'total_score': newScore,
-              'xp': newXP,
-              'coin': newCoins,
-              'total_quiz': newTotalQuiz,
-              'best_score': newBestScore,
-              'level': newLevel,
-            })
-            .eq('id', user.id);
+    totalScore.value = newScore;
+    currentXP.value = newXP;
+    coinCount.value = newCoins;
+    totalQuiz.value = newTotalQuiz;
+    bestScore.value = newBestScore;
+    userLevel.value = newLevel;
 
-        await fetchUserProfile();
-      }
-    } catch (e) {
-      log("Error updating user stats: $e");
+    // Sync with HomeController if available
+    if (Get.isRegistered<HomeController>()) {
+      final home = Get.find<HomeController>();
+      home.currentXP.value = newXP;
+      home.userLevel.value = newLevel;
+      home.coinCount.value = newCoins;
+      home.recentTotalQuiz.value = newTotalQuiz;
+      home.recentBestScore.value = newBestScore;
     }
   }
 
@@ -403,28 +369,6 @@ class ProfileController extends GetxController {
     required DateTime startedAt,
     required DateTime completedAt,
   }) async {
-    try {
-      final user = Supabase.instance.client.auth.currentUser;
-      if (user != null) {
-        final quizId = '${category.toLowerCase().replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}';
-        await Supabase.instance.client.from('quiz_attempts').insert({
-          'user_id': user.id,
-          'quiz_id': quizId,
-          'category': category,
-          'total_question': totalQuestion,
-          'correct': correct,
-          'wrong': wrong,
-          'skip': skip,
-          'score': score,
-          'xp': xp,
-          'coin': coin,
-          'accuracy': accuracy,
-          'started_at': startedAt.toIso8601String(),
-          'completed_at': completedAt.toIso8601String(),
-        });
-      }
-    } catch (e) {
-      log("Error saving quiz attempt: $e");
-    }
+    log("Recorded local quiz attempt for $category: score $score, accuracy $accuracy%");
   }
 }

@@ -20,7 +20,7 @@ class LeaderboardModel {
   final bool isCurrentUser;
   final String todayXp; // formatted period score
 
-  LeaderboardModel({
+  const LeaderboardModel({
     required this.id,
     this.fullName,
     this.email,

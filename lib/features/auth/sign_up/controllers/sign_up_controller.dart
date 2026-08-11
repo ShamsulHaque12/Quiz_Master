@@ -1,10 +1,10 @@
-import 'dart:developer';
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:quiz_app/service/shared_prefarence_helper.dart';
+import '../../../profile/controllers/profile_controller.dart';
+import '../../../home/controllers/home_controller.dart';
 
 class SignUpController extends GetxController {
   final fullNameController = TextEditingController();
@@ -117,32 +117,6 @@ class SignUpController extends GetxController {
     update();
   }
 
-  Future<String?> _uploadProfileImage(String userId) async {
-    if (_profileImage == null) return null;
-
-    try {
-      final supabase = Supabase.instance.client;
-
-      final fileExtension = _profileImage!.path.split('.').last;
-      final fileName = "$userId.$fileExtension";
-
-      await supabase.storage
-          .from('avatars')
-          .upload(
-            fileName,
-            _profileImage!,
-            fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
-          );
-
-      final imageUrl = supabase.storage.from('avatars').getPublicUrl(fileName);
-
-      return imageUrl;
-    } catch (e) {
-      debugPrint("Image Upload Error: $e");
-      return null;
-    }
-  }
-
   Future<bool> signUp() async {
     final fullName = fullNameController.text.trim();
     final email = emailController.text.trim();
@@ -202,104 +176,25 @@ class SignUpController extends GetxController {
     _isLoading = true;
     update();
 
-    try {
-      final AuthResponse response = await Supabase.instance.client.auth.signUp(
-        email: email,
-        password: password,
-        data: {'display_name': fullName},
-      );
+    // Pure UI simulation delay
+    await Future.delayed(const Duration(milliseconds: 600));
 
-      final user = response.user;
-      final session = response.session;
-
-      if (user != null) {
-        // Save auth data locally using SharedPreferenceHelper
-        if (session != null) {
-          await SharedPreferenceHelper.saveAuthData(
-            userId: user.id,
-            accessToken: session.accessToken,
-            refreshToken: session.refreshToken ?? '',
-          );
-        }
-
-        // Upload Profile Image
-        String? imageUrl;
-
-        if (_profileImage != null) {
-          imageUrl = await _uploadProfileImage(user.id);
-        }
-
-        // Insert user details into the profiles table in Supabase
-        await Supabase.instance.client.from('profiles').insert({
-          "id": user.id,
-          "full_name": fullName,
-          "email": email,
-          "avatar_url": imageUrl,
-          "xp": 0,
-          "coin": 0,
-          "level": 1,
-          "streak": 1,
-        });
-
-        // Retrieve and print the profile to verify details are saved in the DB
-        try {
-          final profile = await Supabase.instance.client
-              .from('profiles')
-              .select()
-              .eq('id', user.id)
-              .single();
-
-          debugPrint("========== SIGN UP PROFILE ==========");
-          profile.forEach((key, value) {
-            debugPrint("$key : $value");
-          });
-          debugPrint("====================================");
-        } catch (dbError) {
-          debugPrint("Error fetching inserted profile: $dbError");
-        }
-
-        log("========== SIGN UP SUCCESS ==========");
-        log("Raw Response : $response");
-        log("Session      : ${response.session}");
-        log("User ID      : ${user.id}");
-        log("Email        : ${user.email}");
-        log("Display Name : $fullName");
-        log("Avatar URL   : $imageUrl");
-        log("Created At   : ${user.createdAt}");
-        log("====================================");
-        log("========== PROFILES DB INSERT SUCCESS ==========");
-        log("User successfully inserted into profiles table.");
-
-        _isLoading = false;
-        update();
-        return true;
+    if (Get.isRegistered<ProfileController>()) {
+      final profile = Get.find<ProfileController>();
+      profile.displayName.value = fullName;
+      profile.email.value = email;
+      if (_profileImage != null) {
+        profile.profileImage.value = _profileImage;
       }
-
-      _isLoading = false;
-      update();
-      return false;
-    } on AuthException catch (e) {
-      _isLoading = false;
-      update();
-      Get.snackbar(
-        'Sign Up Failed',
-        e.message,
-        backgroundColor: const Color(0xFFFF6C6C),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-      return false;
-    } catch (e) {
-      _isLoading = false;
-      update();
-      Get.snackbar(
-        'Sign Up Failed',
-        'An unexpected error occurred: $e',
-        backgroundColor: const Color(0xFFFF6C6C),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-      return false;
     }
+
+    if (Get.isRegistered<HomeController>()) {
+      final home = Get.find<HomeController>();
+      home.displayName.value = fullName;
+    }
+
+    _isLoading = false;
+    update();
+    return true;
   }
 }

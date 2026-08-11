@@ -5,17 +5,10 @@ import 'package:get/get.dart';
 import 'package:quiz_app/main.dart';
 import 'package:quiz_app/features/quiz/controllers/quiz_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
-    try {
-      await Supabase.initialize(
-        url: 'https://placeholder-project.supabase.co',
-        anonKey: 'placeholder-anon-key',
-      );
-    } catch (_) {}
   });
 
   testWidgets('Quiz App full integration flow test', (WidgetTester tester) async {

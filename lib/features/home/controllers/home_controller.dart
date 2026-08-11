@@ -1,120 +1,96 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/sign_up/controllers/sign_up_controller.dart';
 import '../../auth/sign_in/controllers/sign_in_controller.dart';
-import '../models/home_model.dart';
+import '../../profile/controllers/profile_controller.dart';
 
 class HomeController extends GetxController {
   // Streaks and Coins
-  final streakCount = 1.obs;
-  final coinCount = 0.obs;
+  final streakCount = 3.obs;
+  final coinCount = 150.obs;
 
   // Level stats
   final userLevel = 1.obs;
-  final currentXP = 0.obs;
+  final currentXP = 350.obs;
   final nextLevelXP = 1000.obs;
-  final totalXP = 0.obs;
+  final totalXP = 350.obs;
 
   // Recent Performance stats
-  final recentTotalQuiz = 0.obs;
-  final recentBestScore = 0.obs;
-  final recentDayStreak = 1.obs;
+  final recentTotalQuiz = 8.obs;
+  final recentBestScore = 180.obs;
+  final recentDayStreak = 3.obs;
 
-  final displayName = ''.obs;
+  final displayName = 'Quiz Master'.obs;
+  final topPlayers = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Pre-populate if controllers are registered
+    _initUserData();
+    loadMockTopPlayers();
+  }
+
+  void _initUserData() {
+    if (Get.isRegistered<ProfileController>()) {
+      final profile = Get.find<ProfileController>();
+      displayName.value = profile.displayName.value;
+      userLevel.value = profile.userLevel.value;
+      currentXP.value = profile.currentXP.value;
+      coinCount.value = profile.coinCount.value;
+      streakCount.value = profile.streakCount.value;
+      recentTotalQuiz.value = profile.totalQuiz.value;
+      recentBestScore.value = profile.bestScore.value;
+      recentDayStreak.value = profile.streakCount.value;
+      return;
+    }
+
     if (Get.isRegistered<SignUpController>()) {
-      displayName.value = Get.find<SignUpController>().fullNameController.text
-          .trim();
+      final name = Get.find<SignUpController>().fullNameController.text.trim();
+      if (name.isNotEmpty) displayName.value = name;
     } else if (Get.isRegistered<SignInController>()) {
       final email = Get.find<SignInController>().emailController.text.trim();
       if (email.isNotEmpty) {
         displayName.value = email.split('@').first;
       }
     }
-    fetchUserProfile();
-    fetchTopPlayers();
   }
 
-  Future<void> fetchUserProfile() async {
-    try {
-      final user = Supabase.instance.client.auth.currentUser;
-      if (user != null) {
-        final data = await Supabase.instance.client
-            .from('profiles')
-            .select()
-            .eq('id', user.id)
-            .single();
-
-        final userModel = HomeUserModel.fromJson(data);
-
-        displayName.value = userModel.fullName ?? '';
-        userLevel.value = userModel.level;
-        currentXP.value = userModel.xp;
-        nextLevelXP.value = userModel.level * 1000;
-        totalXP.value = userModel.xp;
-        streakCount.value = userModel.streak;
-        coinCount.value = userModel.coin;
-        recentDayStreak.value = userModel.streak;
-        recentTotalQuiz.value = userModel.totalQuiz;
-        recentBestScore.value = userModel.bestScore;
-      }
-    } catch (e) {
-      log("Error fetching profile in HomeController: $e");
-    }
-  }
-
-  final topPlayers = <Map<String, dynamic>>[].obs;
-
-  Future<void> fetchTopPlayers() async {
-    try {
-      final List<dynamic> data = await Supabase.instance.client
-          .from('profiles')
-          .select()
-          .order('total_score', ascending: false)
-          .limit(3);
-
-      final list = <Map<String, dynamic>>[];
-      for (int i = 0; i < data.length; i++) {
-        final item = data[i];
-        final rank = i + 1;
-        Color color;
-        if (rank == 1) {
-          color = const Color(0xFFFFD700); // Gold
-        } else if (rank == 2) {
-          color = const Color(0xFFC0C0C0); // Silver
-        } else if (rank == 3) {
-          color = const Color(0xFFCD7F32); // Bronze
-        } else {
-          color = const Color(0xFF808080); // Gray
-        }
-
-        String avatar = '😊';
-        final emojis = ['🦁', '🦊', '🐺', '🦅', '🐹', '🐼', '🐯', '🐨'];
-        avatar = emojis[i % emojis.length];
-
-        list.add({
-          'rank': rank.toString(),
-          'name': item['full_name'] ?? 'User',
-          'xp': item['xp'] ?? 0,
-          'coin': item['coin'] ?? 0,
-          'totalScore': item['total_score'] ?? 0,
-          'totalXp': '${item['xp'] ?? 0} XP',
-          'todayXp': '${item['total_score'] ?? 0}',
-          'avatar': avatar,
-          'color': color,
-        });
-      }
-      topPlayers.assignAll(list);
-    } catch (e) {
-      debugPrint("Error fetching top players: $e");
-    }
+  void loadMockTopPlayers() {
+    topPlayers.assignAll([
+      {
+        'rank': '1',
+        'name': 'Sophia Vance',
+        'xp': 1450,
+        'coin': 520,
+        'totalScore': 2100,
+        'totalXp': '1450 XP',
+        'todayXp': '2100',
+        'avatar': '🦁',
+        'color': const Color(0xFFFFD700), // Gold
+      },
+      {
+        'rank': '2',
+        'name': 'David Kim',
+        'xp': 1280,
+        'coin': 410,
+        'totalScore': 1850,
+        'totalXp': '1280 XP',
+        'todayXp': '1850',
+        'avatar': '🦊',
+        'color': const Color(0xFFC0C0C0), // Silver
+      },
+      {
+        'rank': '3',
+        'name': 'Marcus Roy',
+        'xp': 1120,
+        'coin': 360,
+        'totalScore': 1600,
+        'totalXp': '1120 XP',
+        'todayXp': '1600',
+        'avatar': '🐺',
+        'color': const Color(0xFFCD7F32), // Bronze
+      },
+    ]);
   }
 
   int get xpUserLevel {

@@ -1,8 +1,8 @@
-import 'dart:developer';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:quiz_app/service/shared_prefarence_helper.dart';
+import '../../../profile/controllers/profile_controller.dart';
+import '../../../home/controllers/home_controller.dart';
 
 class SignInController extends GetxController {
   final emailController = TextEditingController();
@@ -94,95 +94,67 @@ class SignInController extends GetxController {
     _isLoading = true;
     update();
 
-    try {
-      final AuthResponse response = await Supabase.instance.client.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+    // Pure UI simulation delay
+    await Future.delayed(const Duration(milliseconds: 600));
 
-      final user = response.user;
-      final session = response.session;
+    // Update Profile and Home controllers if registered
+    final username = email.split('@').first;
+    final formattedName = username.isEmpty
+        ? 'Quiz Master'
+        : username[0].toUpperCase() + username.substring(1);
 
-      if (user != null && session != null) {
-        // Save auth data locally using SharedPreferenceHelper
-        await SharedPreferenceHelper.saveAuthData(
-          userId: user.id,
-          accessToken: session.accessToken,
-          refreshToken: session.refreshToken ?? '',
-        );
-
-        // Retrieve and print the profile to verify details on sign in
-        try {
-          final profile = await Supabase.instance.client
-              .from('profiles')
-              .select()
-              .eq('id', user.id)
-              .single();
-
-          debugPrint("========== SIGN IN PROFILE ==========");
-          profile.forEach((key, value) {
-            debugPrint("$key : $value");
-          });
-          debugPrint("====================================");
-        } catch (dbError) {
-          debugPrint("Error fetching profile on Sign In: $dbError");
-        }
-
-        log("========== SIGN IN SUCCESS ==========");
-        log("Raw Response : $response");
-        log("Session      : ${response.session}");
-        log("User ID      : ${user.id}");
-        log("Email        : ${user.email}");
-        log("Created At   : ${user.createdAt}");
-        log("====================================");
-
-        _isLoading = false;
-        update();
-        return true;
-      }
-
-      _isLoading = false;
-      update();
-      return false;
-    } on AuthException catch (e) {
-      _isLoading = false;
-      update();
-      Get.snackbar(
-        'Sign In Failed',
-        e.message,
-        backgroundColor: const Color(0xFFFF6C6C),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-      return false;
-    } catch (e) {
-      _isLoading = false;
-      update();
-      Get.snackbar(
-        'Sign In Failed',
-        'An unexpected error occurred: $e',
-        backgroundColor: const Color(0xFFFF6C6C),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-      return false;
+    if (Get.isRegistered<ProfileController>()) {
+      final profile = Get.find<ProfileController>();
+      profile.displayName.value = formattedName;
+      profile.email.value = email;
     }
+
+    if (Get.isRegistered<HomeController>()) {
+      final home = Get.find<HomeController>();
+      home.displayName.value = formattedName;
+    }
+
+    _isLoading = false;
+    update();
+    return true;
   }
 
   Future<bool> signInWithGoogle() async {
     _isLoading = true;
     update();
 
-    // Mock network request delay
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 800));
+
+    const googleName = 'Alex Hunter';
+    const googleEmail = 'alex.hunter@example.com';
+
+    if (Get.isRegistered<ProfileController>()) {
+      final profile = Get.find<ProfileController>();
+      profile.displayName.value = googleName;
+      profile.email.value = googleEmail;
+    }
+
+    if (Get.isRegistered<HomeController>()) {
+      final home = Get.find<HomeController>();
+      home.displayName.value = googleName;
+    }
 
     _isLoading = false;
     update();
-
     return true;
   }
 
   bool playAsGuest() {
+    if (Get.isRegistered<ProfileController>()) {
+      final profile = Get.find<ProfileController>();
+      profile.displayName.value = 'Guest Player';
+      profile.email.value = 'guest@quizmaster.app';
+    }
+
+    if (Get.isRegistered<HomeController>()) {
+      final home = Get.find<HomeController>();
+      home.displayName.value = 'Guest Player';
+    }
     return true;
   }
 }
