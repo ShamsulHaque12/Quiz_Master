@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../profile/controllers/profile_controller.dart';
 import '../../../home/controllers/home_controller.dart';
+import '../../../../service/shared_prefarence_helper.dart';
 
 class SignInController extends GetxController {
   final emailController = TextEditingController();
@@ -114,6 +115,14 @@ class SignInController extends GetxController {
       home.displayName.value = formattedName;
     }
 
+    if (_rememberMe) {
+      await SharedPreferenceHelper.saveAuthData(
+        userId: email,
+        accessToken: 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
+        refreshToken: 'mock_refresh_token',
+      );
+    }
+
     _isLoading = false;
     update();
     return true;
@@ -137,6 +146,14 @@ class SignInController extends GetxController {
     if (Get.isRegistered<HomeController>()) {
       final home = Get.find<HomeController>();
       home.displayName.value = googleName;
+    }
+
+    if (_rememberMe) {
+      await SharedPreferenceHelper.saveAuthData(
+        userId: googleEmail,
+        accessToken: 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
+        refreshToken: 'mock_refresh_token',
+      );
     }
 
     _isLoading = false;

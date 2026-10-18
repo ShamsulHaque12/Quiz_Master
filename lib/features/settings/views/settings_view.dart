@@ -288,7 +288,7 @@ class SettingsView extends GetView<SettingsController> {
           ),
           Switch.adaptive(
             value: value,
-            activeColor: const Color(0xFF6C63FF),
+            activeThumbColor: const Color(0xFF6C63FF),
             activeTrackColor: const Color(0xFF6C63FF).withValues(alpha: 0.3),
             inactiveThumbColor: Colors.white.withValues(alpha: 0.7),
             inactiveTrackColor: Colors.white.withValues(alpha: 0.05),

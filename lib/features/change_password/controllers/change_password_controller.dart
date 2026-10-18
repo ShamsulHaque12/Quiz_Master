@@ -10,8 +10,6 @@ class ChangePasswordController extends GetxController {
   final obscureNewPassword = true.obs;
   final obscureConfirmPassword = true.obs;
 
-
-
   void toggleCurrentPasswordVisibility() {
     obscureCurrentPassword.value = !obscureCurrentPassword.value;
   }

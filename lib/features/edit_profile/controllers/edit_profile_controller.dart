@@ -19,8 +19,6 @@ class EditProfileController extends GetxController {
     }
   }
 
-
-
   Future<void> pickImage(ImageSource source) async {
     try {
       final ImagePicker picker = ImagePicker();

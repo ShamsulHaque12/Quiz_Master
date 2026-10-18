@@ -9,6 +9,7 @@ import '../../home/controllers/home_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../core/app_images.dart';
 import '../models/badge_model.dart';
+import '../../../service/shared_prefarence_helper.dart';
 
 class ProfileController extends GetxController {
   // Gamification & stats (Mock initial state for pure UI)
@@ -293,8 +294,9 @@ class ProfileController extends GetxController {
             ),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Get.back();
+              await SharedPreferenceHelper.clearAuthData();
               if (Get.isRegistered<SignInController>()) {
                 Get.find<SignInController>().emailController.clear();
                 Get.find<SignInController>().passwordController.clear();
