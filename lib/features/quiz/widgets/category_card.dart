@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:get/get.dart';
 import '../../../../routes/app_pages.dart';
+import '../controllers/quiz_controller.dart';
 
 class CategoryCard extends StatelessWidget {
   final String name;
@@ -16,20 +17,6 @@ class CategoryCard extends StatelessWidget {
     required this.gradient,
     this.onTap,
   });
-
-  String _getFilepath(String category, String mode) {
-    final bool isMcq = mode == 'MCQ';
-    final String modeSuffix = isMcq ? 'option' : 'tf';
-    String prefix = category.toLowerCase().replaceAll(' ', '_');
-    if (prefix.contains('program') ||
-        prefix.contains('ict') ||
-        prefix.contains('computer')) {
-      prefix = 'program';
-    } else {
-      prefix = 'genarel';
-    }
-    return 'assets/quiz_json_file/${prefix}_$modeSuffix.json';
-  }
 
   Future<bool> _doesAssetExist(BuildContext context, String filepath) async {
     try {
@@ -117,29 +104,87 @@ class CategoryCard extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 22.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Top row with Category Icon badge and Close button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 32.r),
+                  Container(
+                    width: 52.r,
+                    height: 52.r,
+                    decoration: BoxDecoration(
+                      gradient: gradient,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.25),
+                          blurRadius: 10.r,
+                          offset: Offset(0, 4.h),
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: icon,
+                  ),
+                  GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Container(
+                      width: 32.r,
+                      height: 32.r,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.08),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.close_rounded,
+                        color: Colors.white.withValues(alpha: 0.6),
+                        size: 18.r,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 12.h),
+
+              // Selected Category Name displayed prominently at the top
               Text(
-                'Select Mode',
+                name,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 6.h),
-              Text(
-                'Choose your preferred quiz style',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.5),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.3,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 24.h),
+              SizedBox(height: 4.h),
+
+              // Subtitle
+              Text(
+                'Select Quiz Mode',
+                style: TextStyle(
+                  color: const Color(0xFF6C63FF),
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                'Choose your preferred quiz style to begin',
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.5),
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.h),
               // MCQ Mode Button
               _buildModeButton(
                 title: 'MCQ (Multiple Choice)',
@@ -149,14 +194,25 @@ class CategoryCard extends StatelessWidget {
                   colors: [Color(0xFF6C63FF), Color(0xFF4A00E0)],
                 ),
                 onTap: () async {
-                  final String filepath = _getFilepath(name, 'MCQ');
+                  const String filepath = 'assets/quiz_json_file/program_option.json';
                   final bool exists = await _doesAssetExist(context, filepath);
                   if (!context.mounted) return;
                   Get.back();
                   if (exists) {
+                    if (Get.isRegistered<QuizController>()) {
+                      Get.find<QuizController>().startQuiz(
+                        newCategory: name,
+                        newMode: 'MCQ',
+                        filepath: filepath,
+                      );
+                    }
                     Get.toNamed(
                       Routes.QUIZ,
-                      arguments: {'category': name, 'mode': 'MCQ'},
+                      arguments: {
+                        'category': name,
+                        'mode': 'MCQ',
+                        'filepath': filepath,
+                      },
                     );
                   } else {
                     _showComingSoonDialog(context, name);
@@ -173,14 +229,25 @@ class CategoryCard extends StatelessWidget {
                   colors: [Color(0xFF00B074), Color(0xFF05D59E)],
                 ),
                 onTap: () async {
-                  final String filepath = _getFilepath(name, 'TF');
+                  const String filepath = 'assets/quiz_json_file/program_tf.json';
                   final bool exists = await _doesAssetExist(context, filepath);
                   if (!context.mounted) return;
                   Get.back();
                   if (exists) {
+                    if (Get.isRegistered<QuizController>()) {
+                      Get.find<QuizController>().startQuiz(
+                        newCategory: name,
+                        newMode: 'TF',
+                        filepath: filepath,
+                      );
+                    }
                     Get.toNamed(
                       Routes.QUIZ,
-                      arguments: {'category': name, 'mode': 'TF'},
+                      arguments: {
+                        'category': name,
+                        'mode': 'TF',
+                        'filepath': filepath,
+                      },
                     );
                   } else {
                     _showComingSoonDialog(context, name);
@@ -297,9 +364,11 @@ class CategoryCard extends StatelessWidget {
                         name,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 15.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 4.h),
                       Text(

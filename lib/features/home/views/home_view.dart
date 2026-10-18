@@ -10,6 +10,7 @@ import '../widgets/daily_challenge_card.dart';
 import '../widgets/top_players_list.dart';
 import '../widgets/daily_spin_wheel_banner.dart';
 import '../../../routes/app_pages.dart';
+import '../../quiz/controllers/quiz_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -82,7 +83,26 @@ class HomeView extends GetView<HomeController> {
         SizedBox(height: 14.h),
 
         // Programming Fundamentals Card
-        DailyChallengeCard(onTap: () => Get.toNamed(Routes.QUIZ)),
+        DailyChallengeCard(
+          onTap: () {
+            const String filepath = 'assets/quiz_json_file/program_option.json';
+            if (Get.isRegistered<QuizController>()) {
+              Get.find<QuizController>().startQuiz(
+                newCategory: 'Programming',
+                newMode: 'MCQ',
+                filepath: filepath,
+              );
+            }
+            Get.toNamed(
+              Routes.QUIZ,
+              arguments: {
+                'category': 'Programming',
+                'mode': 'MCQ',
+                'filepath': filepath,
+              },
+            );
+          },
+        ),
         SizedBox(height: 24.h),
 
         // Daily Spin Wheel Banner

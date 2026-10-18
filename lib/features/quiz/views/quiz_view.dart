@@ -10,6 +10,23 @@ class QuizView extends GetView<QuizController> {
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    if (args != null && args is Map) {
+      final String? argMode = args['mode'];
+      final String? argCategory = args['category'];
+      final String? argPath = args['filepath'];
+      if ((argMode != null && argMode != controller.mode) ||
+          (argPath != null && argPath != controller.currentFilepath)) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          controller.startQuiz(
+            newCategory: argCategory ?? controller.category,
+            newMode: argMode ?? controller.mode,
+            filepath: argPath,
+          );
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFF0F0C20), // Obsidian Space Dark
       body: Stack(

@@ -20,6 +20,7 @@ class QuizController extends GetxController {
   // Dynamic parameters
   String category = 'Programming';
   String mode = 'MCQ';
+  String? currentFilepath;
   bool isLoading = true;
   DateTime? quizStartedAt;
 
@@ -51,31 +52,43 @@ class QuizController extends GetxController {
     if (args != null && args is Map) {
       category = args['category'] ?? 'Programming';
       mode = args['mode'] ?? 'MCQ';
+      currentFilepath = args['filepath'] as String?;
     }
-    loadQuestions();
+    loadQuestions(customFilepath: currentFilepath);
   }
 
-  Future<void> loadQuestions() async {
+  Future<void> startQuiz({
+    required String newCategory,
+    required String newMode,
+    String? filepath,
+  }) async {
+    category = newCategory;
+    mode = newMode;
+    currentFilepath = filepath;
+    await loadQuestions(customFilepath: filepath);
+  }
+
+  Future<void> loadQuestions({String? customFilepath}) async {
     isLoading = true;
     update();
+
+    if (customFilepath != null && customFilepath.isNotEmpty) {
+      currentFilepath = customFilepath;
+    }
 
     try {
       final bool isMcq =
           mode.toUpperCase() == 'MCQ' || mode.toLowerCase().contains('option');
-      String prefix = category.toLowerCase().replaceAll(' ', '_');
-      if (prefix.contains('program') ||
-          prefix.contains('ict') ||
-          prefix.contains('computer')) {
-        prefix = 'program';
-      } else {
-        prefix = 'genarel';
+      
+      String targetPath = currentFilepath ?? '';
+      if (targetPath.isEmpty) {
+        targetPath = isMcq
+            ? 'assets/quiz_json_file/program_option.json'
+            : 'assets/quiz_json_file/program_tf.json';
       }
-      final String modeSuffix = isMcq ? 'option' : 'tf';
-      final String filepath =
-          'assets/quiz_json_file/${prefix}_$modeSuffix.json';
 
       final AssetBundle bundle = assetBundle ?? rootBundle;
-      final String response = await bundle.loadString(filepath);
+      final String response = await bundle.loadString(targetPath);
       final List<dynamic> jsonList = json.decode(response);
 
       List<Question> allQuestions = [];
@@ -112,7 +125,8 @@ class QuizController extends GetxController {
           if (ans is bool) {
             correctAnswerIndex = ans ? 0 : 1;
           } else {
-            correctAnswerIndex = (ans.toString().toLowerCase() == 'true')
+            final ansLower = ans.toString().toLowerCase();
+            correctAnswerIndex = (ansLower == 'true' || ansLower == '1' || ansLower == 'সত্য')
                 ? 0
                 : 1;
           }
